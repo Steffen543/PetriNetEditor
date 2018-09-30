@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petri.Editor", "Petri.Editor\Petri.Editor.csproj", "{59D8F323-B337-4AD7-933D-DFB2382EC45A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petri.Logic", "Petri.Logic\Petri.Logic.csproj", "{20E6EF4C-EF69-4FDC-B60E-A5B922E6A5D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59D8F323-B337-4AD7-933D-DFB2382EC45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D8F323-B337-4AD7-933D-DFB2382EC45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D8F323-B337-4AD7-933D-DFB2382EC45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D8F323-B337-4AD7-933D-DFB2382EC45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E6EF4C-EF69-4FDC-B60E-A5B922E6A5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E6EF4C-EF69-4FDC-B60E-A5B922E6A5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E6EF4C-EF69-4FDC-B60E-A5B922E6A5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E6EF4C-EF69-4FDC-B60E-A5B922E6A5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C6553BC-CC99-46BD-ADAF-7244E145CF2B}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="Petri.Editor.UI.Editor.EditorDislay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Petri.Editor.UI.Editor"
+             xmlns:components="clr-namespace:Petri.Logic.Components;assembly=Petri.Logic"
+             xmlns:converters="clr-namespace:Petri.Editor.Converter"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+               xmlns:converter="clr-namespace:Petri.Editor.Converter"
+              xmlns:viewModel="clr-namespace:Petri.Logic.ViewModel;assembly=Petri.Logic"
+             xmlns:converterConnection="clr-namespace:Petri.Editor.Converter.Conn"
+             xmlns:media2d="clr-namespace:Petzold.Media2D"
+             xmlns:controls="clr-namespace:Petri.Editor.Controls"
+             mc:Ignorable="d"  x:Name="self"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        <converter:ConnectionColorConverter x:Key="ConnectionColorConverter" />
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type viewModel:EditorMode}"  x:Key="MyEnumValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModel:EditorMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <converterConnection:ConnectionSourceXPointConverter x:Key="ConnectionSourceXPointConverter" />
+        <converterConnection:ConnectionDestinationXPointConverter x:Key="ConnectionDestinationXPointConverter" />
+        <converterConnection:ConnectionSourceYPointConverter x:Key="ConnectionSourceYPointConverter" />
+        <converterConnection:ConnectionDestinationYPointConverter x:Key="ConnectionDestinationYPointConverter" />
+        <converterConnection:HalfValueConverter x:Key="HalfValueConverter" />
+        <Style TargetType="Border" x:Key="Border_UI_Placeable">
+            
+        </Style>
+        <Style TargetType="Border" x:Key="Border_Stelle" BasedOn="{StaticResource Border_UI_Placeable}">
+            <Setter Property="CornerRadius" Value="50" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Width" Value="{DynamicResource StelleSize}" />
+            <Setter Property="Height" Value="{DynamicResource StelleSize}" />
+        </Style>
+        <Style TargetType="Border" x:Key="Border_Transition" BasedOn="{StaticResource Border_UI_Placeable}">
+            <Setter Property="Background" Value="Blue" />
+            <Setter Property="Width" Value="{DynamicResource TransitionSize}" />
+            <Setter Property="Height" Value="{DynamicResource TransitionSize}" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+      
+        
+        <ItemsControl Grid.Row="1"  MouseLeftButtonUp="Canvas_MouseLeftButtonUp"  Background="Gray" ItemsSource="{Binding Path=Items}">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas HorizontalAlignment="Stretch" MouseLeftButtonUp="Canvas_MouseLeftButtonUp"
+                    VerticalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.Resources>
+
+                <DataTemplate DataType="{x:Type components:Connection}">
+                    <DataTemplate.Resources>
+                        <system:Int32 x:Key="StartPosition">0</system:Int32>
+                        <Point x:Key="StartPoint" X="0" Y="0" />
+                    </DataTemplate.Resources>
+                    <Border>
+                        <Canvas Background="Red">
+
+                            <!--<Button Width="30" Height="30"  Content="{Binding Value}"
+                                Canvas.Left="{Binding ., Converter={StaticResource LineXCenterConverter}}" 
+                                Canvas.Top="{Binding ., Converter={StaticResource LineYCenterConverter}}"  />-->
+
+                            <media2d:ArrowLine x:Name="Arrow" IsArrowClosed="True" 
+                                               Stroke="{Binding Source.IsExecutable, Converter={StaticResource ConnectionColorConverter}}" 
+                                               Fill="{Binding Source.IsExecutable, Converter={StaticResource ConnectionColorConverter}}" 
+                                               StrokeThickness="2" ArrowLength="17" MouseLeftButtonUp="Arrow_MouseLeftButtonUp"
+                              X1="{Binding ., Converter={StaticResource ConnectionSourceXPointConverter}}"
+                              Y1="{Binding ., Converter={StaticResource ConnectionSourceYPointConverter}}"
+                              X2="{Binding ., Converter={StaticResource ConnectionDestinationXPointConverter}}"
+                              Y2="{Binding ., Converter={StaticResource ConnectionDestinationYPointConverter}}"
+                              />
+
+                            <Border Canvas.Top="{Binding ElementName=Arrow, Path=MiddlePoint.Y}" 
+                               Canvas.Left="{Binding ElementName=Arrow,  Path=MiddlePoint.X}">
+                                <!--<Label Width="30" Height="30"  Content="{Binding Value}" />-->
+                                <controls:EditConnectionValueControl DataContext="{Binding .}" />
+                            </Border>
+                        </Canvas>
+                    </Border>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type components:Transition}">
+                    <Grid>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=BorderMain}" />
+                        </Grid.OpacityMask>
+                        <Border Style="{StaticResource Border_Transition}" x:Name="BorderMain" />
+                        <Button Click="Component_CLick" IsEnabled="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}">
+                            <Grid>
+                                <TextBlock Text="{Binding Description}" />
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate  DataType="{x:Type components:Stelle}">
+                    <Grid>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=BorderMain}" />
+                        </Grid.OpacityMask>
+                        <Border Style="{StaticResource Border_Stelle}" x:Name="BorderMain" />
+                        
+                        <Button Click="Component_CLick" >
+                            <ItemsControl ItemsSource="{Binding Points}" Width="30" Height="30">
+                               
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.Resources>
+                                    <DataTemplate DataType="{x:Type components:StelleEmptyPoint}">
+                                        <Grid Margin="1">
+                                            <Ellipse  Fill="Transparent" Stroke="Black" StrokeThickness="1" />
+                                        </Grid>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type components:StelleFullPoint}">
+                                        <Grid Margin="1">
+                                            <Ellipse  Fill="Black" Stroke="Black" StrokeThickness="1" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.Resources>
+                            </ItemsControl>
+                        </Button>
+
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.Resources>
+        </ItemsControl>
+        <Border Grid.Row="1" Background="#DDDDDD" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="10">
+            <TextBlock x:Name="LabelCurrentCommand" Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" >
+                <Run Text="{Binding EditorMode, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumDescriptionConverter}}" />
+            </TextBlock>
+        </Border>
+    </Grid>
+</UserControl>
