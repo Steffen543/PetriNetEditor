@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Petri.Editor.UI.Editor"
              x:Name="self"
              xmlns:converter="clr-namespace:Petri.Editor.Converter"
-             xmlns:viewModel="clr-namespace:Petri.Logic.ViewModel;assembly=Petri.Logic"
+             xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -22,24 +22,14 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
+    <StackPanel Margin="10">
         <ListBox  ItemsSource="{Binding Source={StaticResource MyEnumValues}}" SelectedItem="{Binding EditorMode}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    <TextBlock FontSize="18" Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <!--<RadioButton
-            IsChecked="{Binding Path=EditorMode, Converter={StaticResource EditorOptionConverter}, ConverterParameter={x:Static viewModel:EditorMode.AddTransition}}" 
-            Content="Transition hinzufügen (4ECK)" />
-        <RadioButton
-            IsChecked="{Binding Path=EditorMode, Converter={StaticResource EditorOptionConverter}, ConverterParameter={x:Static viewModel:EditorMode.AddStelle}}" 
-            Content="Stelle hinzufügen (Kreis)" />
-                <RadioButton Content="Stelle hinzufügen (KREIS)" />
-        <RadioButton Content="Verbindung hinzufügen"/>
-        <RadioButton Content="Löschen" />-->
-        <TextBlock Text="{Binding Path=EditorMode, UpdateSourceTrigger=PropertyChanged}" />
     </StackPanel>
         
 

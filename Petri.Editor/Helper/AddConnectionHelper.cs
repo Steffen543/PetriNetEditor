@@ -4,14 +4,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DevExpress.Mvvm;
 
 namespace Petri.Editor.Helper
 {
-    public class AddConnectionHelper
+    public class AddConnectionHelper : ViewModelBase
     {
-        public IConnectable Source { get; set; }
-        public IConnectable Destination { get; set; }
-        public int Value { get; set; }
-        public string Description { get; set; }
+
+
+        public IConnectable Source
+        {
+            get { return GetProperty(() => Source); }
+            set { SetProperty(() => Source, value); }
+        }
+
+        public IConnectable Destination
+        {
+            get { return GetProperty(() => Destination); }
+            set { SetProperty(() => Destination, value); }
+        }
+
+        public int Value
+        {
+            get { return GetProperty(() => Value); }
+            set { SetProperty(() => Value, value); }
+        }
+
+        public string Description
+        {
+            get { return GetProperty(() => Description); }
+            set { SetProperty(() => Description, value); }
+        }
+
+      
     }
 }

@@ -1,4 +1,4 @@
-﻿using Petri.Logic.ViewModel;
+﻿using Petri.Editor.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

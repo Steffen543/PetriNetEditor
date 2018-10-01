@@ -1,6 +1,6 @@
-﻿using Petri.Logic.Components;
+﻿using Petri.Editor.UI.ViewModel;
+using Petri.Logic.Components;
 using Petri.Logic.Data;
-using Petri.Logic.ViewModel;
 using Petri.Logic.Xml;
 using System;
 using System.Collections.Generic;

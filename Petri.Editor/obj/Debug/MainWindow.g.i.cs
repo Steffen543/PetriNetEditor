@@ -9,6 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using DevExpress.Xpf.DXBinding;
 using Petri.Editor;
 using Petri.Editor.UI.Editor;
 using System;

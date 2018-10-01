@@ -29,3 +29,11 @@ F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\Dialogs\Con
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\Dialogs\ConnectionWindow.baml
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\Controls\EditConnectionValueControl.g.cs
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\Controls\EditConnectionValueControl.baml
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\DevExpress.Mvvm.dll
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\DevExpress.Mvvm.UI.dll
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\DevExpress.Mvvm.pdb
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\DevExpress.Mvvm.UI.pdb
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\Microsoft.Expression.Interactions.dll
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\System.Windows.Interactivity.dll
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\Microsoft.Expression.Interactions.xml
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\System.Windows.Interactivity.xml

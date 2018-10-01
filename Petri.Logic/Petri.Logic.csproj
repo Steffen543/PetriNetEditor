@@ -45,6 +45,7 @@
     <Compile Include="Components\ConnectionableBase.cs" />
     <Compile Include="Components\IConnectable.cs" />
     <Compile Include="Components\Connection.cs" />
+    <Compile Include="Components\ObjectList.cs" />
     <Compile Include="Components\Stelle.cs" />
     <Compile Include="Components\Transition.cs" />
     <Compile Include="Components\UIPlaceable.cs" />
