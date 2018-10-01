@@ -20,6 +20,6 @@ namespace Petri.Editor.UI.ViewModel
         [Description("Löschen")]
         Delete,
         [Description("Informationen")]
-        Info
+        ShowInformation
     }
 }

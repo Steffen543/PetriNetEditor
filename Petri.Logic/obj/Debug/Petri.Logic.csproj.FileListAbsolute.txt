@@ -1,6 +1,5 @@
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\bin\Debug\Petri.Logic.dll
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\bin\Debug\Petri.Logic.pdb
-F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\obj\Debug\Petri.Logic.csprojResolveAssemblyReference.cache
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\obj\Debug\Petri.Logic.csproj.CoreCompileInputs.cache
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\obj\Debug\Petri.Logic.dll
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Logic\obj\Debug\Petri.Logic.pdb

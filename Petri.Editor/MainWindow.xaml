@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Petri.Editor"
-        xmlns:editor="clr-namespace:Petri.Editor.UI.Editor"
+        xmlns:view="clr-namespace:Petri.Editor.UI.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1200">
     <Grid>
@@ -17,6 +17,6 @@
             <MenuItem Header="Öffnen" Click="OpenPetriNet" />
             <MenuItem Header="Speichern" Click="SavePetriNet" />
         </Menu>
-        <editor:PetriNetEditor x:Name="PetriEditor" Grid.Row="1"></editor:PetriNetEditor>
+        <view:PetriNetEditorView x:Name="PetriEditor" Grid.Row="1"></view:PetriNetEditorView>
     </Grid>
 </Window>

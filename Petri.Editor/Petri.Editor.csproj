@@ -91,19 +91,17 @@
       <DependentUpon>ConnectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\AddConnectionHelper.cs" />
-    <Compile Include="UI\Editor\EditorDislay.xaml.cs">
-      <DependentUpon>EditorDislay.xaml</DependentUpon>
+    <Compile Include="UI\View\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Editor\EditorTools.xaml.cs">
-      <DependentUpon>EditorTools.xaml</DependentUpon>
+    <Compile Include="UI\View\EditorToolsView.xaml.cs">
+      <DependentUpon>EditorToolsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Editor\PetriNetEditor.xaml.cs">
-      <DependentUpon>PetriNetEditor.xaml</DependentUpon>
+    <Compile Include="UI\View\PetriNetEditorView.xaml.cs">
+      <DependentUpon>PetriNetEditorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ViewModel\EditorAction.cs" />
     <Compile Include="UI\ViewModel\EditorMode.cs" />
     <Compile Include="UI\ViewModel\EditorViewModel.cs" />
-    <Compile Include="UI\ViewModel\ViewModelBase.cs" />
     <Page Include="Controls\EditConnectionValueControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,15 +126,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Editor\EditorDislay.xaml">
+    <Page Include="UI\View\EditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Editor\EditorTools.xaml">
+    <Page Include="UI\View\EditorToolsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Editor\PetriNetEditor.xaml">
+    <Page Include="UI\View\PetriNetEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,7 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Components\" />
-    <Folder Include="UI\View\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Petri.Logic\Petri.Logic.csproj">
