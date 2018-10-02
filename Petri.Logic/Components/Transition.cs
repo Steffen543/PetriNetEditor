@@ -19,8 +19,8 @@ namespace Petri.Logic.Components
                 foreach (var inputConnection in Input)
                 {
                     var currentValue = ((Stelle)inputConnection.Source).Value;
-                    var neededValue = ((Stelle)inputConnection.Source).MaxValue;
-                    if (currentValue < neededValue)
+                    
+                    if (currentValue < inputConnection.Value)
                         returnValue = false;
                 }
                 return returnValue;
@@ -42,8 +42,8 @@ namespace Petri.Logic.Components
             foreach(var inputConnection in Input)
             {
                 var source = ((Stelle)inputConnection.Source);
-                //source.Value -= inputConnection.Value;
-                source.Value = 0;
+                source.Value -= inputConnection.Value;
+                //source.Value = 0;
             }
             foreach (var outputConnection in Output)
             {

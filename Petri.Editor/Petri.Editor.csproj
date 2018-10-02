@@ -85,12 +85,15 @@
     <Compile Include="Converter\Conn\ConnectionSourceYPointConverter.cs" />
     <Compile Include="Converter\Conn\HalfValueConverter.cs" />
     <Compile Include="Converter\EnumDescriptionConverter.cs" />
+    <Compile Include="Converter\IncreaseNumberConverter.cs" />
     <Compile Include="Converter\IsNullConverter.cs" />
+    <Compile Include="Converter\PetriNetCoordinatesConverter.cs" />
     <Compile Include="Converter\StellePointConverter.cs" />
     <Compile Include="Dialogs\ConnectionWindow.xaml.cs">
       <DependentUpon>ConnectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\AddConnectionHelper.cs" />
+    <Compile Include="Helper\PetriNetCoordinates.cs" />
     <Compile Include="UI\View\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>

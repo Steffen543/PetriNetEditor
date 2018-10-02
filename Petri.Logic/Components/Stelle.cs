@@ -21,7 +21,7 @@ namespace Petri.Logic.Components
         {
             get
             {
-                if (Value == MaxValue) return true;
+                
                 return false;
             }
         }

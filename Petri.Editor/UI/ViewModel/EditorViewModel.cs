@@ -46,7 +46,7 @@ namespace Petri.Editor.UI.ViewModel
 
 
 
-        public DelegateCommand<object> AddCommand { get; private set; }
+        public DelegateCommand<PetriNetCoordinates> AddCommand { get; private set; }
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
         public DelegateCommand<ConnectableBase> AddConnectionCommand { get; private set; }
@@ -54,7 +54,7 @@ namespace Petri.Editor.UI.ViewModel
         public EditorViewModel()
         {
             AddConnectionHelper = new AddConnectionHelper();
-            AddCommand = new DelegateCommand<object>(AddCommandExecute, AddCommandCanExecute);
+            AddCommand = new DelegateCommand<PetriNetCoordinates>(AddCommandExecute, AddCommandCanExecute);
             DeleteCommand = new DelegateCommand<UIPlaceable>(DeleteCommandExecute, DeleteCommandCanExecute);
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
@@ -103,17 +103,12 @@ namespace Petri.Editor.UI.ViewModel
             DeleteComponent(item);
         }
 
-        void AddCommandExecute(object itemsControl)
+        void AddCommandExecute(PetriNetCoordinates coordinates)
         {
-            var obj = (ItemsControl)itemsControl;
-            var canvas = VisualTreeHelper.GetChild(obj, 0) as UIElement;
-            var pos = Mouse.GetPosition(canvas);
-            double size = (double)Application.Current.FindResource("TransitionSize");
+            var x = coordinates.X;
+            var y = coordinates.Y;
 
-            var x = pos.X - size / 2;
-            var y = pos.Y - size / 2;
-
-            Console.WriteLine($"{EditorMode} on ({x} | {y})");
+            Console.WriteLine($"{EditorMode} on ({x} | {x})");
             switch (EditorMode)
             {
                 case EditorMode.AddStelle:
@@ -148,7 +143,7 @@ namespace Petri.Editor.UI.ViewModel
             return EditorMode == EditorMode.Delete;
         }
 
-        bool AddCommandCanExecute(object parameter)
+        bool AddCommandCanExecute(PetriNetCoordinates parameter)
         {
             if (EditorMode == EditorMode.AddTransition || EditorMode == EditorMode.AddStelle)
                 return true;

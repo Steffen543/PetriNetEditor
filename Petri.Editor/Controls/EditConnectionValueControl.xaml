@@ -11,7 +11,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" x:Name="MainTextBlock" Cursor="Hand" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Content="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Column="0" Foreground="Black" FontSize="16" x:Name="MainTextBlock" Cursor="Hand" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Content="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Padding="3" Grid.Column="0" Visibility="Collapsed" x:Name="MainTextBox" KeyDown="MainTextBox_KeyDown" LostFocus="TextBox_LostFocus" Text="{Binding Value, Mode=TwoWay}" />
         <Button x:Name="MainButton" Grid.Column="1" Content="Ok" Visibility="Collapsed" />
     </Grid>
