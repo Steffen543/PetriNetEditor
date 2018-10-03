@@ -11,34 +11,12 @@ namespace Petri.Logic.Components
     [XmlType("Stelle")]
     public class Stelle : ConnectableBase, IConnectable
     {
-        private int maxValue;
         private int value;
 
         [XmlIgnore()]
         public ObservableCollection<StellePoint> Points { get; set; }
 
-        public bool IsExecutable
-        {
-            get
-            {
-                
-                return false;
-            }
-        }
-
-        [XmlAttribute("MaxValue")]
-        public int MaxValue
-        {
-            get
-            {
-                return maxValue;
-            }
-            set
-            {
-                maxValue = value;
-                NotifyPropertyChanged();
-            }
-        }
+      
 
         [XmlAttribute("Value")]
         public int Value
@@ -50,27 +28,27 @@ namespace Petri.Logic.Components
             set
             {
                 if (value < 0) value = 0;
-                if (value > MaxValue) value = MaxValue;
                 this.value = value;
-                NotifyPropertyChanged();
+                RaisePropertyChanged("Value");
                 foreach (var outputConnection in Output)
                 {
-                    ((Transition)outputConnection.Destination).NotifyPropertyChanged("IsExecutable");
+                    var destinationTransition = outputConnection.Destination as Transition;
+
+                    outputConnection.CalcIsExecutable();
+                    destinationTransition.CalcIsExecutable();
                 }
 
-
-                var missing = MaxValue - Value;
                 Points = new ObservableCollection<StellePoint>();
                 for (int i = 0; i < Value; i++)
                 {
                     Points.Add(new StelleFullPoint());
                 }
-                for (int i = 0; i < missing; i++)
+                /*for (int i = 0; i < missing; i++)
                 {
                     Points.Add(new StelleEmptyPoint());
-                }
-                NotifyPropertyChanged("Points");
-                NotifyPropertyChanged("IsExecutable");
+                }*/
+                RaisePropertyChanged("Points");
+                RaisePropertyChanged("IsExecutable");
 
             }
         }
@@ -83,9 +61,8 @@ namespace Petri.Logic.Components
         }
 
 
-        public Stelle(int id, double x, double y, string name, string description, int maxValue, int value) : base(id, x, y, description, name)
+        public Stelle(int id, double x, double y, string name, string description, int value) : base(id, x, y, description, name)
         {
-            MaxValue = maxValue;
             Value = value;
         }
 

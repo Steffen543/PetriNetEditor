@@ -95,12 +95,14 @@
     <Compile Include="Helper\AddConnectionHelper.cs" />
     <Compile Include="Helper\GetVisualChildHelper.cs" />
     <Compile Include="Helper\PetriNetCoordinates.cs" />
+    <Compile Include="UI\ViewModel\MainWindowViewModel.cs" />
     <Compile Include="UI\View\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\View\EditorToolsView.xaml.cs">
       <DependentUpon>EditorToolsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\View\Manager\ScrollZoomManager.cs" />
     <Compile Include="UI\View\PetriNetEditorView.xaml.cs">
       <DependentUpon>PetriNetEditorView.xaml</DependentUpon>
     </Compile>

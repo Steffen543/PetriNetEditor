@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using Petri.Logic.Components;
 
 namespace Petri.Editor.Converter
 {
@@ -16,12 +17,16 @@ namespace Petri.Editor.Converter
         public object Convert(object value, Type targetType, object parameter,
            System.Globalization.CultureInfo culture)
         {
-            bool executable = (bool)value;
-            if(executable == true)
+            var conn = value as Connection;
+
+            if (conn?.Source is Transition transitionSource)
             {
-                return Brushes.Green;
+                if(transitionSource.IsExecutable)
+                    return Brushes.Green;
             }
+
             return Brushes.LightGray;
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

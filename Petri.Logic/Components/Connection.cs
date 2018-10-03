@@ -15,16 +15,29 @@ namespace Petri.Logic.Components
         [XmlAttribute("Value")]
         public int Value
         {
-            get
+            get { return GetProperty(() => Value); }
+            set { SetProperty(() => Value, value); }
+        }
+
+        [XmlAttribute("IsExecutable")]
+        public bool IsExecutable
+        {
+            get { return GetProperty(() => IsExecutable); }
+            set { SetProperty(() => IsExecutable, value); }
+        }
+
+        internal void CalcIsExecutable()
+        {
+            if (Source is Transition transitionSource)
             {
-                return value;
+                IsExecutable = transitionSource.IsExecutable;
             }
-            set
+            else if (Source is Stelle stelleSource)
             {
-                this.value = value;
-                NotifyPropertyChanged();
+                IsExecutable = (stelleSource.Value >= Value);
             }
         }
+
 
         [XmlAttribute("SourceId")]
         public int SourceId { get; set; }

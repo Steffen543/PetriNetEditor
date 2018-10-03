@@ -11,21 +11,31 @@ namespace Petri.Logic.Components
     [XmlType("Transition")]
     public class Transition : ConnectableBase, IConnectable
     {
+        [XmlAttribute("IsExecutable")]
         public bool IsExecutable
         {
-            get
+            get { return GetProperty(() => IsExecutable); }
+            set { SetProperty(() => IsExecutable, value); }
+        }
+
+        internal void CalcIsExecutable()
+        {
+            bool returnValue = true;
+            foreach (var inputConnection in Input)
             {
-                bool returnValue = true;
-                foreach (var inputConnection in Input)
-                {
-                    var currentValue = ((Stelle)inputConnection.Source).Value;
-                    
-                    if (currentValue < inputConnection.Value)
-                        returnValue = false;
-                }
-                return returnValue;
+                var currentValue = ((Stelle)inputConnection.Source).Value;
+
+                if (currentValue < inputConnection.Value)
+                    returnValue = false;
+            }
+            IsExecutable = returnValue;
+            foreach (var outputConnection in Output)
+            {
+                outputConnection.CalcIsExecutable();
             }
         }
+
+
       
         public Transition()
         {
@@ -43,14 +53,13 @@ namespace Petri.Logic.Components
             {
                 var source = ((Stelle)inputConnection.Source);
                 source.Value -= inputConnection.Value;
-                //source.Value = 0;
             }
             foreach (var outputConnection in Output)
             {
                 var destination = ((Stelle)outputConnection.Destination);
-               destination.Value += outputConnection.Value;
+                destination.Value += outputConnection.Value;
             }
-
+            CalcIsExecutable();
 
         }
 

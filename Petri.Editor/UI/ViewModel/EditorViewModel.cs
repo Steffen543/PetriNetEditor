@@ -22,8 +22,10 @@ namespace Petri.Editor.UI.ViewModel
         public PetriNetXML PetriNet
         {
             get { return GetProperty(() => PetriNet); }
-            set { SetProperty(() => PetriNet, value); }
+            set{ SetProperty(() => PetriNet, value); }
         }
+
+
 
         public EditorMode EditorMode {
             get {  return GetProperty(() => this.EditorMode); }
@@ -44,8 +46,6 @@ namespace Petri.Editor.UI.ViewModel
             set { SetProperty(() => AddConnectionHelper, value); }
         }
 
-
-
         public DelegateCommand<PetriNetCoordinates> AddCommand { get; private set; }
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
@@ -59,10 +59,6 @@ namespace Petri.Editor.UI.ViewModel
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
         }
-
-
-
-
 
         #region Commands
 
@@ -80,7 +76,7 @@ namespace Petri.Editor.UI.ViewModel
             else if (AddConnectionHelper.Destination == null)
             {
                 AddConnectionHelper.Destination = item;
-                ConnectionWindow connWindow = new ConnectionWindow()
+                /*ConnectionWindow connWindow = new ConnectionWindow()
                 {
                     Owner = MainWindow.GetInstance(),
                     WindowStartupLocation = WindowStartupLocation.CenterOwner,
@@ -88,13 +84,12 @@ namespace Petri.Editor.UI.ViewModel
                 };
                 connWindow.ShowDialog();
                 if (connWindow.DialogResult == true)
-                {
-                    AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, AddConnectionHelper.Value, AddConnectionHelper.Description);
-                    AddConnectionHelper.Destination = null;
-                    AddConnectionHelper.Source = null;
-                    EditorMode = EditorMode.Execute;
-                }
-
+                {*/
+                AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, 1, AddConnectionHelper.Description);
+                AddConnectionHelper.Destination = null;
+                AddConnectionHelper.Source = null;
+                EditorMode = EditorMode.Execute;
+                
             }
         }
 
@@ -165,7 +160,7 @@ namespace Petri.Editor.UI.ViewModel
 
         public void AddStelle(double x, double y, string description)
         {
-            Stelle stelle = new Stelle(PetriNet.CreateId(), x, y, "Name", "Description", 5, 0);
+            Stelle stelle = new Stelle(PetriNet.CreateId(), x, y, "Name", "Description",  0);
             PetriNet.Objects.Add(stelle);
 
         }

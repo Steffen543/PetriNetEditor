@@ -5,18 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Petri.Editor"
         xmlns:view="clr-namespace:Petri.Editor.UI.View"
+        xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1200">
+        Title="{Binding CurrentFileName}" Height="750" Width="1200">
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="Neu" />
-            <MenuItem Header="Öffnen" Click="OpenPetriNet" />
-            <MenuItem Header="Speichern" Click="SavePetriNet" />
+           
+            <MenuItem Header="Datei">
+                <MenuItem Header="Neu" Command="{Binding CreateNewPetriNetCommand}" />
+                <MenuItem Header="Öffnen" Command="{Binding OpenPetriNetFileCommand}"  />
+                <MenuItem Header="Speichern" Command="{Binding SavePetriNetCommand}" />
+                <MenuItem Header="Speichern unter" Command="{Binding SavePetriNetUnderNewNameCommand}" />
+            </MenuItem>
         </Menu>
-        <view:PetriNetEditorView x:Name="PetriEditor" Grid.Row="1"></view:PetriNetEditorView>
+        <view:PetriNetEditorView x:Name="PetriEditor" Grid.Row="1" />
     </Grid>
 </Window>

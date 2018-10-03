@@ -6,15 +6,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using DevExpress.Mvvm;
 
 namespace Petri.Logic.Components
 {
     [XmlType("UIPlaceable")] // define Type
     [XmlInclude(typeof(Transition)), XmlInclude(typeof(Stelle)), XmlInclude(typeof(Connection)), XmlInclude(typeof(ConnectableBase))]
-    public class UIPlaceable : INotifyPropertyChanged
+    public class UIPlaceable : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         [XmlAttribute("Id")]
         public int Id { get; set; }
 
@@ -47,12 +46,6 @@ namespace Petri.Logic.Components
         }
 
       
-        internal void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
     }
 }

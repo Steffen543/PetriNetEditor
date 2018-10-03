@@ -31,7 +31,7 @@
         <converterConnection:ConnectionDestinationYPointConverter x:Key="ConnectionDestinationYPointConverter" />
         <converterConnection:HalfValueConverter x:Key="HalfValueConverter" />
         <Style TargetType="Border" x:Key="Border_UI_Placeable">
-            
+
         </Style>
         <Style TargetType="Border" x:Key="Border_Stelle" BasedOn="{StaticResource Border_UI_Placeable}">
             <Setter Property="CornerRadius" Value="50" />
@@ -52,22 +52,10 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
-            <!--MouseDown="ScrollViewer_MouseDown" MouseUp="ScrollViewer_MouseUp" MouseMove="ScrollViewer_MouseMove"-->
-             
-            <ItemsControl Grid.Row="1" x:Name="MainItemsControl" Tag="{Binding ElementName=MainCanvas, Path=Name}"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
-              
-                <!--<ItemsControl.Template>
-                    <ControlTemplate>
-                        <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </ItemsControl.Template>-->
-                <!--<ItemsControl.LayoutTransform>
-                    <ScaleTransform
-                        ScaleX="{Binding Path=Value, ElementName=ZoomSlider}"
-                        ScaleY="{Binding Path=Value, ElementName=ZoomSlider}" />
-                </ItemsControl.LayoutTransform>-->
+            <ItemsControl Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
+                <ItemsControl.LayoutTransform>
+                    <ScaleTransform x:Name="ScaleTransform" />
+                </ItemsControl.LayoutTransform>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
                         <i:InvokeCommandAction Command="{Binding DataContext.AddCommand, ElementName=self}" CommandParameter="{Binding ElementName=MainItemsControl, Converter={StaticResource PetriNetCoordinatesConverter}, UpdateSourceTrigger=PropertyChanged}" />
@@ -76,12 +64,10 @@
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
 
-                        <Canvas Width="8000" Height="8000" x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Canvas.LayoutTransform>
-                                <ScaleTransform x:Name="ScaleTransform" />
-                            </Canvas.LayoutTransform>
+                        <Canvas  x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
                         </Canvas>
-                        
+
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
@@ -123,6 +109,16 @@
                                                         <Setter Property="Stroke" Value="Red" />
                                                         <Setter Property="Fill" Value="Red" />
                                                         <Setter Property="Cursor" Value="Hand" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute" />
+                                                        <Condition Binding="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Stroke" Value="Green" />
+                                                        <Setter Property="Fill" Value="Green" />
                                                     </MultiDataTrigger.Setters>
                                                 </MultiDataTrigger>
 
@@ -220,7 +216,7 @@
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Text" Value="Löschen" />
-                                                            
+
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
@@ -360,7 +356,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Resources>
-                               
+
                             </Button>
 
                         </Grid>
@@ -377,19 +373,19 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch"  >
-                     <Label Content="Zoom: " VerticalAlignment="Center"
+                <Label Content="Zoom: " VerticalAlignment="Center"
                        Target="{Binding ElementName=ZoomSlider}" />
-                    <Slider x:Name="ZoomSlider" Width="200" 
+                <Slider x:Name="ZoomSlider" Width="200" 
                         Minimum="0.25" VerticalAlignment="Center"
                         Value="1"
                         Maximum="1.5"
                         SmallChange="0.5"
                         LargeChange="1.0" />
 
-          
+
             </StackPanel>
         </Grid>
-       
-       
+
+
     </Grid>
 </UserControl>

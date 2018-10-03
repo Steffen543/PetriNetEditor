@@ -32,7 +32,19 @@ namespace Petri.Logic.Components
             return list;
         }
 
-       
+        public ObservableCollection<Transition> GetTransitions()
+        {
+            var list = new ObservableCollection<Transition>();
+            foreach (var obj in this)
+            {
+                if (obj is Transition trans)
+                    list.Add(trans);
+               
+            }
+            return list;
+        }
+
+
         public ObservableCollection<Connection> GetConnections()
         {
             var list = new ObservableCollection<Connection>();

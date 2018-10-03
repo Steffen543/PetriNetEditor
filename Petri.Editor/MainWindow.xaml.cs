@@ -25,38 +25,21 @@ namespace Petri.Editor
     {
         private static MainWindow instance;
 
-        public PetriNetXML CurrentPetriNet { get; set; }
 
         public MainWindow()
         {
+            instance = this;
             InitializeComponent();
 
-            PetriNetXMLReader reader = new PetriNetXMLReader();
-            CurrentPetriNet = reader.ReadFromXML(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml");
-            //CurrentPetriNet = new PetriNetXML();
-            //CurrentPetriNet.AddTestEntries();
-            CurrentPetriNet.InitDependencies();
-            PetriEditor.DataContext = EditorViewModel.CreateModel(CurrentPetriNet);
-            instance = this;
-        }
-
-        private void SavePetriNet(object sender, RoutedEventArgs e)
-        {
-            PetriNetXMLReader reader = new PetriNetXMLReader();
-            reader.SaveToXML(CurrentPetriNet, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml");
-        }
-
-        private void OpenPetriNet(object sender, RoutedEventArgs e)
-        {
-            PetriNetXMLReader reader = new PetriNetXMLReader();
-            CurrentPetriNet = reader.ReadFromXML(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml");
-            CurrentPetriNet.InitDependencies();
-            PetriEditor.DataContext = EditorViewModel.CreateModel(CurrentPetriNet);
+           // PetriEditor.DataContext = EditorViewModel.CreateModel(((MainWindowViewModel)DataContext).CurrentPetriNet);
+           
         }
 
         public static MainWindow GetInstance()
         {
             return instance;
         }
+
+
     }
 }

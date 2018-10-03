@@ -31,9 +31,9 @@ namespace Petri.Logic.Data
             Objects.Add(new Transition(1, 600, 100, "Test", "Beschreibung"));
             Objects.Add(new Transition(2, 100, 600, "Hallo", "Beschreibung"));
 
-            Objects.Add(new Stelle(3, 300, 100, "Stelle 1", "Stelllenbeschreibung", 9, 0));
-            Objects.Add(new Stelle(4, 100, 300, "Stelle 2", "Stelllenbeschreibung", 12, 0));
-            Objects.Add(new Stelle(5, 600, 600, "Stelle 3", "Stelllenbeschreibung", 7, 0));
+            Objects.Add(new Stelle(3, 300, 100, "Stelle 1", "Stelllenbeschreibung", 0));
+            Objects.Add(new Stelle(4, 100, 300, "Stelle 2", "Stelllenbeschreibung", 0));
+            Objects.Add(new Stelle(5, 600, 600, "Stelle 3", "Stelllenbeschreibung", 0));
 
             Objects.Add(new Connection(6, 0, 3, 3, "Conn1", "Connbeschreibung"));
             Objects.Add(new Connection(7, 3, 1, 6, "Conn2", "Connbeschreibung"));
@@ -61,6 +61,16 @@ namespace Petri.Logic.Data
             {
                 InitDependency(obj);
             }
+
+            foreach (var obj in Objects.GetTransitions())
+            {
+                obj.CalcIsExecutable();
+            }
+
+            foreach (var obj in Objects.GetConnections())
+            {
+                obj.CalcIsExecutable();
+            }
         }
 
         public void InitDependency(ConnectableBase obj)
@@ -70,6 +80,8 @@ namespace Petri.Logic.Data
 
             obj.Input = new ObservableCollection<Connection>(sources);
             obj.Output = new ObservableCollection<Connection>(destinations);
+
+           
 
         }
 

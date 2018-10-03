@@ -22,6 +22,7 @@ namespace Petri.Editor.Dialogs
         public ConnectionWindow()
         {
             InitializeComponent();
+            ValueTextBox.SelectAll();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
