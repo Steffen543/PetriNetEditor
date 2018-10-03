@@ -47,14 +47,15 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto"
-                      MouseDown="ScrollViewer_MouseDown" MouseUp="ScrollViewer_MouseUp" MouseMove="ScrollViewer_MouseMove">
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
+            <!--MouseDown="ScrollViewer_MouseDown" MouseUp="ScrollViewer_MouseUp" MouseMove="ScrollViewer_MouseMove"-->
+             
             <ItemsControl Grid.Row="1" x:Name="MainItemsControl" Tag="{Binding ElementName=MainCanvas, Path=Name}"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
+              
                 <!--<ItemsControl.Template>
                     <ControlTemplate>
                         <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
@@ -77,9 +78,7 @@
 
                         <Canvas Width="8000" Height="8000" x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Canvas.LayoutTransform>
-                                <ScaleTransform
-                                    ScaleX="{Binding Path=Value, ElementName=ZoomSlider}"
-                                    ScaleY="{Binding Path=Value, ElementName=ZoomSlider}" />
+                                <ScaleTransform x:Name="ScaleTransform" />
                             </Canvas.LayoutTransform>
                         </Canvas>
                         
@@ -370,23 +369,27 @@
             </ItemsControl>
 
         </ScrollViewer>
-        
-        <Border Grid.Row="1" Background="#DDDDDD" VerticalAlignment="Top" Visibility="Collapsed" HorizontalAlignment="Center" Padding="10">
-            <TextBlock x:Name="LabelCurrentCommand" Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" >
-                <Run Text="{Binding EditorMode, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EnumDescriptionConverter}}" />
-            </TextBlock>
 
-        </Border>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center"  Background="Red">
-            <Label Content="Zoom: " VerticalAlignment="Center"
-                   Target="{Binding ElementName=ZoomSlider}" />
-            <Slider x:Name="ZoomSlider" Width="200"
-                    Minimum="0.25" VerticalAlignment="Center"
-                    Value="1"
-                    Maximum="1.5"
-                    SmallChange="0.5"
-                    LargeChange="1.0" />
-        </StackPanel>
+        <Grid Background="#F0F0F0"  Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch"  >
+                     <Label Content="Zoom: " VerticalAlignment="Center"
+                       Target="{Binding ElementName=ZoomSlider}" />
+                    <Slider x:Name="ZoomSlider" Width="200" 
+                        Minimum="0.25" VerticalAlignment="Center"
+                        Value="1"
+                        Maximum="1.5"
+                        SmallChange="0.5"
+                        LargeChange="1.0" />
+
+          
+            </StackPanel>
+        </Grid>
+       
        
     </Grid>
 </UserControl>

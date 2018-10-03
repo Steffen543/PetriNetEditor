@@ -31,7 +31,7 @@ namespace Petri.Editor.Helper
 
             var realCanvas = itemsControl.GetVisualChild<Canvas>();
             var transform = realCanvas.LayoutTransform as ScaleTransform;
-
+        
             var halfSizeX = size / 2 * transform.ScaleX;
             var halfSizeY = size / 2 * transform.ScaleY;
 

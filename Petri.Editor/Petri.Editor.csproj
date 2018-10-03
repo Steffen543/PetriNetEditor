@@ -93,6 +93,7 @@
       <DependentUpon>ConnectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\AddConnectionHelper.cs" />
+    <Compile Include="Helper\GetVisualChildHelper.cs" />
     <Compile Include="Helper\PetriNetCoordinates.cs" />
     <Compile Include="UI\View\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
