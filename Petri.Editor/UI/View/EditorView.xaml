@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <converter:IsNullConverter x:Key="IsNullConverter"/>
         <converter:PetriNetCoordinatesConverter x:Key="PetriNetCoordinatesConverter"/>
-        <converter:EqualsConverter x:Key="EqualsConverter"/>
+        <converter:EqualsConverter EditorViewModel="{Binding ElementName=self, Path=DataContext}" x:Key="EqualsConverter"/>
         <converter:IncreaseNumberConverter x:Key="IncreaseNumberConverter"/>
         <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converter:ConnectionColorConverter x:Key="ConnectionColorConverter" />
@@ -133,242 +133,280 @@
                         </Border>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type components:Transition}">
-                        <Grid >
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=BorderMain}" />
-                            </Grid.OpacityMask>
-                            <Border Style="{StaticResource Border_Transition}" x:Name="BorderMain" />
-                            <Button x:Name="MainButton">
-                                <Button.Resources>
-                                    <Style TargetType="Button" BasedOn="{StaticResource TransitionButtonStyle}">
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute"/>
-                                                    <Condition Binding="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}" Value="true" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="BorderBrush" Value="Green" />
-                                                    <Setter Property="BorderThickness" Value="3" />
-                                                    <Setter Property="Cursor" Value="Hand" />
-                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ExecuteCommand, ElementName=self}" />
+                        <Border x:Name="MainBorder" BorderThickness="5" >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedAsSource, UpdateSourceTrigger=PropertyChanged}" Value="True" />
+                                                <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                                <Setter Property="BorderBrush" Value="Green" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=BorderMain}" />
+                                </Grid.OpacityMask>
+                                <Border Style="{StaticResource Border_Transition}" x:Name="BorderMain" />
+                                <Button x:Name="MainButton">
+                                    <Button.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TransitionButtonStyle}">
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute"/>
+                                                        <Condition Binding="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}" Value="true" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="BorderBrush" Value="Green" />
+                                                        <Setter Property="BorderThickness" Value="3" />
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                        <Setter Property="Command" Value="{Binding Path=DataContext.ExecuteCommand, ElementName=self}" />
+                                                        <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}" Value="false" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="IsEnabled" Value="True"></Setter>
+                                                        <Setter Property="BorderBrush" Value="Red" />
+                                                        <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
+                                                        <Setter Property="BorderThickness" Value="3" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddTransition">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsExecutable, UpdateSourceTrigger=PropertyChanged}" Value="false" />
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="IsEnabled" Value="True"></Setter>
-                                                    <Setter Property="BorderBrush" Value="Red" />
-                                                    <Setter Property="Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
-                                                    <Setter Property="BorderThickness" Value="3" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddTransition">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection">
-                                                <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
-                                                <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
-                                                <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
-                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="FontSize"  Value="16" />
-                                                    <Setter Property="Foreground" Value="Red" />
                                                     <Setter Property="Cursor" Value="Hand" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
+                                                        <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                        <Setter Property="FontSize"  Value="16" />
+                                                        <Setter Property="Foreground" Value="Red" />
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
 
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </DataTrigger>
 
 
 
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Resources>
-                                <Grid>
-                                    <TextBlock TextWrapping="Wrap" MaxWidth="{DynamicResource TransitionSize}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Text" Value="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                            <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Text" Value="Löschen" />
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Resources>
+                                    <Grid>
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="{DynamicResource TransitionSize}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text" Value="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                                <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Text" Value="Löschen" />
 
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                            <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
-                                                            <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Text" Value="Start" />
-                                                            <Setter Property="FontWeight" Value="Bold" />
-                                                            <Setter Property="FontSize" Value="20" />
-                                                            <Setter Property="Foreground" Value="Green" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                            <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
-                                                            <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="false" />
-                                                            <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Destination, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Text" Value="Ziel" />
-                                                            <Setter Property="FontWeight" Value="Bold" />
-                                                            <Setter Property="FontSize" Value="20" />
-                                                            <Setter Property="Foreground" Value="Green" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Button>
-                        </Grid>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                                <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                                                <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Text" Value="Start" />
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                                <Setter Property="FontSize" Value="20" />
+                                                                <Setter Property="Foreground" Value="Green" />
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                                <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                                                <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="false" />
+                                                                <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Destination, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Text" Value="Ziel" />
+                                                                <Setter Property="FontWeight" Value="Bold" />
+                                                                <Setter Property="FontSize" Value="20" />
+                                                                <Setter Property="Foreground" Value="Green" />
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                     <DataTemplate  DataType="{x:Type components:Stelle}">
-                        <Grid>
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=BorderMain}" />
-                            </Grid.OpacityMask>
-                            <Border Style="{StaticResource Border_Stelle}" x:Name="BorderMain" />
-                            <Button x:Name="MainButton" BorderThickness="0">
-                                <Button.Resources>
-                                    <Style TargetType="Button" BasedOn="{StaticResource TransitionButtonStyle}">
-                                        <Setter Property="Content">
-                                            <Setter.Value>
-                                                <ItemsControl ItemsSource="{Binding Points}" Width="30" Height="30">
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <UniformGrid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-                                                    <ItemsControl.Resources>
-                                                        <DataTemplate DataType="{x:Type components:StelleEmptyPoint}">
-                                                            <Grid Margin="1">
-                                                                <Ellipse  Fill="Transparent" Stroke="Black" StrokeThickness="1" />
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                        <DataTemplate DataType="{x:Type components:StelleFullPoint}">
-                                                            <Grid Margin="1">
-                                                                <Ellipse  Fill="Black" Stroke="Black" StrokeThickness="1" />
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ItemsControl.Resources>
-                                                </ItemsControl>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddTransition">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection">
-                                                <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
-                                                <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
-                                                <Setter Property="CommandParameter" Value="{Binding .}" />
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete">
-                                                <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
-                                                <Setter Property="CommandParameter" Value="{Binding .}" />
-                                            </DataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Content" Value="Löschen" />
-                                                    <Setter Property="Foreground" Value="Red" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="FontSize" Value="16" />
+                        <Border x:Name="MainBorder" BorderThickness="5" CornerRadius="50" >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SelectedAsSource, UpdateSourceTrigger=PropertyChanged}" Value="True" />
+                                                <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="IsEnabled" Value="True"></Setter>
+                                                <Setter Property="BorderBrush" Value="Green" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.OpacityMask>
+                                    <VisualBrush Visual="{Binding ElementName=BorderMain}" />
+                                </Grid.OpacityMask>
+                                <Border Style="{StaticResource Border_Stelle}" x:Name="BorderMain" />
+                                <Button x:Name="MainButton" BorderThickness="0">
+                                    <Button.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TransitionButtonStyle}">
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <ItemsControl ItemsSource="{Binding Points}" Width="30" Height="30">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <UniformGrid HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.Resources>
+                                                            <DataTemplate DataType="{x:Type components:StelleEmptyPoint}">
+                                                                <Grid Margin="1">
+                                                                    <Ellipse  Fill="Transparent" Stroke="Black" StrokeThickness="1" />
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                            <DataTemplate DataType="{x:Type components:StelleFullPoint}">
+                                                                <Grid Margin="1">
+                                                                    <Ellipse  Fill="Black" Stroke="Black" StrokeThickness="1" />
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ItemsControl.Resources>
+                                                    </ItemsControl>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddTransition">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
+                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
                                                     <Setter Property="Cursor" Value="Hand" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
-                                                    <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Content" Value="Start" />
-                                                    <Setter Property="Foreground" Value="Green" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="FontSize" Value="20" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
-                                                    <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
-                                                    <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="false" />
-                                                    <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Destination, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Content" Value="Ziel" />
-                                                    <Setter Property="Foreground" Value="Green" />
-                                                    <Setter Property="FontWeight" Value="Bold" />
-                                                    <Setter Property="FontSize" Value="20" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
+                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Content" Value="Löschen" />
+                                                        <Setter Property="Foreground" Value="Red" />
+                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                        <Setter Property="FontSize" Value="16" />
+                                                        <Setter Property="Cursor" Value="Hand" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                                        <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Content" Value="Start" />
+                                                        <Setter Property="Foreground" Value="Green" />
+                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                        <Setter Property="FontSize" Value="20" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="true" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection" />
+                                                        <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Source, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="false" />
+                                                        <Condition Binding="{Binding Path=DataContext.AddConnectionHelper.Destination, ElementName=self, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="true" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Content" Value="Ziel" />
+                                                        <Setter Property="Foreground" Value="Green" />
+                                                        <Setter Property="FontWeight" Value="Bold" />
+                                                        <Setter Property="FontSize" Value="20" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
 
 
-                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                <Setter Property="Cursor" Value="Hand" />
-                                            </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                </DataTrigger>
 
 
 
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Resources>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Resources>
 
-                            </Button>
+                                </Button>
 
-                        </Grid>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.Resources>
             </ItemsControl>

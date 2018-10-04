@@ -10,6 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <converter:IsNullConverter x:Key="IsNullConverter"/>
         <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type viewModel:EditorMode}"  x:Key="MyEnumValues">
             <ObjectDataProvider.MethodParameters>
@@ -32,11 +33,26 @@
         </ListBox>
 
         <Border Padding="10" Margin="0,15,0,0" BorderThickness="1" BorderBrush="{Binding ElementName=ListBoxTools, Path=BorderBrush}">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentInformationEntry, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <StackPanel HorizontalAlignment="Left">
                 <Label Content="Name" HorizontalAlignment="Left"/>
-                <TextBox MaxLength="40" Padding="3" Width="250" HorizontalAlignment="Left" Text="{Binding CurrentInformationEntry.Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <TextBox MaxLength="40" Padding="3" Width="250" HorizontalAlignment="Left" 
+                         Text="{Binding CurrentInformationEntry.Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <Label  HorizontalAlignment="Left" Content="Beschreibung" />
-                <TextBox MaxLength="1500" Padding="3" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Width="250" HorizontalAlignment="Left" MaxWidth="500" TextWrapping="Wrap" Height="300" Text="{Binding CurrentInformationEntry.Description,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <TextBox MaxLength="1500" Padding="3" 
+                         VerticalScrollBarVisibility="Auto" AcceptsReturn="True" 
+                         Width="250" HorizontalAlignment="Left" MaxWidth="500" 
+                         TextWrapping="Wrap" Height="300" 
+                         Text="{Binding CurrentInformationEntry.Description,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
         </Border>
     </StackPanel>

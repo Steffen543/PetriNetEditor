@@ -16,6 +16,13 @@ namespace Petri.Logic.Components
         [XmlIgnore()]
         public ObservableCollection<Connection> Output { get; set; }
 
+        [XmlIgnore()]
+        public bool SelectedAsSource
+        {
+            get { return GetProperty(() => SelectedAsSource); }
+            set { SetProperty(() => SelectedAsSource, value); }
+        }
+
         public ConnectableBase()
         {
             Input = new ObservableCollection<Connection>();

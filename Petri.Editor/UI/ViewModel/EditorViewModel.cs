@@ -19,6 +19,7 @@ namespace Petri.Editor.UI.ViewModel
 {
     public class EditorViewModel : ViewModelBase
     {
+       
         public PetriNetXML PetriNet
         {
             get { return GetProperty(() => PetriNet); }
@@ -40,6 +41,8 @@ namespace Petri.Editor.UI.ViewModel
             {
                 if (value != EditorMode.AddConnection)
                 {
+                    if(AddConnectionHelper.Source != null)
+                        AddConnectionHelper.Source.SelectedAsSource = false;
                     AddConnectionHelper.Source = null;
                     AddConnectionHelper.Destination = null;
                 }
@@ -86,24 +89,16 @@ namespace Petri.Editor.UI.ViewModel
             if (AddConnectionHelper.Source == null)
             {
                 AddConnectionHelper.Source = item;
+                item.SelectedAsSource = true;
             }
             else if (AddConnectionHelper.Destination == null)
             {
                 AddConnectionHelper.Destination = item;
-                /*ConnectionWindow connWindow = new ConnectionWindow()
-                {
-                    Owner = MainWindow.GetInstance(),
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    DataContext = AddConnectionHelper
-                };
-                connWindow.ShowDialog();
-                if (connWindow.DialogResult == true)
-                {*/
                 AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, 1, AddConnectionHelper.Description);
                 AddConnectionHelper.Destination = null;
                 AddConnectionHelper.Source = null;
                 EditorMode = EditorMode.Execute;
-                
+                item.SelectedAsSource = false;
             }
         }
 

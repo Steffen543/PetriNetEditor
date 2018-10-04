@@ -11,5 +11,6 @@ namespace Petri.Logic.Components
         int Id { get; set; }
         double X { get; set; }
         double Y { get; set; }
+        bool SelectedAsSource { get; set; }
     }
 }
