@@ -9,6 +9,8 @@ namespace Petri.Editor.UI.ViewModel
 {
     public enum EditorMode
     {
+        [Description("Bearbeiten")]
+        ShowInformation,
         [Description("Aktivieren")]
         Execute,
         [Description("Transition hinzufügen")]
@@ -18,8 +20,7 @@ namespace Petri.Editor.UI.ViewModel
         [Description("Verbindung hinzufügen")]
         AddConnection,
         [Description("Löschen")]
-        Delete,
-        [Description("Informationen")]
-        ShowInformation
+        Delete
+      
     }
 }

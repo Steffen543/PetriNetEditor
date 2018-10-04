@@ -18,15 +18,15 @@ namespace Petri.Editor.UI.ViewModel
             get { return GetProperty(() => CurrentPetriNet); }
             set
             {
-                var mainWindow = MainWindow.GetInstance();
-                if (mainWindow.PetriEditor != null)
-                {
-                    mainWindow.PetriEditor.DataContext = EditorViewModel.CreateModel(value);
-                }
-              
+                EditorViewModel.PetriNet = value;
                 SetProperty(() => CurrentPetriNet, value); 
-
             }
+        }
+
+        public EditorViewModel EditorViewModel
+        {
+            get { return GetProperty(() => EditorViewModel); }
+            set { SetProperty(() => EditorViewModel, value); }
         }
 
         public string CurrentFileName
@@ -52,7 +52,7 @@ namespace Petri.Editor.UI.ViewModel
             OpenPetriNetFileCommand = new DelegateCommand(OpenPetriNetFileCommandExecute, OpenPetriNetFileCommandCanExecute);
             SavePetriNetCommand = new DelegateCommand(SavePetriNetCommandExecute, SavePetriNetCommandCanExecute);
             SavePetriNetUnderNewNameCommand = new DelegateCommand(SavePetriNetUnderNewNameCommandExecute, SavePetriNetUnderNewNameCommandCanExecute);
-
+            EditorViewModel = new EditorViewModel();
             CurrentPetriNet = new PetriNetXML();
         }
 
@@ -78,11 +78,7 @@ namespace Petri.Editor.UI.ViewModel
 
                 PetriNetXMLReader reader = new PetriNetXMLReader();
                 CurrentPetriNet = reader.ReadFromXML(file);
-                //CurrentPetriNet = new PetriNetXML();
-                //CurrentPetriNet.AddTestEntries();
                 CurrentPetriNet.InitDependencies();
-               
-
             }
         }
 

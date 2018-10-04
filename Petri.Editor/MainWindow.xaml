@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Petri.Editor"
-        xmlns:view="clr-namespace:Petri.Editor.UI.View"
+        xmlns:view="clr-namespace:Petri.Editor.UI.View" d:DataContext="{d:DesignInstance viewModel:MainWindowViewModel}"
         xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
         mc:Ignorable="d"
         Title="{Binding CurrentFileName}" Height="750" Width="1200">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SavePetriNetCommand}"/>
+    </Window.InputBindings>
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>
@@ -25,6 +28,6 @@
                 <MenuItem Header="Speichern unter" Command="{Binding SavePetriNetUnderNewNameCommand}" />
             </MenuItem>
         </Menu>
-        <view:PetriNetEditorView x:Name="PetriEditor" Grid.Row="1" />
+        <view:PetriNetEditorView x:Name="PetriEditor" DataContext="{Binding EditorViewModel}" Grid.Row="1" />
     </Grid>
 </Window>

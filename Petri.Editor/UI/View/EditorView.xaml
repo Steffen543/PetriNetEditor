@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:components="clr-namespace:Petri.Logic.Components;assembly=Petri.Logic"
              xmlns:converters="clr-namespace:Petri.Editor.Converter"
+             d:DataContext="{d:DesignInstance viewModel:EditorViewModel}"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
                xmlns:converter="clr-namespace:Petri.Editor.Converter"
@@ -17,6 +18,7 @@
     <UserControl.Resources>
         <converter:IsNullConverter x:Key="IsNullConverter"/>
         <converter:PetriNetCoordinatesConverter x:Key="PetriNetCoordinatesConverter"/>
+        <converter:EqualsConverter x:Key="EqualsConverter"/>
         <converter:IncreaseNumberConverter x:Key="IncreaseNumberConverter"/>
         <converter:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converter:ConnectionColorConverter x:Key="ConnectionColorConverter" />
@@ -49,6 +51,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
@@ -63,11 +66,7 @@
                 </i:Interaction.Triggers>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-
-                        <Canvas  x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-                        </Canvas>
-
+                        <Canvas  x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
@@ -179,6 +178,11 @@
                                                 <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 <Setter Property="Cursor" Value="Hand" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                <Setter Property="Cursor" Value="Hand" />
+                                            </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
@@ -204,10 +208,10 @@
                                     </Style>
                                 </Button.Resources>
                                 <Grid>
-                                    <TextBlock>
+                                    <TextBlock TextWrapping="Wrap" MaxWidth="{DynamicResource TransitionSize}">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="Text" Value="{Binding Description}" />
+                                                <Setter Property="Text" Value="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -301,6 +305,11 @@
                                                 <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 <Setter Property="Cursor" Value="Hand" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                                <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                <Setter Property="Cursor" Value="Hand" />
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Delete">
                                                 <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
                                                 <Setter Property="CommandParameter" Value="{Binding .}" />
@@ -366,7 +375,7 @@
 
         </ScrollViewer>
 
-        <Grid Background="#F0F0F0"  Grid.Row="0">
+        <Grid Background="#999999"  Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />

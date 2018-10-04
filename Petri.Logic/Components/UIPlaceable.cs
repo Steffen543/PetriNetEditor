@@ -12,22 +12,44 @@ namespace Petri.Logic.Components
 {
     [XmlType("UIPlaceable")] // define Type
     [XmlInclude(typeof(Transition)), XmlInclude(typeof(Stelle)), XmlInclude(typeof(Connection)), XmlInclude(typeof(ConnectableBase))]
-    public class UIPlaceable : ViewModelBase
+    public class UIPlaceable : BindableBase
     {
         [XmlAttribute("Id")]
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return GetProperty(() => Id); }
+            set { SetProperty(() => Id, value); }
+        }
 
         [XmlAttribute("Name")]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return GetProperty(() => Name); }
+            set { SetProperty(() => Name, value); }
+        }
 
         [XmlAttribute("Description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get { return GetProperty(() => Description); }
+            set { SetProperty(() => Description, value); }
+        }
 
         [XmlAttribute("X")]
-        public double X { get; set; }
+        public double X
+        {
+            get { return GetProperty(() => X); }
+            set { SetProperty(() => X, value); }
+        }
 
         [XmlAttribute("Y")]
-        public double Y { get; set; }
+        public double Y
+        {
+            get { return GetProperty(() => Y); }
+            set { SetProperty(() => Y, value); }
+        }
+
+     
 
         public UIPlaceable() { }
 

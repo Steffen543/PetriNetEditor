@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             x:Name="self"
+             x:Name="self" 
+             d:DataContext="{d:DesignInstance viewModel:EditorViewModel}"
              xmlns:converter="clr-namespace:Petri.Editor.Converter"
              xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
              mc:Ignorable="d" 
@@ -22,13 +23,22 @@
     </UserControl.Resources>
 
     <StackPanel Margin="10">
-        <ListBox  ItemsSource="{Binding Source={StaticResource MyEnumValues}}" SelectedItem="{Binding EditorMode}">
+        <ListBox x:Name="ListBoxTools" ItemsSource="{Binding Source={StaticResource MyEnumValues}}" SelectedItem="{Binding EditorMode}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock FontSize="18" Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <Border Padding="10" Margin="0,15,0,0" BorderThickness="1" BorderBrush="{Binding ElementName=ListBoxTools, Path=BorderBrush}">
+            <StackPanel HorizontalAlignment="Left">
+                <Label Content="Name" HorizontalAlignment="Left"/>
+                <TextBox MaxLength="40" Padding="3" Width="250" HorizontalAlignment="Left" Text="{Binding CurrentInformationEntry.Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <Label  HorizontalAlignment="Left" Content="Beschreibung" />
+                <TextBox MaxLength="1500" Padding="3" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Width="250" HorizontalAlignment="Left" MaxWidth="500" TextWrapping="Wrap" Height="300" Text="{Binding CurrentInformationEntry.Description,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            </StackPanel>
+        </Border>
     </StackPanel>
         
 

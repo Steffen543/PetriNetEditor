@@ -25,6 +25,13 @@ namespace Petri.Editor.UI.ViewModel
             set{ SetProperty(() => PetriNet, value); }
         }
 
+        public UIPlaceable CurrentInformationEntry
+        {
+            get { return GetProperty(() => CurrentInformationEntry); }
+            set{ SetProperty(() => CurrentInformationEntry, value); }
+        }
+
+
 
 
         public EditorMode EditorMode {
@@ -47,6 +54,7 @@ namespace Petri.Editor.UI.ViewModel
         }
 
         public DelegateCommand<PetriNetCoordinates> AddCommand { get; private set; }
+        public DelegateCommand<UIPlaceable> ShowInformationCommand { get; private set; }
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
         public DelegateCommand<ConnectableBase> AddConnectionCommand { get; private set; }
@@ -58,6 +66,7 @@ namespace Petri.Editor.UI.ViewModel
             DeleteCommand = new DelegateCommand<UIPlaceable>(DeleteCommandExecute, DeleteCommandCanExecute);
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
+            ShowInformationCommand = new DelegateCommand<UIPlaceable>(ShowInformationCommandExecute, ShowInformationCommandCanExecute);
         }
 
         #region Commands
@@ -65,6 +74,11 @@ namespace Petri.Editor.UI.ViewModel
         void ExecuteCommandExecute(Transition item)
         {
             item.Execute();
+        }
+
+        void ShowInformationCommandExecute(UIPlaceable item)
+        {
+            CurrentInformationEntry = item;
         }
 
         void AddConnectionCommandExecute(ConnectableBase item)
@@ -122,6 +136,11 @@ namespace Petri.Editor.UI.ViewModel
         bool ExecuteCommandCanExecute(Transition item)
         {
             return EditorMode == EditorMode.Execute && item != null && item.IsExecutable;
+        }
+
+        bool ShowInformationCommandCanExecute(UIPlaceable item)
+        {
+            return EditorMode == EditorMode.ShowInformation;
         }
 
         bool AddConnectionCommandCanExecute(ConnectableBase item)

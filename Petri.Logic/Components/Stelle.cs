@@ -16,8 +16,6 @@ namespace Petri.Logic.Components
         [XmlIgnore()]
         public ObservableCollection<StellePoint> Points { get; set; }
 
-      
-
         [XmlAttribute("Value")]
         public int Value
         {
