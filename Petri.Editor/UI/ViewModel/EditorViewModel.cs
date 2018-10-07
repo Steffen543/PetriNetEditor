@@ -176,14 +176,15 @@ namespace Petri.Editor.UI.ViewModel
         {
             Stelle stelle = new Stelle(PetriNet.CreateId(), x, y, "Name", "Description",  0);
             PetriNet.Objects.Add(stelle);
-
+            PetriNet.InitDependency(stelle);
         }
 
         public void AddTransition(double x, double y, string description)
         {
             Transition trans = new Transition(PetriNet.CreateId(), x, y, "Name", "Description");
             PetriNet.Objects.Add(trans);
-
+            PetriNet.InitDependency(trans);
+            trans.CalcIsExecutable();
         }
 
         public void DeleteComponent(UIPlaceable component)
@@ -217,6 +218,7 @@ namespace Petri.Editor.UI.ViewModel
             PetriNet.Objects.Add(newConnection);
             PetriNet.InitDependency(source as ConnectableBase);
             PetriNet.InitDependency(destination as ConnectableBase);
+            newConnection.CalcIsExecutable();
         }
 
         #endregion

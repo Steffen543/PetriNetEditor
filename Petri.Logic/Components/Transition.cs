@@ -18,7 +18,7 @@ namespace Petri.Logic.Components
             set { SetProperty(() => IsExecutable, value); }
         }
 
-        internal void CalcIsExecutable()
+        public void CalcIsExecutable()
         {
             bool returnValue = true;
             foreach (var inputConnection in Input)

@@ -26,7 +26,7 @@ namespace Petri.Logic.Components
             set { SetProperty(() => IsExecutable, value); }
         }
 
-        internal void CalcIsExecutable()
+        public void CalcIsExecutable()
         {
             if (Source is Transition transitionSource)
             {

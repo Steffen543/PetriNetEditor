@@ -72,6 +72,7 @@
     <Compile Include="Controls\Arrows\ArrowLine.cs" />
     <Compile Include="Controls\Arrows\ArrowLineBase.cs" />
     <Compile Include="Controls\Arrows\ArrowPolyline.cs" />
+    <Compile Include="Controls\ConnectableButton.cs" />
     <Compile Include="Controls\EditConnectionValueControl.xaml.cs">
       <DependentUpon>EditConnectionValueControl.xaml</DependentUpon>
     </Compile>
@@ -88,6 +89,7 @@
     <Compile Include="Converter\EqualsConverter.cs" />
     <Compile Include="Converter\IncreaseNumberConverter.cs" />
     <Compile Include="Converter\IsNullConverter.cs" />
+    <Compile Include="Converter\PercentageConverter.cs" />
     <Compile Include="Converter\PetriNetCoordinatesConverter.cs" />
     <Compile Include="Converter\StellePointConverter.cs" />
     <Compile Include="Dialogs\ConnectionWindow.xaml.cs">

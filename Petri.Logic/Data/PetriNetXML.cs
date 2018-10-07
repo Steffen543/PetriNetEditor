@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -82,13 +83,14 @@ namespace Petri.Logic.Data
             obj.Output = new ObservableCollection<Connection>(destinations);
 
            
+           
 
         }
 
         public void InitDependency(Connection connection)
         {
-            connection.Source = Objects.Where(o => o.Id == connection.SourceId).First() as IConnectable;
-            connection.Destination = Objects.Where(o => o.Id == connection.DestinationId).First() as IConnectable;
+            connection.Source = Objects.FirstOrDefault(o => o.Id == connection.SourceId) as IConnectable;
+            connection.Destination = Objects.FirstOrDefault(o => o.Id == connection.DestinationId) as IConnectable;
             connection.X = connection.Source.X;
             connection.Y = connection.Source.Y;
         }

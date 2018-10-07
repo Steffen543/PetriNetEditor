@@ -35,11 +35,18 @@
         <Border Padding="10" Margin="0,15,0,0" BorderThickness="1" BorderBrush="{Binding ElementName=ListBoxTools, Path=BorderBrush}">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CurrentInformationEntry, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding CurrentInformationEntry, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="False" />
+                                <Condition Binding="{Binding  EditorMode, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+       
                     </Style.Triggers>
                 </Style>
             </Border.Style>
