@@ -61,6 +61,7 @@ namespace Petri.Editor.UI.ViewModel
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
         public DelegateCommand<ConnectableBase> AddConnectionCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         public EditorViewModel()
         {
@@ -70,9 +71,24 @@ namespace Petri.Editor.UI.ViewModel
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
             ShowInformationCommand = new DelegateCommand<UIPlaceable>(ShowInformationCommandExecute, ShowInformationCommandCanExecute);
+            CancelCommand = new DelegateCommand(CancelCommandExecute, CancelCommandCanExecute);
         }
 
         #region Commands
+
+        void CancelCommandExecute()
+        {
+            if (AddConnectionHelper.Destination != null)
+            {
+                AddConnectionHelper.Destination = null;
+            }
+
+            if (AddConnectionHelper.Source != null)
+            {
+                AddConnectionHelper.Source.SelectedAsSource = false;
+                AddConnectionHelper.Source = null;
+            }
+        }
 
         void ExecuteCommandExecute(Transition item)
         {
@@ -91,14 +107,16 @@ namespace Petri.Editor.UI.ViewModel
                 AddConnectionHelper.Source = item;
                 item.SelectedAsSource = true;
             }
-            else if (AddConnectionHelper.Destination == null)
+            else if (AddConnectionHelper.Destination == null && item != AddConnectionHelper.Source)
             {
                 AddConnectionHelper.Destination = item;
                 AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, 1, AddConnectionHelper.Description);
+             
+                AddConnectionHelper.Source.SelectedAsSource = false;
+                item.SelectedAsSource = false;
                 AddConnectionHelper.Destination = null;
                 AddConnectionHelper.Source = null;
                 EditorMode = EditorMode.Execute;
-                item.SelectedAsSource = false;
             }
         }
 
@@ -127,6 +145,11 @@ namespace Petri.Editor.UI.ViewModel
         #endregion
 
         #region CanExecute
+
+        bool CancelCommandCanExecute()
+        {
+            return true;
+        }
 
         bool ExecuteCommandCanExecute(Transition item)
         {

@@ -245,7 +245,7 @@
                                     <VisualBrush Visual="{Binding ElementName=BorderMain}" />
                                 </Grid.OpacityMask>
                                 <Border Style="{StaticResource Border_Stelle}" x:Name="BorderMain" />
-                                <controls:ConnectableButton x:Name="MainButton"  CornerRadius="50">
+                                <controls:ConnectableButton x:Name="MainButton"  CornerRadius="50" EditorMode="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}">
                                     <controls:ConnectableButton.Resources>
                                         <Style TargetType="controls:ConnectableButton" BasedOn="{StaticResource ConnectableButtonStyle}">
                                             <Setter Property="Content">
@@ -259,12 +259,12 @@
                                                         <ItemsControl.Resources>
                                                             <DataTemplate DataType="{x:Type components:StelleEmptyPoint}">
                                                                 <Grid Margin="1">
-                                                                    <Ellipse  Fill="Transparent" Stroke="Black" StrokeThickness="1" />
+                                                                    <Ellipse  Fill="Transparent" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
                                                                 </Grid>
                                                             </DataTemplate>
                                                             <DataTemplate DataType="{x:Type components:StelleFullPoint}">
                                                                 <Grid Margin="1">
-                                                                    <Ellipse  Fill="Black" Stroke="Black" StrokeThickness="1" />
+                                                                    <Ellipse  Fill="{Binding ElementName=MainButton, Path=Foreground}" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
                                                                 </Grid>
                                                             </DataTemplate>
                                                         </ItemsControl.Resources>
@@ -284,7 +284,7 @@
                                                 </MultiDataTrigger>
                                                 <!-- execute mode -->
                                                 <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Execute">
-                                                    <Setter Property="IsEnabled" Value="False" />
+                                                    <!--<Setter Property="IsEnabled" Value="False" />-->
                                                 </DataTrigger>
                                                 <!-- add transition -->
                                                 <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddTransition">

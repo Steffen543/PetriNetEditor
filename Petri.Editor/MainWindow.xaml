@@ -10,6 +10,7 @@
         Title="{Binding CurrentFileName}" Height="750" Width="1200">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SavePetriNetCommand}"/>
+        <KeyBinding Key="Escape" Command="{Binding EditorViewModel.CancelCommand}"/>
     </Window.InputBindings>
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
