@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<PetriNetXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.cpandl.com">
+  <Objects>
+    <Transition Id="0" Name="Description" Description="Name" X="1552.0135975135972" Y="546.59622377622372" IsExecutable="true" />
+    <Transition Id="1" Name="Description" Description="Name" X="1202.782828282828" Y="595.826993006993" IsExecutable="true" />
+    <Transition Id="2" Name="Description" Description="Name" X="1158.1674436674434" Y="417.3654545454545" IsExecutable="true" />
+    <Stelle Id="3" Name="Description" Description="Name" X="67.833333333333343" Y="35.940000000000026" Value="0" />
+    <Stelle Id="4" Name="Description" Description="Name" X="371.83333333333337" Y="42.606666666666683" Value="0" />
+    <Stelle Id="5" Name="Description" Description="Name" X="225.16666666666669" Y="181.27333333333337" Value="0" />
+    <Stelle Id="6" Name="Description" Description="Name" X="53.166666666666671" Y="355.94000000000005" Value="0" />
+    <Stelle Id="7" Name="Description" Description="Name" X="94.500000000000028" Y="386.60666666666674" Value="0" />
+    <Stelle Id="8" Name="Description" Description="Name" X="139.83333333333334" Y="410.60666666666674" Value="0" />
+    <Stelle Id="9" Name="Description" Description="Name" X="177.16666666666669" Y="418.60666666666674" Value="0" />
+    <Stelle Id="10" Name="Description" Description="Name" X="249.16666666666669" Y="423.94000000000011" Value="0" />
+    <Stelle Id="11" Name="Description" Description="Name" X="290.50000000000006" Y="423.94000000000011" Value="0" />
+    <Stelle Id="12" Name="Description" Description="Name" X="337.16666666666669" Y="413.27333333333337" Value="0" />
+    <Stelle Id="13" Name="Description" Description="Name" X="363.83333333333337" Y="401.27333333333337" Value="0" />
+    <Stelle Id="14" Name="Description" Description="Name" X="398.50000000000006" Y="373.27333333333337" Value="0" />
+    <Stelle Id="15" Name="Description" Description="Name" X="422.50000000000006" Y="339.94000000000005" Value="0" />
+    <Stelle Id="16" Name="Description" Description="Name" X="406.50000000000006" Y="341.27333333333337" Value="0" />
+    <Stelle Id="17" Name="Description" Description="Name" X="182.50000000000003" Y="437.27333333333337" Value="0" />
+    <Stelle Id="18" Name="Description" Description="Name" X="226.50000000000006" Y="435.94000000000011" Value="0" />
+  </Objects>
+</PetriNetXML>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PetriNetXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.cpandl.com">
+  <Objects>
+    <Connection Id="41" Name="NAME" X="580.46629213483152" Y="990.405168539326" Value="3" IsExecutable="true" SourceId="19" DestinationId="17" />
+    <Connection Id="40" Name="NAME" X="1310.5" Y="1262.82" Value="3" IsExecutable="true" SourceId="37" DestinationId="39" />
+    <Connection Id="13" Name="Conn8" Description="Connbeschreibung" X="100" Y="600" Value="2" IsExecutable="true" SourceId="2" DestinationId="4" />
+    <Connection Id="12" Name="Conn7" Description="Connbeschreibung" X="100" Y="100" Value="2" IsExecutable="true" SourceId="0" DestinationId="5" />
+    <Connection Id="11" Name="Conn6" Description="Connbeschreibung" X="600" Y="600" Value="4" IsExecutable="false" SourceId="5" DestinationId="1" />
+    <Connection Id="10" Name="Conn5" Description="Connbeschreibung" X="600" Y="100" Value="1" IsExecutable="false" SourceId="1" DestinationId="5" />
+    <Connection Id="9" Name="Conn4" Description="Connbeschreibung" X="100" Y="300" Value="4" IsExecutable="true" SourceId="4" DestinationId="0" />
+    <Connection Id="8" Name="Conn3" Description="Connbeschreibung" X="100" Y="100" Value="1" IsExecutable="true" SourceId="0" DestinationId="4" />
+    <Connection Id="7" Name="Conn2" Description="Connbeschreibung" X="300" Y="100" Value="1" IsExecutable="false" SourceId="3" DestinationId="1" />
+    <Connection Id="6" Name="Conn1" Description="Connbeschreibung" X="100" Y="100" Value="3" IsExecutable="true" SourceId="0" DestinationId="3" />
+    <Connection Id="27" Name="NAME" X="1726.1363636363637" Y="915.37272727272727" Value="3" IsExecutable="true" SourceId="20" DestinationId="24" />
+    <Connection Id="28" Name="NAME" X="1691.5909090909092" Y="751.73636363636365" Value="2" IsExecutable="true" SourceId="24" DestinationId="21" />
+    <Connection Id="29" Name="NAME" X="1731.5909090909092" Y="529.91818181818178" Value="5" IsExecutable="true" SourceId="21" DestinationId="23" />
+    <Connection Id="30" Name="NAME" X="2100.6818181818185" Y="509.91818181818172" Value="2" IsExecutable="false" SourceId="23" DestinationId="22" />
+    <Connection Id="31" Name="NAME" X="2306.136363636364" Y="639.0090909090909" Value="1" IsExecutable="false" SourceId="22" DestinationId="25" />
+    <Connection Id="32" Name="NAME" X="2367.954545454546" Y="1288.1000000000001" Value="1" IsExecutable="true" SourceId="26" DestinationId="25" />
+    <Connection Id="33" Name="NAME" X="2171.5909090909095" Y="1122.6454545454546" Value="1" IsExecutable="true" SourceId="25" DestinationId="20" />
+    <Transition Id="0" Name="Main" Description="Main" X="100" Y="100" IsExecutable="true" />
+    <Transition Id="1" Name="xxxxx" Description="Test" X="600" Y="100" IsExecutable="false" />
+    <Transition Id="2" Name="Func1" Description="Hallo" X="100" Y="600" IsExecutable="true" />
+    <Stelle Id="3" Name="Stelllenbeschreibung" Description="Stelle 1" X="300" Y="100" Value="0" />
+    <Stelle Id="4" Name="Stelllenbeschreibung" Description="Stelle 2" X="100" Y="300" Value="6" />
+    <Stelle Id="5" Name="Stelllenbeschreibung" Description="Stelle 3" X="600" Y="600" Value="0" />
+    <Transition Id="15" Name="Description" Description="Name" X="281.5" Y="439.5" IsExecutable="true" />
+    <Stelle Id="16" Name="Description" Description="Name" X="418.5" Y="214.54" Value="0" />
+    <Stelle Id="17" Name="Description" Description="Name" X="1073.1404494382025" Y="518.966966292135" Value="0" />
+    <Stelle Id="18" Name="Description" Description="Name" X="858.65730337078662" Y="94.247865168539334" Value="0" />
+    <Transition Id="19" Name="Description" Description="Name" X="580.46629213483152" Y="990.405168539326" IsExecutable="true" />
+    <Transition Id="20" Name="Description" Description="Name" X="1726.1363636363637" Y="915.37272727272727" IsExecutable="true" />
+    <Transition Id="21" Name="Description" Description="Name" X="1731.5909090909092" Y="529.91818181818178" IsExecutable="true" />
+    <Transition Id="22" Name="Description" Description="Name" X="2306.136363636364" Y="639.0090909090909" IsExecutable="false" />
+    <Stelle Id="23" Name="Description" Description="Name" X="2100.6818181818185" Y="509.91818181818172" Value="1" />
+    <Stelle Id="24" Name="Description" Description="Name" X="1691.5909090909092" Y="751.73636363636365" Value="5" />
+    <Stelle Id="25" Name="Description" Description="Name" X="2171.5909090909095" Y="1122.6454545454546" Value="2" />
+    <Transition Id="26" Name="Description" Description="Name" X="2367.954545454546" Y="1288.1000000000001" IsExecutable="true" />
+    <Transition Id="34" Name="afafafaf" Description="Name" X="685.5" Y="227.57999999999998" IsExecutable="true" />
+    <Transition Id="35" Name="Description" Description="Name" X="827.49999999999989" Y="695.96666666666658" IsExecutable="true" />
+    <Transition Id="36" Name="Description" Description="Name" X="2018.5" Y="2010.8200000000002" IsExecutable="true" />
+    <Transition Id="37" Name="Description" Description="Name" X="1310.5" Y="1262.82" IsExecutable="true" />
+    <Stelle Id="38" Name="Description" Description="Name" X="2934.5" Y="362.82" Value="0" />
+    <Stelle Id="39" Name="Description" Description="Name" X="1674.5" Y="1674.82" Value="0" />
+    <Stelle Id="42" Name="Description" Description="Name" X="173.5" Y="56.58" Value="0" />
+  </Objects>
+</PetriNetXML>
