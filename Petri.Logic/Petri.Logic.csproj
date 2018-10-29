@@ -46,8 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AddTransitionCommand.cs" />
-    <Compile Include="Commands\EditorCommandBase.cs" />
     <Compile Include="Components\ConnectionableBase.cs" />
     <Compile Include="Components\IConnectable.cs" />
     <Compile Include="Components\Connection.cs" />
@@ -59,9 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xml\PetriNetXMLReader.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

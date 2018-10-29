@@ -1,6 +1,7 @@
 ﻿using Petri.Logic.Components;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +11,13 @@ using System.Windows.Data;
 namespace Petri.Editor.Converter.Conn
 {
     [ValueConversion(typeof(object), typeof(Connection))]
-    class ConnectionSourceXPointConverter : BaseConverter, IValueConverter
+    class ConnectionSourceXPointConverter : IMultiValueConverter
     {
         public static List<RoundLineModdlePointPosition> Points = new List<RoundLineModdlePointPosition>();
 
-        public object Convert(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Connection conn = (Connection)value;
+            Connection conn = (Connection)values[0];
             double size = (double) Application.Current.FindResource("TransitionSize");
 
             var connectionAlreadyDrawn = Points.FirstOrDefault(p => p.Contains(conn.Source, conn.Destination));
@@ -40,12 +40,10 @@ namespace Petri.Editor.Converter.Conn
 
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-                            System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             return null;
         }
-  
     }
 
     

@@ -24,7 +24,20 @@
     </UserControl.Resources>
 
     <StackPanel Margin="10">
+
+       
+
         <ListBox x:Name="ListBoxTools" ItemsSource="{Binding Source={StaticResource MyEnumValues}}" SelectedItem="{Binding EditorMode}">
+            <ListBox.Style>
+                <Style TargetType="ListBox">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <Setter Property="IsEnabled" Value="false" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock FontSize="18" Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>

@@ -26,6 +26,34 @@ namespace Petri.Logic.Components
             set { SetProperty(() => IsExecutable, value); }
         }
 
+        [XmlIgnore]
+        public bool ArrowSourceX
+        {
+            get { return GetProperty(() => ArrowSourceX); }
+            set { SetProperty(() => ArrowSourceX, value); }
+        }
+
+        [XmlIgnore]
+        public bool ArrowSourceY
+        {
+            get { return GetProperty(() => ArrowSourceY); }
+            set { SetProperty(() => ArrowSourceY, value); }
+        }
+
+        [XmlIgnore]
+        public bool ArrowDestinationX
+        {
+            get { return GetProperty(() => ArrowDestinationX); }
+            set { SetProperty(() => ArrowDestinationX, value); }
+        }
+
+        [XmlIgnore]
+        public bool ArrowDestinationY
+        {
+            get { return GetProperty(() => ArrowDestinationY); }
+            set { SetProperty(() => ArrowDestinationY, value); }
+        }
+
         public void CalcIsExecutable()
         {
             if (Source is Transition transitionSource)
@@ -81,6 +109,12 @@ namespace Petri.Logic.Components
         public override string ToString()
         {
             return $"Connection: [Id: {Id.ToString()}, SourceId: {SourceId}, DestinationId: {DestinationId}, Description: {Description}";
+        }
+
+        public void UpdatePosition()
+        {
+            RaisePropertyChanged("X");
+            RaisePropertyChanged("Y");
         }
 
 

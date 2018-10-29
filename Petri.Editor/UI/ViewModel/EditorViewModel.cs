@@ -1,5 +1,4 @@
 ﻿using DevExpress.Mvvm;
-using Petri.Logic.Commands;
 using Petri.Logic.Components;
 using Petri.Logic.Data;
 using System;
@@ -12,14 +11,75 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using GongSolutions.Wpf.DragDrop;
+using Petri.Editor.Converter.Conn;
 using Petri.Editor.Dialogs;
 using Petri.Editor.Helper;
 
 namespace Petri.Editor.UI.ViewModel
 {
-    public class EditorViewModel : ViewModelBase
+    public class EditorViewModel : ViewModelBase, IDropTarget
     {
-       
+
+        void IDropTarget.DragOver(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data;
+
+
+            if (sourceItem != null)
+            {
+                dropInfo.Effects = DragDropEffects.Move;
+            }
+
+            //ExampleItemViewModel sourceItem = dropInfo.Data as ExampleItemViewModel;
+            //ExampleItemViewModel targetItem = dropInfo.TargetItem as ExampleItemViewModel;
+
+            /*  if (sourceItem != null && targetItem != null && targetItem.CanAcceptChildren)
+              {
+                  dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                  dropInfo.Effects = DragDropEffects.Copy;
+              }*/
+        }
+
+        void IDropTarget.Drop(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data;
+            var targetItem = dropInfo.TargetItem;
+
+            if (sourceItem is ConnectableBase item)
+            {
+                item.X = dropInfo.DropPosition.X;
+                item.Y = dropInfo.DropPosition.Y;
+
+                ConnectionDestinationXPointConverter.Points = new List<RoundLineModdlePointPosition>();
+                ConnectionDestinationYPointConverter.Points = new List<RoundLineModdlePointPosition>();
+                ConnectionSourceXPointConverter.Points = new List<RoundLineModdlePointPosition>();
+                ConnectionSourceYPointConverter.Points = new List<RoundLineModdlePointPosition>();
+
+
+              
+                foreach (var connection in item.Output)
+                {
+                    connection.X = connection.Source.X;
+                    connection.Y = connection.Source.Y;
+                    connection.UpdatePosition();
+                }
+                foreach (var connection in item.Input)
+                {
+                    connection.UpdatePosition();
+                }
+            }
+
+           
+
+            //    ExampleItemViewModel sourceItem = dropInfo.Data as ExampleItemViewModel;
+            //    ExampleItemViewModel targetItem = dropInfo.TargetItem as ExampleItemViewModel;
+            //    targetItem.Children.Add(sourceItem);
+        }
+
+
+
+
         public PetriNetXML PetriNet
         {
             get { return GetProperty(() => PetriNet); }

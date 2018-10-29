@@ -23,21 +23,12 @@ namespace Petri.Editor
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static MainWindow instance;
-
 
         public MainWindow()
         {
-            instance = this;
+           
             InitializeComponent();
 
-           // PetriEditor.DataContext = EditorViewModel.CreateModel(((MainWindowViewModel)DataContext).CurrentPetriNet);
-           
-        }
-
-        public static MainWindow GetInstance()
-        {
-            return instance;
         }
 
 

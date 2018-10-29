@@ -53,7 +53,7 @@ namespace Petri.Editor.UI.ViewModel
             SavePetriNetCommand = new DelegateCommand(SavePetriNetCommandExecute, SavePetriNetCommandCanExecute);
             SavePetriNetUnderNewNameCommand = new DelegateCommand(SavePetriNetUnderNewNameCommandExecute, SavePetriNetUnderNewNameCommandCanExecute);
             EditorViewModel = new EditorViewModel();
-            CurrentPetriNet = new PetriNetXML();
+            //CurrentPetriNet = new PetriNetXML();
         }
 
         #region Commands

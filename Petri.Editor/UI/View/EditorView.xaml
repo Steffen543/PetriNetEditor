@@ -8,8 +8,9 @@
              d:DataContext="{d:DesignInstance viewModel:EditorViewModel}"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-               xmlns:converter="clr-namespace:Petri.Editor.Converter"
-              xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
+             xmlns:converter="clr-namespace:Petri.Editor.Converter"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
              xmlns:converterConnection="clr-namespace:Petri.Editor.Converter.Conn"
              xmlns:media2d="clr-namespace:Petzold.Media2D"
              xmlns:controls="clr-namespace:Petri.Editor.Controls"
@@ -54,8 +55,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
-            <ItemsControl Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
+        <ScrollViewer  HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
+            <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
                 <ItemsControl.LayoutTransform>
                     <ScaleTransform x:Name="ScaleTransform" />
                 </ItemsControl.LayoutTransform>
@@ -66,7 +67,7 @@
                 </i:Interaction.Triggers>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas  x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        <Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
@@ -81,14 +82,35 @@
                             <system:Int32 x:Key="StartPosition">0</system:Int32>
                             <Point x:Key="StartPoint" X="0" Y="0" />
                         </DataTemplate.Resources>
-                        <Border>
+                        <Border >
                             <Canvas Background="Red">
                                 <media2d:ArrowLine x:Name="Arrow" IsArrowClosed="True"  
-                                    StrokeThickness="2" ArrowLength="17" 
-                                    X1="{Binding ., Converter={StaticResource ConnectionSourceXPointConverter}}"
-                                    Y1="{Binding ., Converter={StaticResource ConnectionSourceYPointConverter}}"
-                                    X2="{Binding ., Converter={StaticResource ConnectionDestinationXPointConverter}}"
-                                    Y2="{Binding ., Converter={StaticResource ConnectionDestinationYPointConverter}}">
+                                    StrokeThickness="2" ArrowLength="17" >
+                                    <media2d:ArrowLine.X1>
+                                        <MultiBinding Converter="{StaticResource ConnectionSourceXPointConverter}">
+                                            <Binding Path="." />
+                                            <Binding Path="X" UpdateSourceTrigger="PropertyChanged" />
+                                        </MultiBinding>
+                                    </media2d:ArrowLine.X1>
+                                    <media2d:ArrowLine.Y1>
+                                        <MultiBinding Converter="{StaticResource ConnectionSourceYPointConverter}">
+                                            <Binding Path="."  />
+                                            <Binding Path="Y" UpdateSourceTrigger="PropertyChanged" />
+                                        </MultiBinding>
+                                    </media2d:ArrowLine.Y1>
+                                    <media2d:ArrowLine.X2>
+                                        <MultiBinding Converter="{StaticResource ConnectionDestinationXPointConverter}">
+                                            <Binding Path="." />
+                                            <Binding Path="X" UpdateSourceTrigger="PropertyChanged" />
+                                        </MultiBinding>
+                                    </media2d:ArrowLine.X2>
+                                    <media2d:ArrowLine.Y2>
+                                        <MultiBinding Converter="{StaticResource ConnectionDestinationYPointConverter}">
+                                            <Binding Path="." />
+                                            <Binding Path="Y" UpdateSourceTrigger="PropertyChanged" />
+                                        </MultiBinding>
+                                    </media2d:ArrowLine.Y2>
+
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                             <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand, ElementName=self}" CommandParameter="{Binding .}" />
@@ -99,6 +121,9 @@
                                             <Setter Property="Stroke" Value="#212121" />
                                             <Setter Property="Fill" Value="#212121" />
                                             <Style.Triggers>
+
+                                                
+
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
@@ -133,7 +158,7 @@
                         </Border>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type components:Transition}">
-                        <Border x:Name="MainBorder" BorderThickness="5" >
+                        <Border dd:DragDrop.IsDragSource="True" x:Name="MainBorder" BorderThickness="5" >
                             <Grid>
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BorderMain}" />
@@ -355,7 +380,7 @@
 
         </ScrollViewer>
 
-        <Grid Background="#999999"  Grid.Row="2">
+        <Grid Background="#CCCCCC"  Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
