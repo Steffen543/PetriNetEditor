@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\IsBiggerConverter.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowEnds.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowLine.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowLineBase.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="UI\View\EditorToolsView.xaml.cs">
       <DependentUpon>EditorToolsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\View\EmptyPetriNetView.xaml.cs">
+      <DependentUpon>EmptyPetriNetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\View\Manager\ScrollZoomManager.cs" />
     <Compile Include="UI\View\PetriNetEditorView.xaml.cs">
       <DependentUpon>PetriNetEditorView.xaml</DependentUpon>
@@ -143,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\View\EditorToolsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\View\EmptyPetriNetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

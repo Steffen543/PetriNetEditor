@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Petzold.Media2D;
 
 namespace Petri.Editor.UI.View
 {
@@ -11,6 +13,6 @@ namespace Petri.Editor.UI.View
         {
             InitializeComponent();
         }
-     
+
     }
 }

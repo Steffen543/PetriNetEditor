@@ -14,17 +14,21 @@ namespace Petri.Editor.UI.View
     /// </summary>
     public partial class EditorView : UserControl
     {
+        private Slider _zoomSlider;
+
+        public Slider ZoomSlider
+        {
+            get { return _zoomSlider; }
+            set
+            {
+                _zoomSlider = value;
+                ScrollZoomManager zoomManager = new ScrollZoomManager(MainItemsControl, _zoomSlider);
+            }
+        }
+
         public EditorView()
         {
             InitializeComponent();
-
-            ScrollZoomManager zoomManager = new ScrollZoomManager(MainItemsControl, ZoomSlider);
-
-
         }
-
-      
-
     }
-
 }

@@ -40,3 +40,5 @@ F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\UI\Controls
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\GongSolutions.Wpf.DragDrop.dll
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\GongSolutions.Wpf.DragDrop.pdb
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\bin\Debug\GongSolutions.Wpf.DragDrop.xml
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\UI\View\EmptyPetriNetView.g.cs
+F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\UI\View\EmptyPetriNetView.baml

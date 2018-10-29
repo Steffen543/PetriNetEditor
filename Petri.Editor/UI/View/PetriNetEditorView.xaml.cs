@@ -14,6 +14,7 @@ namespace Petri.Editor.UI.View
         public PetriNetEditorView()
         {
             InitializeComponent();
+            EditorDisplay.ZoomSlider = EditorTools.ZoomSlider;
         }
     }
 }

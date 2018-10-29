@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Petri.Logic.Helper;
 
 namespace Petri.Logic.Components
 {
     [XmlType("Connection")]
     public class Connection : UIPlaceable
     {
-        private int value;
 
         [XmlAttribute("Value")]
         public int Value
@@ -27,28 +27,30 @@ namespace Petri.Logic.Components
         }
 
         [XmlIgnore]
-        public bool ArrowSourceX
+        public double ArrowSourceX
         {
             get { return GetProperty(() => ArrowSourceX); }
             set { SetProperty(() => ArrowSourceX, value); }
         }
 
+        
+
         [XmlIgnore]
-        public bool ArrowSourceY
+        public double ArrowSourceY
         {
             get { return GetProperty(() => ArrowSourceY); }
             set { SetProperty(() => ArrowSourceY, value); }
         }
 
         [XmlIgnore]
-        public bool ArrowDestinationX
+        public double ArrowDestinationX
         {
             get { return GetProperty(() => ArrowDestinationX); }
             set { SetProperty(() => ArrowDestinationX, value); }
         }
 
         [XmlIgnore]
-        public bool ArrowDestinationY
+        public double ArrowDestinationY
         {
             get { return GetProperty(() => ArrowDestinationY); }
             set { SetProperty(() => ArrowDestinationY, value); }
@@ -111,8 +113,34 @@ namespace Petri.Logic.Components
             return $"Connection: [Id: {Id.ToString()}, SourceId: {SourceId}, DestinationId: {DestinationId}, Description: {Description}";
         }
 
-        public void UpdatePosition()
+        public void UpdateArrows()
         {
+            X = Source.X;
+            Y = Source.Y;
+            double size = 75;
+            if (!ArrowManagement.AlreadyCalculated(Source, Destination))
+            {
+                var _x = 0 + size * 0.25;
+                var _y = 0 + size * 0.25;
+
+                ArrowSourceX = _x;
+                ArrowSourceY = _y;
+                ArrowDestinationX = DestX + size * 0.25;
+                ArrowDestinationY = DestY + size * 0.25;
+
+                ArrowManagement.Add(Source, Destination);
+            }
+            else
+            {
+                var _x = 0 + size * 0.75;
+                var _y = 0 + size * 0.75;
+
+                ArrowSourceX = _x;
+                ArrowSourceY = _y;
+                ArrowDestinationX = DestX + size * 0.75;
+                ArrowDestinationY = DestY + size * 0.75;
+            }
+
             RaisePropertyChanged("X");
             RaisePropertyChanged("Y");
         }

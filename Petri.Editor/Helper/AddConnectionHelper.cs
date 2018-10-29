@@ -12,13 +12,13 @@ namespace Petri.Editor.Helper
     {
 
 
-        public IConnectable Source
+        public ConnectableBase Source
         {
             get { return GetProperty(() => Source); }
             set { SetProperty(() => Source, value); }
         }
 
-        public IConnectable Destination
+        public ConnectableBase Destination
         {
             get { return GetProperty(() => Destination); }
             set { SetProperty(() => Destination, value); }

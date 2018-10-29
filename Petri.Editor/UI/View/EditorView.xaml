@@ -14,11 +14,13 @@
              xmlns:converterConnection="clr-namespace:Petri.Editor.Converter.Conn"
              xmlns:media2d="clr-namespace:Petzold.Media2D"
              xmlns:controls="clr-namespace:Petri.Editor.Controls"
+             xmlns:view="clr-namespace:Petri.Editor.UI.View"
              mc:Ignorable="d"  x:Name="self"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converter:IsNullConverter x:Key="IsNullConverter"/>
         <converter:PercentageConverter x:Key="PercentageConverter"/>
+        <converter:IsBiggerConverter x:Key="IsBiggerConverter"/>
         <converter:PetriNetCoordinatesConverter x:Key="PetriNetCoordinatesConverter"/>
         <converter:EqualsConverter EditorViewModel="{Binding ElementName=self, Path=DataContext}" x:Key="EqualsConverter"/>
         <converter:IncreaseNumberConverter x:Key="IncreaseNumberConverter"/>
@@ -55,7 +57,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer  HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" Grid.Row="1"  VerticalScrollBarVisibility="Auto" x:Name="MainScrollViewer">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
             <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
                 <ItemsControl.LayoutTransform>
                     <ScaleTransform x:Name="ScaleTransform" />
@@ -72,8 +84,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        <Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.Resources>
@@ -82,35 +94,15 @@
                             <system:Int32 x:Key="StartPosition">0</system:Int32>
                             <Point x:Key="StartPoint" X="0" Y="0" />
                         </DataTemplate.Resources>
-                        <Border >
+                        <Border  >
                             <Canvas Background="Red">
                                 <media2d:ArrowLine x:Name="Arrow" IsArrowClosed="True"  
-                                    StrokeThickness="2" ArrowLength="17" >
-                                    <media2d:ArrowLine.X1>
-                                        <MultiBinding Converter="{StaticResource ConnectionSourceXPointConverter}">
-                                            <Binding Path="." />
-                                            <Binding Path="X" UpdateSourceTrigger="PropertyChanged" />
-                                        </MultiBinding>
-                                    </media2d:ArrowLine.X1>
-                                    <media2d:ArrowLine.Y1>
-                                        <MultiBinding Converter="{StaticResource ConnectionSourceYPointConverter}">
-                                            <Binding Path="."  />
-                                            <Binding Path="Y" UpdateSourceTrigger="PropertyChanged" />
-                                        </MultiBinding>
-                                    </media2d:ArrowLine.Y1>
-                                    <media2d:ArrowLine.X2>
-                                        <MultiBinding Converter="{StaticResource ConnectionDestinationXPointConverter}">
-                                            <Binding Path="." />
-                                            <Binding Path="X" UpdateSourceTrigger="PropertyChanged" />
-                                        </MultiBinding>
-                                    </media2d:ArrowLine.X2>
-                                    <media2d:ArrowLine.Y2>
-                                        <MultiBinding Converter="{StaticResource ConnectionDestinationYPointConverter}">
-                                            <Binding Path="." />
-                                            <Binding Path="Y" UpdateSourceTrigger="PropertyChanged" />
-                                        </MultiBinding>
-                                    </media2d:ArrowLine.Y2>
-
+                                    StrokeThickness="2" ArrowLength="17" 
+                                    X1="{Binding ArrowSourceX, UpdateSourceTrigger=PropertyChanged}"
+                                    Y1="{Binding ArrowSourceY, UpdateSourceTrigger=PropertyChanged}"
+                                    X2="{Binding ArrowDestinationX, UpdateSourceTrigger=PropertyChanged}"
+                                    Y2="{Binding ArrowDestinationY, UpdateSourceTrigger=PropertyChanged}">
+      
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                             <i:InvokeCommandAction Command="{Binding DataContext.DeleteCommand, ElementName=self}" CommandParameter="{Binding .}" />
@@ -158,13 +150,22 @@
                         </Border>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type components:Transition}">
-                        <Border dd:DragDrop.IsDragSource="True" x:Name="MainBorder" BorderThickness="5" >
+                        <Border x:Name="MainBorder" BorderThickness="5" >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                            <Setter Property="dd:DragDrop.IsDragSource" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                             <Grid>
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BorderMain}" />
                                 </Grid.OpacityMask>
                                 <Border Style="{StaticResource Border_Transition}" x:Name="BorderMain" />
-                                <controls:ConnectableButton x:Name="MainButton" EditorMode="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}">
+                                <controls:ConnectableButton x:Name="MainButton"  EditorMode="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}">
                                     <controls:ConnectableButton.Resources>
                                         <Style TargetType="controls:ConnectableButton" BasedOn="{StaticResource ConnectableButtonStyle}">
                                             <Setter Property="Content" Value="{Binding Name}" />
@@ -214,7 +215,7 @@
                                                     <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 </DataTrigger>
-                                                <!-- show information -->
+                                                <!-- edit -->
                                                 <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
                                                     <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
@@ -265,6 +266,15 @@
                     </DataTemplate>
                     <DataTemplate  DataType="{x:Type components:Stelle}">
                         <Border x:Name="MainBorder" BorderThickness="5" CornerRadius="50" >
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                            <Setter Property="dd:DragDrop.IsDragSource" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                             <Grid>
                                 <Grid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=BorderMain}" />
@@ -282,11 +292,6 @@
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.Resources>
-                                                            <DataTemplate DataType="{x:Type components:StelleEmptyPoint}">
-                                                                <Grid Margin="1">
-                                                                    <Ellipse  Fill="Transparent" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
-                                                                </Grid>
-                                                            </DataTemplate>
                                                             <DataTemplate DataType="{x:Type components:StelleFullPoint}">
                                                                 <Grid Margin="1">
                                                                     <Ellipse  Fill="{Binding ElementName=MainButton, Path=Foreground}" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
@@ -297,6 +302,13 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Points.Count, Converter={StaticResource IsBiggerConverter}, ConverterParameter=9}" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <TextBlock Text="{Binding Points.Count}" FontSize="18" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
                                                 <!-- is marked as source -->
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
@@ -324,7 +336,7 @@
                                                     <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 </DataTrigger>
-                                                <!-- show information -->
+                                                <!-- edit -->
                                                 <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
                                                     <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
@@ -380,29 +392,7 @@
 
         </ScrollViewer>
 
-        <Grid Background="#CCCCCC"  Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Stretch"  >
-                
-                <Slider x:Name="ZoomSlider" Width="200" 
-                        Minimum="0.25" VerticalAlignment="Center"
-                        Value="1"
-                        Maximum="1.5"
-                        SmallChange="0.5"
-                        LargeChange="1.0" />
-                <TextBlock HorizontalAlignment="Center">
-                    <Run Text="Zoom: "/>
-                    <Run Text="{Binding ElementName=ZoomSlider, Path=Value, Converter={StaticResource PercentageConverter}, StringFormat=N2}"/>
-                    <Run Text="%"/>
-                </TextBlock>
-
-            </StackPanel>
-        </Grid>
-
+      
 
     </Grid>
 </UserControl>

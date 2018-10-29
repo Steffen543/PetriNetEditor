@@ -15,6 +15,7 @@ using GongSolutions.Wpf.DragDrop;
 using Petri.Editor.Converter.Conn;
 using Petri.Editor.Dialogs;
 using Petri.Editor.Helper;
+using Petri.Logic.Helper;
 
 namespace Petri.Editor.UI.ViewModel
 {
@@ -25,60 +26,48 @@ namespace Petri.Editor.UI.ViewModel
         {
             var sourceItem = dropInfo.Data;
 
-
             if (sourceItem != null)
             {
                 dropInfo.Effects = DragDropEffects.Move;
             }
 
-            //ExampleItemViewModel sourceItem = dropInfo.Data as ExampleItemViewModel;
-            //ExampleItemViewModel targetItem = dropInfo.TargetItem as ExampleItemViewModel;
-
-            /*  if (sourceItem != null && targetItem != null && targetItem.CanAcceptChildren)
-              {
-                  dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-                  dropInfo.Effects = DragDropEffects.Copy;
-              }*/
         }
 
         void IDropTarget.Drop(IDropInfo dropInfo)
         {
+            double size = 75;
             var sourceItem = dropInfo.Data;
             var targetItem = dropInfo.TargetItem;
 
             if (sourceItem is ConnectableBase item)
             {
-                item.X = dropInfo.DropPosition.X;
-                item.Y = dropInfo.DropPosition.Y;
+                item.X = dropInfo.DropPosition.X - size/2;
+                item.Y = dropInfo.DropPosition.Y - size / 2;
 
                 ConnectionDestinationXPointConverter.Points = new List<RoundLineModdlePointPosition>();
                 ConnectionDestinationYPointConverter.Points = new List<RoundLineModdlePointPosition>();
                 ConnectionSourceXPointConverter.Points = new List<RoundLineModdlePointPosition>();
                 ConnectionSourceYPointConverter.Points = new List<RoundLineModdlePointPosition>();
-
-
               
                 foreach (var connection in item.Output)
                 {
-                    connection.X = connection.Source.X;
-                    connection.Y = connection.Source.Y;
-                    connection.UpdatePosition();
+                    ArrowManagement.Remove(connection.Source, connection.Destination);
                 }
                 foreach (var connection in item.Input)
                 {
-                    connection.UpdatePosition();
+                    ArrowManagement.Remove(connection.Source, connection.Destination);
+                }
+
+                foreach (var connection in item.Output)
+                {
+                    connection.UpdateArrows();
+                }
+                foreach (var connection in item.Input)
+                {
+                    connection.UpdateArrows();
                 }
             }
-
-           
-
-            //    ExampleItemViewModel sourceItem = dropInfo.Data as ExampleItemViewModel;
-            //    ExampleItemViewModel targetItem = dropInfo.TargetItem as ExampleItemViewModel;
-            //    targetItem.Children.Add(sourceItem);
         }
-
-
-
 
         public PetriNetXML PetriNet
         {
@@ -227,6 +216,9 @@ namespace Petri.Editor.UI.ViewModel
                 return false;
             if (AddConnectionHelper.Source != null && AddConnectionHelper.Source.GetType() == item.GetType())
                 return false;
+            if (AddConnectionHelper.Source != null &&
+                AddConnectionHelper.Source.Output.Count(i => i.Destination == item) > 0)
+                return false;
             return EditorMode == EditorMode.AddConnection;
         }
 
@@ -302,6 +294,7 @@ namespace Petri.Editor.UI.ViewModel
             PetriNet.InitDependency(source as ConnectableBase);
             PetriNet.InitDependency(destination as ConnectableBase);
             newConnection.CalcIsExecutable();
+            newConnection.UpdateArrows();
         }
 
         #endregion

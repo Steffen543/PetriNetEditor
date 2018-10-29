@@ -29,6 +29,6 @@
                 <MenuItem Header="Speichern unter" Command="{Binding SavePetriNetUnderNewNameCommand}" />
             </MenuItem>
         </Menu>
-        <view:PetriNetEditorView x:Name="PetriEditor" DataContext="{Binding EditorViewModel}" Grid.Row="1" />
+        <view:PetriNetEditorView x:Name="PetriEditor" DataContext="{Binding .}" Grid.Row="1" />
     </Grid>
 </Window>

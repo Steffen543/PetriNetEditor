@@ -73,7 +73,7 @@ namespace Petri.Editor.UI.ViewModel
             {
                 var file = openFileDialog.FileName;
 
-                CurrentFileName = openFileDialog.SafeFileName;
+                CurrentFileName = openFileDialog.FileName;
                 CurrentFilePath = file;
 
                 PetriNetXMLReader reader = new PetriNetXMLReader();

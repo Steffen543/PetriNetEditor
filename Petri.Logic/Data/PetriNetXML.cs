@@ -71,6 +71,7 @@ namespace Petri.Logic.Data
             foreach (var obj in Objects.GetConnections())
             {
                 obj.CalcIsExecutable();
+                obj.UpdateArrows();
             }
         }
 
@@ -93,6 +94,7 @@ namespace Petri.Logic.Data
             connection.Destination = Objects.FirstOrDefault(o => o.Id == connection.DestinationId) as IConnectable;
             connection.X = connection.Source.X;
             connection.Y = connection.Source.Y;
+           
         }
 
       

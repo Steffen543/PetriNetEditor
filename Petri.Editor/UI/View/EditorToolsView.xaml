@@ -22,22 +22,22 @@
             <Setter Property="Foreground" Value="Black" />
         </Style>
     </UserControl.Resources>
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="IsEnabled" Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                    <Setter Property="IsEnabled" Value="false" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
 
     <StackPanel Margin="10">
 
        
 
         <ListBox x:Name="ListBoxTools" ItemsSource="{Binding Source={StaticResource MyEnumValues}}" SelectedItem="{Binding EditorMode}">
-            <ListBox.Style>
-                <Style TargetType="ListBox">
-                    <Setter Property="IsEnabled" Value="True" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
-                            <Setter Property="IsEnabled" Value="false" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock FontSize="18" Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
@@ -45,6 +45,23 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+
+      
+        <StackPanel Orientation="Vertical" Margin="0,5,0,0" >
+
+            <Slider x:Name="ZoomSlider" Width="200" 
+                    Minimum="0.25" 
+                    Value="1"
+                    Maximum="1.5"
+                    SmallChange="0.5"
+                    LargeChange="1.0" />
+            <TextBlock HorizontalAlignment="Center">
+                <Run Text="Zoom: "/>
+                <Run Text="{Binding Value, ElementName=ZoomSlider, StringFormat=p0}"/>
+            </TextBlock>
+
+        </StackPanel>
+        
         <Border Padding="10" Margin="0,15,0,0" BorderThickness="1" BorderBrush="{Binding ElementName=ListBoxTools, Path=BorderBrush}">
             <Border.Style>
                 <Style TargetType="Border">
