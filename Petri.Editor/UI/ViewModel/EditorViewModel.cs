@@ -22,57 +22,11 @@ namespace Petri.Editor.UI.ViewModel
     public class EditorViewModel : ViewModelBase, IDropTarget
     {
 
-        void IDropTarget.DragOver(IDropInfo dropInfo)
+      
+        public PnmlNet PnmlNet
         {
-            var sourceItem = dropInfo.Data;
-
-            if (sourceItem != null)
-            {
-                dropInfo.Effects = DragDropEffects.Move;
-            }
-
-        }
-
-        void IDropTarget.Drop(IDropInfo dropInfo)
-        {
-            double size = 75;
-            var sourceItem = dropInfo.Data;
-            var targetItem = dropInfo.TargetItem;
-
-            if (sourceItem is ConnectableBase item)
-            {
-                item.X = dropInfo.DropPosition.X - size/2;
-                item.Y = dropInfo.DropPosition.Y - size / 2;
-
-                ConnectionDestinationXPointConverter.Points = new List<RoundLineModdlePointPosition>();
-                ConnectionDestinationYPointConverter.Points = new List<RoundLineModdlePointPosition>();
-                ConnectionSourceXPointConverter.Points = new List<RoundLineModdlePointPosition>();
-                ConnectionSourceYPointConverter.Points = new List<RoundLineModdlePointPosition>();
-              
-                foreach (var connection in item.Output)
-                {
-                    ArrowManagement.Remove(connection.Source, connection.Destination);
-                }
-                foreach (var connection in item.Input)
-                {
-                    ArrowManagement.Remove(connection.Source, connection.Destination);
-                }
-
-                foreach (var connection in item.Output)
-                {
-                    connection.UpdateArrows();
-                }
-                foreach (var connection in item.Input)
-                {
-                    connection.UpdateArrows();
-                }
-            }
-        }
-
-        public PetriNetXML PetriNet
-        {
-            get { return GetProperty(() => PetriNet); }
-            set{ SetProperty(() => PetriNet, value); }
+            get { return GetProperty(() => PnmlNet); }
+            set{ SetProperty(() => PnmlNet, value); }
         }
 
         public UIPlaceable CurrentInformationEntry
@@ -125,6 +79,50 @@ namespace Petri.Editor.UI.ViewModel
 
         #region Commands
 
+        void IDropTarget.DragOver(IDropInfo dropInfo)
+        {
+            var sourceItem = dropInfo.Data;
+
+            if (sourceItem != null)
+            {
+                dropInfo.Effects = DragDropEffects.Move;
+            }
+
+        }
+
+        void IDropTarget.Drop(IDropInfo dropInfo)
+        {
+            double size = ConnectableBase.SIZE;
+            var sourceItem = dropInfo.Data;
+            var targetItem = dropInfo.TargetItem;
+
+            if (sourceItem is ConnectableBase item)
+            {
+                item.X = dropInfo.DropPosition.X - size / 2;
+                item.Y = dropInfo.DropPosition.Y - size / 2;
+
+              
+                foreach (var connection in item.Output)
+                {
+                    ArrowManagement.Remove(connection.Source, connection.Destination);
+                }
+                foreach (var connection in item.Input)
+                {
+                    ArrowManagement.Remove(connection.Source, connection.Destination);
+                }
+
+                foreach (var connection in item.Output)
+                {
+                    connection.UpdateArrows();
+                }
+                foreach (var connection in item.Input)
+                {
+                    connection.UpdateArrows();
+                }
+            }
+        }
+
+
         void CancelCommandExecute()
         {
             if (AddConnectionHelper.Destination != null)
@@ -172,6 +170,7 @@ namespace Petri.Editor.UI.ViewModel
         void DeleteCommandExecute(UIPlaceable item)
         {
             DeleteComponent(item);
+          
         }
 
         void AddCommandExecute(PetriNetCoordinates coordinates)
@@ -182,8 +181,8 @@ namespace Petri.Editor.UI.ViewModel
             Console.WriteLine($"{EditorMode} on ({x} | {x})");
             switch (EditorMode)
             {
-                case EditorMode.AddStelle:
-                    AddStelle(x, y, "neu");
+                case EditorMode.AddPlace:
+                    AddPlace(x, y, "neu");
                     break;
                 case EditorMode.AddTransition:
                     AddTransition(x, y, "neu");
@@ -229,7 +228,7 @@ namespace Petri.Editor.UI.ViewModel
 
         bool AddCommandCanExecute(PetriNetCoordinates parameter)
         {
-            if (EditorMode == EditorMode.AddTransition || EditorMode == EditorMode.AddStelle)
+            if (EditorMode == EditorMode.AddTransition || EditorMode == EditorMode.AddPlace)
                 return true;
             return false;
         }
@@ -238,39 +237,39 @@ namespace Petri.Editor.UI.ViewModel
 
         #region Logic
 
-        public static EditorViewModel CreateModel(PetriNetXML petriNet)
+        public void AddPlace(double x, double y, string description)
         {
-            EditorViewModel model = new EditorViewModel();
-            model.PetriNet = petriNet;
-            return model;
-        }
-
-
-
-        public void AddStelle(double x, double y, string description)
-        {
-            Stelle stelle = new Stelle(PetriNet.CreateId(), x, y, "Name", "Description",  0);
-            PetriNet.Objects.Add(stelle);
-            PetriNet.InitDependency(stelle);
+            Place place = new Place(PnmlNet.PetriNet.CreateId(), x, y, "Name", "Description",  0);
+            PnmlNet.PetriNet.Objects.Add(place);
+            PnmlNet.PetriNet.InitDependency(place);
         }
 
         public void AddTransition(double x, double y, string description)
         {
-            Transition trans = new Transition(PetriNet.CreateId(), x, y, "Name", "Description");
-            PetriNet.Objects.Add(trans);
-            PetriNet.InitDependency(trans);
+            Transition trans = new Transition(PnmlNet.PetriNet.CreateId(), x, y, "Name", "Description");
+            PnmlNet.PetriNet.Objects.Add(trans);
+            PnmlNet.PetriNet.InitDependency(trans);
             trans.CalcIsExecutable();
         }
 
         public void DeleteComponent(UIPlaceable component)
         {
-            PetriNet.Objects.Remove(component);
+            PnmlNet.PetriNet.Objects.Remove(component);
             if (component is Connection conn)
             {
-                var related = PetriNet.Objects.GetConnectables().Where(o => o.Id == conn.SourceId || o.Id == conn.DestinationId);
+                var related = PnmlNet.PetriNet.Objects.GetConnectables().Where(o => o.Id == conn.SourceId || o.Id == conn.DestinationId);
                 foreach (var rel in related)
                 {
-                    PetriNet.InitDependency(rel);
+                    PnmlNet.PetriNet.InitDependency(rel);
+                }
+
+                ArrowManagement.Remove(conn.Source, conn.Destination);
+                var otherConnectionsBetweenRemoved = PnmlNet.PetriNet.Objects.GetConnections().Where(c => 
+                    (c.Source == conn.Destination || c.Source == conn.Source) &&
+                    (c.Destination == conn.Destination || c.Destination == conn.Source));
+                foreach (var c in otherConnectionsBetweenRemoved)
+                {
+                    c.UpdateArrows();
                 }
             }
             if (component is ConnectableBase connectable)
@@ -288,11 +287,13 @@ namespace Petri.Editor.UI.ViewModel
 
         public void AddConnection(IConnectable source, IConnectable destination, int value, string description)
         {
-            Connection newConnection = new Connection(PetriNet.CreateId(), source.Id, destination.Id, value, "NAME", description);
-            PetriNet.InitDependency(newConnection);
-            PetriNet.Objects.Add(newConnection);
-            PetriNet.InitDependency(source as ConnectableBase);
-            PetriNet.InitDependency(destination as ConnectableBase);
+            Connection newConnection = new Connection(PnmlNet.PetriNet.CreateId(), source.Id, destination.Id, value, description);
+            PnmlNet.PetriNet.InitDependency(newConnection);
+            PnmlNet.PetriNet.Objects.Add(newConnection);
+            PnmlNet.PetriNet.InitDependency(source as ConnectableBase);
+            PnmlNet.PetriNet.InitDependency(destination as ConnectableBase);
+            if(source is Transition trans) trans.CalcIsExecutable();
+            if(destination is Transition transd) transd.CalcIsExecutable();
             newConnection.CalcIsExecutable();
             newConnection.UpdateArrows();
         }

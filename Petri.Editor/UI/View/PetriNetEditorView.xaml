@@ -20,7 +20,7 @@
             <view:EditorView.Style>
                 <Style TargetType="view:EditorView">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CurrentPetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding CurrentPnmlNet, Converter={StaticResource IsNullConverter}}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
@@ -32,7 +32,7 @@
                 <Style TargetType="view:EmptyPetriNetView">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CurrentPetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding CurrentPnmlNet, Converter={StaticResource IsNullConverter}}" Value="True">
                             <Setter Property="Visibility" Value="Visible"></Setter>
                         </DataTrigger>
                     </Style.Triggers>

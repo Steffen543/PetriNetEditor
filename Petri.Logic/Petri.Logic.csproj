@@ -50,11 +50,16 @@
     <Compile Include="Components\IConnectable.cs" />
     <Compile Include="Components\Connection.cs" />
     <Compile Include="Components\ObjectList.cs" />
-    <Compile Include="Components\Stelle.cs" />
+    <Compile Include="Components\Place.cs" />
     <Compile Include="Components\Transition.cs" />
     <Compile Include="Components\UIPlaceable.cs" />
-    <Compile Include="Data\PetriNetXML.cs" />
+    <Compile Include="Data\Net.cs" />
+    <Compile Include="Data\PnmlNet.cs" />
     <Compile Include="Helper\ArrowManagement.cs" />
+    <Compile Include="PNML\PNML_InitialMarking.cs" />
+    <Compile Include="PNML\PNML_Inscription.cs" />
+    <Compile Include="PNML\PNML_Name.cs" />
+    <Compile Include="PNML\PNML_Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xml\PetriNetXMLReader.cs" />
   </ItemGroup>

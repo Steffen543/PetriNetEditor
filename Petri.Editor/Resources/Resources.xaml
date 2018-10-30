@@ -3,9 +3,10 @@
                     xmlns:local="clr-namespace:Petri.Editor.Resources"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:Petri.Editor.Controls">
+    
+    <system:Double x:Key="NetObjectSize">75</system:Double>
 
-    <system:Double x:Key="TransitionSize">75</system:Double>
-    <system:Double x:Key="StelleSize">75</system:Double>
+
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -34,8 +35,8 @@
         <Setter Property="IsMarkedAsSource" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="False" />
         <Setter Property="BorderThickness" Value="3" />
-        <Setter Property="Width" Value="{DynamicResource StelleSize}" />
-        <Setter Property="Height" Value="{DynamicResource StelleSize}" />
+        <Setter Property="Width" Value="{DynamicResource NetObjectSize}" />
+        <Setter Property="Height" Value="{DynamicResource NetObjectSize}" />
         <Setter Property="Padding" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>

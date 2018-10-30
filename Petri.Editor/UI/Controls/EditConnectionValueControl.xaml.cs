@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Petri.Logic.Components;
+using Petri.Logic.PNML;
 
 namespace Petri.Editor.Controls
 {
@@ -42,6 +44,7 @@ namespace Petri.Editor.Controls
                 MainTextBlock.Visibility = Visibility.Collapsed;
                 MainTextBox.Visibility = Visibility.Visible;
                 MainButton.Visibility = Visibility.Visible;
+                MainTextBox.Text = ((Connection) DataContext).Value.Text.ToString();
                 MainTextBox.Focus();
                 MainTextBox.SelectAll();
             }
@@ -50,6 +53,15 @@ namespace Petri.Editor.Controls
                 MainTextBlock.Visibility = Visibility.Visible;
                 MainTextBox.Visibility = Visibility.Collapsed;
                 MainButton.Visibility = Visibility.Collapsed;
+                try
+                {
+                    ((Connection) DataContext).Value = new PNML_Inscription(int.Parse(MainTextBox.Text));
+                }
+                catch
+                {
+                    EditMode(true);
+                }
+               
             }
         }
 
@@ -58,5 +70,6 @@ namespace Petri.Editor.Controls
             if (e.Key == Key.Enter)
                 EditMode(false);
         }
+
     }
 }

@@ -26,7 +26,7 @@ namespace Petri.Logic.Components
             {
                 if (obj is Transition trans)
                     list.Add(trans);
-                if (obj is Stelle stelle)
+                if (obj is Place stelle)
                     list.Add(stelle);
             }
             return list;

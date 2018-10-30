@@ -11,24 +11,17 @@ using DevExpress.Mvvm;
 namespace Petri.Logic.Components
 {
     [XmlType("UIPlaceable")] // define Type
-    [XmlInclude(typeof(Transition)), XmlInclude(typeof(Stelle)), XmlInclude(typeof(Connection)), XmlInclude(typeof(ConnectableBase))]
+    [XmlInclude(typeof(Transition)), XmlInclude(typeof(Place)), XmlInclude(typeof(Connection)), XmlInclude(typeof(ConnectableBase))]
     public class UIPlaceable : BindableBase
     {
-        [XmlAttribute("Id")]
-        public int Id
+        [XmlAttribute("id")]
+        public String Id
         {
             get { return GetProperty(() => Id); }
             set { SetProperty(() => Id, value); }
         }
 
-        [XmlAttribute("Name")]
-        public string Name
-        {
-            get { return GetProperty(() => Name); }
-            set { SetProperty(() => Name, value); }
-        }
-
-        [XmlAttribute("Description")]
+        [XmlElement("Description")]
         public string Description
         {
             get { return GetProperty(() => Description); }
@@ -53,13 +46,12 @@ namespace Petri.Logic.Components
 
         public UIPlaceable() { }
 
-        public UIPlaceable(int id, double x, double y, string description, string name)
+        public UIPlaceable(string id, double x, double y, string description)
         {
             Id = id;
             X = x;
             Y = y;
             Description = description;
-            Name = name;
         }
 
         public override string ToString()

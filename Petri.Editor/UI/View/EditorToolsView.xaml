@@ -26,7 +26,7 @@
         <Style TargetType="UserControl">
             <Setter Property="IsEnabled" Value="True" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                <DataTrigger Binding="{Binding PnmlNet, Converter={StaticResource IsNullConverter}}" Value="True">
                     <Setter Property="IsEnabled" Value="false" />
                 </DataTrigger>
             </Style.Triggers>

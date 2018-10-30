@@ -84,10 +84,6 @@
     <Compile Include="Converter\BaseConverter.cs" />
     <Compile Include="Converter\ButtonExecutableConverter.cs" />
     <Compile Include="Converter\ConnectionColorConverter.cs" />
-    <Compile Include="Converter\Conn\ConnectionDestinationYPointConverter.cs" />
-    <Compile Include="Converter\Conn\ConnectionDestinationXPointConverter.cs" />
-    <Compile Include="Converter\Conn\ConnectionSourceXPointConverter.cs" />
-    <Compile Include="Converter\Conn\ConnectionSourceYPointConverter.cs" />
     <Compile Include="Converter\Conn\HalfValueConverter.cs" />
     <Compile Include="Converter\EnumDescriptionConverter.cs" />
     <Compile Include="Converter\EqualsConverter.cs" />
@@ -95,7 +91,6 @@
     <Compile Include="Converter\IsNullConverter.cs" />
     <Compile Include="Converter\PercentageConverter.cs" />
     <Compile Include="Converter\PetriNetCoordinatesConverter.cs" />
-    <Compile Include="Converter\StellePointConverter.cs" />
     <Compile Include="Dialogs\ConnectionWindow.xaml.cs">
       <DependentUpon>ConnectionWindow.xaml</DependentUpon>
     </Compile>

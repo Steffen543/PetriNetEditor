@@ -31,10 +31,6 @@
                 <x:Type TypeName="viewModel:EditorMode" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <converterConnection:ConnectionSourceXPointConverter x:Key="ConnectionSourceXPointConverter" />
-        <converterConnection:ConnectionDestinationXPointConverter x:Key="ConnectionDestinationXPointConverter" />
-        <converterConnection:ConnectionSourceYPointConverter x:Key="ConnectionSourceYPointConverter" />
-        <converterConnection:ConnectionDestinationYPointConverter x:Key="ConnectionDestinationYPointConverter" />
         <converterConnection:HalfValueConverter x:Key="HalfValueConverter" />
         <Style TargetType="Border" x:Key="Border_UI_Placeable">
 
@@ -46,8 +42,8 @@
         </Style>
         <Style TargetType="Border" x:Key="Border_Transition" BasedOn="{StaticResource Border_UI_Placeable}">
             <Setter Property="Background" Value="Blue" />
-            <Setter Property="Width" Value="{DynamicResource TransitionSize}" />
-            <Setter Property="Height" Value="{DynamicResource TransitionSize}" />
+            <Setter Property="Width" Value="{DynamicResource NetObjectSize}" />
+            <Setter Property="Height" Value="{DynamicResource NetObjectSize}" />
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -62,13 +58,13 @@
             <ScrollViewer.Style>
                 <Style TargetType="ScrollViewer">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PetriNet, Converter={StaticResource IsNullConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding PnmlNet, Converter={StaticResource IsNullConverter}}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </ScrollViewer.Style>
-            <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PetriNet.Objects}">
+            <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PnmlNet.PetriNet.Objects}">
                 <ItemsControl.LayoutTransform>
                     <ScaleTransform x:Name="ScaleTransform" />
                 </ItemsControl.LayoutTransform>
@@ -207,7 +203,7 @@
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
                                                 <!-- add stelle -->
-                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddPlace">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
                                                 <!-- add connection -->
@@ -264,7 +260,7 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-                    <DataTemplate  DataType="{x:Type components:Stelle}">
+                    <DataTemplate  DataType="{x:Type components:Place}">
                         <Border x:Name="MainBorder" BorderThickness="5" CornerRadius="50" >
                             <Border.Style>
                                 <Style TargetType="Border">
@@ -292,7 +288,7 @@
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.Resources>
-                                                            <DataTemplate DataType="{x:Type components:StelleFullPoint}">
+                                                            <DataTemplate DataType="{x:Type components:PlaceFullPoint}">
                                                                 <Grid Margin="1">
                                                                     <Ellipse  Fill="{Binding ElementName=MainButton, Path=Foreground}" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
                                                                 </Grid>
@@ -328,7 +324,7 @@
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
                                                 <!-- add stelle -->
-                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddStelle">
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddPlace">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
                                                 <!-- add connection -->

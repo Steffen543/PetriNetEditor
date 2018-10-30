@@ -25,7 +25,7 @@ namespace Petri.Editor.Helper
         private Point GetPosition()
         {
             var pos = Mouse.GetPosition(itemsControl);
-            double size = (double)Application.Current.FindResource("TransitionSize");
+            double size = (double)Application.Current.FindResource("NetObjectSize");
 
             var halfSizeX = size / 2;
             var halfSizeY = size / 2;

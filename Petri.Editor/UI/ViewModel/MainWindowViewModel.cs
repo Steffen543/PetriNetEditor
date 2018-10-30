@@ -13,13 +13,13 @@ namespace Petri.Editor.UI.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
-        public PetriNetXML CurrentPetriNet
+        public PnmlNet CurrentPnmlNet
         {
-            get { return GetProperty(() => CurrentPetriNet); }
+            get { return GetProperty(() => CurrentPnmlNet); }
             set
             {
-                EditorViewModel.PetriNet = value;
-                SetProperty(() => CurrentPetriNet, value); 
+                EditorViewModel.PnmlNet = value;
+                SetProperty(() => CurrentPnmlNet, value); 
             }
         }
 
@@ -53,14 +53,14 @@ namespace Petri.Editor.UI.ViewModel
             SavePetriNetCommand = new DelegateCommand(SavePetriNetCommandExecute, SavePetriNetCommandCanExecute);
             SavePetriNetUnderNewNameCommand = new DelegateCommand(SavePetriNetUnderNewNameCommandExecute, SavePetriNetUnderNewNameCommandCanExecute);
             EditorViewModel = new EditorViewModel();
-            //CurrentPetriNet = new PetriNetXML();
+            //CurrentPnmlNet = new PnmlNet();
         }
 
         #region Commands
 
         void CreateNewPetriNetCommandExecute()
         {
-            CurrentPetriNet = new PetriNetXML();
+            CurrentPnmlNet = new PnmlNet();
         }
 
         void OpenPetriNetFileCommandExecute()
@@ -77,8 +77,8 @@ namespace Petri.Editor.UI.ViewModel
                 CurrentFilePath = file;
 
                 PetriNetXMLReader reader = new PetriNetXMLReader();
-                CurrentPetriNet = reader.ReadFromXML(file);
-                CurrentPetriNet.InitDependencies();
+                CurrentPnmlNet = reader.ReadFromXML(file);
+                CurrentPnmlNet.PetriNet.InitDependencies();
             }
         }
 
@@ -88,7 +88,7 @@ namespace Petri.Editor.UI.ViewModel
 
             if (CurrentFileName != null)
             {
-                reader.SaveToXML(CurrentPetriNet, CurrentFilePath);
+                reader.SaveToXML(CurrentPnmlNet, CurrentFilePath);
             }
             else
             {
@@ -109,7 +109,7 @@ namespace Petri.Editor.UI.ViewModel
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                reader.SaveToXML(CurrentPetriNet, saveFileDialog.FileName);
+                reader.SaveToXML(CurrentPnmlNet, saveFileDialog.FileName);
             }
         }
 
@@ -127,11 +127,11 @@ namespace Petri.Editor.UI.ViewModel
         }
         bool SavePetriNetCommandCanExecute()
         {
-            return CurrentPetriNet != null;
+            return CurrentPnmlNet != null;
         }
         bool SavePetriNetUnderNewNameCommandCanExecute()
         {
-            return CurrentPetriNet != null;
+            return CurrentPnmlNet != null;
         }
 
 

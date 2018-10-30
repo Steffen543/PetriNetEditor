@@ -16,7 +16,7 @@ namespace Petri.Editor.UI.ViewModel
         [Description("Transition hinzufügen")]
         AddTransition,
         [Description("Stelle hinzufügen")]
-        AddStelle,
+        AddPlace,
         [Description("Verbindung hinzufügen")]
         AddConnection,
         [Description("Löschen")]

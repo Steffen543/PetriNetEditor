@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Petri.Logic.PNML;
 
 namespace Petri.Logic.Components
 {
-    [XmlType("Transition")]
+    [XmlType("transition")]
     public class Transition : ConnectableBase, IConnectable
     {
         [XmlAttribute("IsExecutable")]
@@ -23,9 +24,9 @@ namespace Petri.Logic.Components
             bool returnValue = true;
             foreach (var inputConnection in Input)
             {
-                var currentValue = ((Stelle)inputConnection.Source).Value;
+                var currentValue = ((Place)inputConnection.Source).Value;
 
-                if (currentValue < inputConnection.Value)
+                if (currentValue.Text < inputConnection.Value.Text)
                     returnValue = false;
             }
             IsExecutable = returnValue;
@@ -42,22 +43,27 @@ namespace Petri.Logic.Components
            
         }
 
-        public Transition(int id, double x, double y, string name, string description) : base(id, x, y, description, name)
+        public Transition(string id, double x, double y, string name, string description) : base(id, x, y, description, name)
         {
-
+            
         }
 
         public void Execute()
         {
             foreach(var inputConnection in Input)
             {
-                var source = ((Stelle)inputConnection.Source);
-                source.Value -= inputConnection.Value;
+                var source = ((Place)inputConnection.Source);
+                source.Value = new PNML_InitialMarking(source.Value.Text - inputConnection.Value.Text);
             }
             foreach (var outputConnection in Output)
             {
-                var destination = ((Stelle)outputConnection.Destination);
-                destination.Value += outputConnection.Value;
+                var destination = ((Place)outputConnection.Destination);
+                destination.Value = new PNML_InitialMarking(destination.Value.Text + outputConnection.Value.Text);
+                //foreach (var connection in destination.Output)
+                //{
+                //    if(connection.Destination is Transition trans)
+                //        trans.CalcIsExecutable();
+                //}
             }
             CalcIsExecutable();
 

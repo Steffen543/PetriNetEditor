@@ -8,7 +8,7 @@ namespace Petri.Logic.Components
 {
     public interface IConnectable
     {
-        int Id { get; set; }
+        string Id { get; set; }
         double X { get; set; }
         double Y { get; set; }
         bool SelectedAsSource { get; set; }

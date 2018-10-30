@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Petri.Logic.Components;
 
 namespace Petri.Editor
 {
@@ -13,5 +14,11 @@ namespace Petri.Editor
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+           
+            base.OnStartup(e);
+            ConnectableBase.SIZE = (double)Application.Current.FindResource("NetObjectSize");
+        }
     }
 }

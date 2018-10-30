@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Petri.Logic.Helper;
+using Petri.Logic.PNML;
 
 namespace Petri.Logic.Components
 {
-    [XmlType("Connection")]
+    [XmlType("arc")]
     public class Connection : UIPlaceable
     {
 
-        [XmlAttribute("Value")]
-        public int Value
+        [XmlElement("inscription")]
+        public PNML_Inscription Value
         {
             get { return GetProperty(() => Value); }
-            set { SetProperty(() => Value, value); }
+            set
+            {
+                SetProperty(() => Value, value);
+                if(Destination is Transition trans) trans.CalcIsExecutable();
+                CalcIsExecutable();
+            }
         }
 
-        [XmlAttribute("IsExecutable")]
+        [XmlIgnore]
         public bool IsExecutable
         {
             get { return GetProperty(() => IsExecutable); }
@@ -62,18 +69,18 @@ namespace Petri.Logic.Components
             {
                 IsExecutable = transitionSource.IsExecutable;
             }
-            else if (Source is Stelle stelleSource)
+            else if (Source is Place placeSource)
             {
-                IsExecutable = (stelleSource.Value >= Value);
+                IsExecutable = (placeSource.Value.Text >= Value.Text);
             }
         }
 
 
-        [XmlAttribute("SourceId")]
-        public int SourceId { get; set; }
+        [XmlAttribute("source")]
+        public string SourceId { get; set; }
 
-        [XmlAttribute("DestinationId")]
-        public int DestinationId { get; set; }
+        [XmlAttribute("target")]
+        public string DestinationId { get; set; }
 
         public double DestX {
             get
@@ -91,19 +98,19 @@ namespace Petri.Logic.Components
         }
 
         [XmlIgnore]
-        public IConnectable Source { get; set; }
+        public ConnectableBase Source { get; set; }
 
         [XmlIgnore]
-        public IConnectable Destination {  get; set; }
+        public ConnectableBase Destination {  get; set; }
 
         public Connection()
         {
 
         }
 
-        public Connection(int id, int sourceId, int destinationId, int value, string name, string description) : base(id, 0, 0, description, name)
+        public Connection(string id, string sourceId, string destinationId, int value, string description) : base(id, 0, 0, description)
         {
-            Value = value;
+            Value = new PNML_Inscription(value);
             SourceId = sourceId;
             DestinationId = destinationId;
         }
@@ -117,7 +124,7 @@ namespace Petri.Logic.Components
         {
             X = Source.X;
             Y = Source.Y;
-            double size = 75;
+            double size = ConnectableBase.SIZE;
             if (!ArrowManagement.AlreadyCalculated(Source, Destination))
             {
                 var _x = 0 + size * 0.25;
