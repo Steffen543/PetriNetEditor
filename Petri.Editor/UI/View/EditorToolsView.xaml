@@ -7,6 +7,9 @@
              d:DataContext="{d:DesignInstance viewModel:EditorViewModel}"
              xmlns:converter="clr-namespace:Petri.Editor.Converter"
              xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
+             xmlns:controls="clr-namespace:Petri.Editor.Controls"
+             xmlns:components="clr-namespace:Petri.Logic.Components;assembly=Petri.Logic"
+             xmlns:information="clr-namespace:Petri.Editor.UI.View.Information"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -61,7 +64,7 @@
             </TextBlock>
 
         </StackPanel>
-        
+
         <Border Padding="10" Margin="0,15,0,0" BorderThickness="1" BorderBrush="{Binding ElementName=ListBoxTools, Path=BorderBrush}">
             <Border.Style>
                 <Style TargetType="Border">
@@ -80,17 +83,18 @@
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            <StackPanel HorizontalAlignment="Left">
-                <Label Content="Name" HorizontalAlignment="Left"/>
-                <TextBox MaxLength="40" Padding="3" Width="250" HorizontalAlignment="Left" 
-                         Text="{Binding CurrentInformationEntry.Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <Label  HorizontalAlignment="Left" Content="Beschreibung" />
-                <TextBox MaxLength="1500" Padding="3" 
-                         VerticalScrollBarVisibility="Auto" AcceptsReturn="True" 
-                         Width="250" HorizontalAlignment="Left" MaxWidth="500" 
-                         TextWrapping="Wrap" Height="300" 
-                         Text="{Binding CurrentInformationEntry.Description,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            </StackPanel>
+           
+            <ContentPresenter HorizontalAlignment="Left" Content="{Binding CurrentInformationEntry}">
+                <ContentPresenter.Resources>
+                    <DataTemplate DataType="{x:Type components:Transition}">
+                        <information:TransitionInformationView DataContext="{Binding .}" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type components:Place}">
+                        <information:PlaceInformationView DataContext="{Binding .}" />
+                    </DataTemplate>
+                </ContentPresenter.Resources>
+            </ContentPresenter>
+            
         </Border>
     </StackPanel>
         

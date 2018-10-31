@@ -32,6 +32,15 @@ namespace Petri.Logic.Components
             return list;
         }
 
+        public ObservableCollection<Connection> GetAllConnectionsBetween2Connectables(ConnectableBase component1,
+            ConnectableBase component2)
+        {
+            var connections = GetConnections().Where(c =>
+                (c.Source == component1 || c.Source == component2) &&
+                (c.Destination == component2 || c.Destination == component1));
+            return new ObservableCollection<Connection>(connections);
+        }
+
         public ObservableCollection<Transition> GetTransitions()
         {
             var list = new ObservableCollection<Transition>();
@@ -55,5 +64,7 @@ namespace Petri.Logic.Components
             }
             return list;
         }
+
+        
     }
 }

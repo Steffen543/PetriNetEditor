@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Petri.Editor.UI.View"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" Background="#A0A0A0"
+             x:Name="self"
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Margin="75">
         <TextBlock FontSize="30" Text="Öffnen Sie ein Petri Netz" />   
@@ -12,9 +14,53 @@
             <Button Margin="5" Padding="5" Content="Neu." Command="{Binding CreateNewPetriNetCommand}" />
             <Button Margin="5" Padding="5" Content="Öffnen.." Command="{Binding OpenPetriNetFileCommand}" />
         </StackPanel>
-        <TextBlock Text="Zuletzt geöffnet"></TextBlock>
-        <StackPanel>
+        <TextBlock Text="Zuletzt geöffnet" FontSize="14"></TextBlock>
+        <ListBox ItemsSource="{Binding LastOpenedFiles}" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding DataContext.OpenLastPetriNetFileCommand, ElementName=self}" CommandParameter="{Binding .}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding Path=FileName}" />
+                                    <Setter Property="Foreground" Value="#00597A" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsAvailable}" Value="False">
+                                            <Setter Property="Foreground" Value="#606060" />
+                                            <Setter Property="Cursor" Value="Arrow" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    
+                        
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Name="Border"
+                                        BorderThickness="1"
+                                        CornerRadius="2">
 
-        </StackPanel>
+                                    <ContentPresenter />
+                                </Border>
+                                </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
     </StackPanel>
 </UserControl>

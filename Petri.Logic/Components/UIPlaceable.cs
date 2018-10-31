@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using DevExpress.Mvvm;
+using Petri.Logic.Pnml;
 
 namespace Petri.Logic.Components
 {
@@ -15,7 +16,7 @@ namespace Petri.Logic.Components
     public class UIPlaceable : BindableBase
     {
         [XmlAttribute("id")]
-        public String Id
+        public string Id
         {
             get { return GetProperty(() => Id); }
             set { SetProperty(() => Id, value); }
@@ -28,29 +29,22 @@ namespace Petri.Logic.Components
             set { SetProperty(() => Description, value); }
         }
 
-        [XmlAttribute("X")]
-        public double X
+        [XmlElement("position")]
+        public Position Position
         {
-            get { return GetProperty(() => X); }
-            set { SetProperty(() => X, value); }
+            get { return GetProperty(() => Position); }
+            set { SetProperty(() => Position, value); }
         }
 
-        [XmlAttribute("Y")]
-        public double Y
-        {
-            get { return GetProperty(() => Y); }
-            set { SetProperty(() => Y, value); }
-        }
-
-     
-
+    
         public UIPlaceable() { }
 
         public UIPlaceable(string id, double x, double y, string description)
         {
+            Position = new Position();
             Id = id;
-            X = x;
-            Y = y;
+            Position.X = x;
+            Position.Y = y;
             Description = description;
         }
 

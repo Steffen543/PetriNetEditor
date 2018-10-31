@@ -10,20 +10,20 @@ namespace Petri.Logic.Helper
     public class ArrowManagement
     {
         private static List<ArrowItem> items = new List<ArrowItem>();
+        public static ObjectList ObjectList;
 
-        public static void Add(IConnectable item1, IConnectable item2)
+        public static void Add(ConnectableBase item1, ConnectableBase item2, double position)
         {
-            items.Add(new ArrowItem(item1, item2));
+            items.Add(new ArrowItem(item1, item2) {Position =  position});
         }
 
-        public static bool AlreadyCalculated(IConnectable item1, IConnectable item2)
+        internal static ArrowItem AlreadyContainsConnection(ConnectableBase item1, ConnectableBase item2)
         {
             var connectionAlreadyDrawn = items.FirstOrDefault(p => p.Contains(item1, item2));
-            if (connectionAlreadyDrawn == null) return false;
-            return true;
+            return connectionAlreadyDrawn;
         }
 
-        public static void Remove(IConnectable item1, IConnectable item2)
+        public static void Remove(ConnectableBase item1, ConnectableBase item2)
         {
             List<ArrowItem> removeList = new List<ArrowItem>();
             foreach (var arrowItem in items)
@@ -36,21 +36,39 @@ namespace Petri.Logic.Helper
                 items.Remove(arrowItem);
             }
         }
+
+
+        internal static void Remove(ArrowItem arrowitem)
+        {
+            items.Remove(arrowitem);
+        }
+
+        public static int CountConnections(ConnectableBase component1, ConnectableBase component2)
+        {
+            int counter = 0;
+            foreach (var conn in ObjectList.GetConnections())
+            {
+                var comp1Found = conn.Source == component1 || conn.Destination == component1;
+                var comp2Found = conn.Source == component2 || conn.Destination == component2;
+                if (comp1Found && comp2Found) counter++;
+            }
+            return counter;
+        }
     }
 
     internal class ArrowItem
     {
-        public IConnectable Component1 { get; set; }
-        public IConnectable Component2 { get; set; }
-       
+        public ConnectableBase Component1 { get; set; }
+        public ConnectableBase Component2 { get; set; }
+        public double Position { get; set; }
 
-        public ArrowItem(IConnectable component1, IConnectable component2)
+        public ArrowItem(ConnectableBase component1, ConnectableBase component2)
         {
             Component1 = component1;
             Component2 = component2;
         }
 
-        public bool Contains(IConnectable component1, IConnectable component2)
+        public bool Contains(ConnectableBase component1, ConnectableBase component2)
         {
             bool oneFound = false;
             bool twoFound = false;

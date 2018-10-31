@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Petri.Logic.PNML;
+using Petri.Logic.Pnml;
 
 namespace Petri.Logic.Components
 {
@@ -35,12 +35,10 @@ namespace Petri.Logic.Components
                 outputConnection.CalcIsExecutable();
             }
         }
-
-
       
         public Transition()
         {
-           
+            
         }
 
         public Transition(string id, double x, double y, string name, string description) : base(id, x, y, description, name)
@@ -53,12 +51,12 @@ namespace Petri.Logic.Components
             foreach(var inputConnection in Input)
             {
                 var source = ((Place)inputConnection.Source);
-                source.Value = new PNML_InitialMarking(source.Value.Text - inputConnection.Value.Text);
+                source.Value = new PlaceInitialMarking(source.Value.Text - inputConnection.Value.Text);
             }
             foreach (var outputConnection in Output)
             {
                 var destination = ((Place)outputConnection.Destination);
-                destination.Value = new PNML_InitialMarking(destination.Value.Text + outputConnection.Value.Text);
+                destination.Value = new PlaceInitialMarking(destination.Value.Text + outputConnection.Value.Text);
                 //foreach (var connection in destination.Output)
                 //{
                 //    if(connection.Destination is Transition trans)

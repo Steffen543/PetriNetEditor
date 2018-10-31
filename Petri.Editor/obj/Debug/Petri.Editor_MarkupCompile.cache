@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\App.xaml
-8-2001705124
+10195399577
 
-35719740630
+37-1870944440
 191633033716
-UI\Controls\EditConnectionValueControl.xaml;Dialogs\ConnectionWindow.xaml;MainWindow.xaml;Resources\Resources.xaml;UI\View\EditorView.xaml;UI\View\EditorToolsView.xaml;UI\View\EmptyPetriNetView.xaml;UI\View\PetriNetEditorView.xaml;
+UI\Controls\EditConnectionValueControl.xaml;Dialogs\ConnectionWindow.xaml;MainWindow.xaml;Resources\Resources.xaml;UI\View\EditorView.xaml;UI\View\EditorToolsView.xaml;UI\View\EmptyPetriNetView.xaml;UI\View\Information\PlaceInformationView.xaml;UI\View\Information\TransitionInformationView.xaml;UI\View\PetriNetEditorView.xaml;
 
 False
 

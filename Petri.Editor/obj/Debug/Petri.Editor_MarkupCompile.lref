@@ -1,4 +1,4 @@
-﻿F:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+﻿
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\App.xaml;;
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\Controls\EditConnectionValueControl.xaml;;
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\Dialogs\ConnectionWindow.xaml;;
@@ -7,5 +7,7 @@ FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\Resources\Resources.
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\EditorView.xaml;;
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\EditorToolsView.xaml;;
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\EmptyPetriNetView.xaml;;
+FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\Information\PlaceInformationView.xaml;;
+FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\Information\TransitionInformationView.xaml;;
 FF:\Benutzer\Steffen\Source\Repos\Petri.Editor\Petri.Editor\UI\View\PetriNetEditorView.xaml;;
 

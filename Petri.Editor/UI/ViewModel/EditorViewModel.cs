@@ -29,7 +29,7 @@ namespace Petri.Editor.UI.ViewModel
             set{ SetProperty(() => PnmlNet, value); }
         }
 
-        public UIPlaceable CurrentInformationEntry
+        public ConnectableBase CurrentInformationEntry
         {
             get { return GetProperty(() => CurrentInformationEntry); }
             set{ SetProperty(() => CurrentInformationEntry, value); }
@@ -60,7 +60,7 @@ namespace Petri.Editor.UI.ViewModel
         }
 
         public DelegateCommand<PetriNetCoordinates> AddCommand { get; private set; }
-        public DelegateCommand<UIPlaceable> ShowInformationCommand { get; private set; }
+        public DelegateCommand<ConnectableBase> ShowInformationCommand { get; private set; }
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
         public DelegateCommand<ConnectableBase> AddConnectionCommand { get; private set; }
@@ -73,7 +73,7 @@ namespace Petri.Editor.UI.ViewModel
             DeleteCommand = new DelegateCommand<UIPlaceable>(DeleteCommandExecute, DeleteCommandCanExecute);
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
-            ShowInformationCommand = new DelegateCommand<UIPlaceable>(ShowInformationCommandExecute, ShowInformationCommandCanExecute);
+            ShowInformationCommand = new DelegateCommand<ConnectableBase>(ShowInformationCommandExecute, ShowInformationCommandCanExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute, CancelCommandCanExecute);
         }
 
@@ -94,12 +94,11 @@ namespace Petri.Editor.UI.ViewModel
         {
             double size = ConnectableBase.SIZE;
             var sourceItem = dropInfo.Data;
-            var targetItem = dropInfo.TargetItem;
-
+            
             if (sourceItem is ConnectableBase item)
             {
-                item.X = dropInfo.DropPosition.X - size / 2;
-                item.Y = dropInfo.DropPosition.Y - size / 2;
+                item.Position.X = dropInfo.DropPosition.X - size / 2;
+                item.Position.Y = dropInfo.DropPosition.Y - size / 2;
 
               
                 foreach (var connection in item.Output)
@@ -142,7 +141,7 @@ namespace Petri.Editor.UI.ViewModel
             item.Execute();
         }
 
-        void ShowInformationCommandExecute(UIPlaceable item)
+        void ShowInformationCommandExecute(ConnectableBase item)
         {
             CurrentInformationEntry = item;
         }
@@ -163,7 +162,6 @@ namespace Petri.Editor.UI.ViewModel
                 item.SelectedAsSource = false;
                 AddConnectionHelper.Destination = null;
                 AddConnectionHelper.Source = null;
-                EditorMode = EditorMode.Execute;
             }
         }
 
@@ -204,7 +202,7 @@ namespace Petri.Editor.UI.ViewModel
             return EditorMode == EditorMode.Execute && item != null && item.IsExecutable;
         }
 
-        bool ShowInformationCommandCanExecute(UIPlaceable item)
+        bool ShowInformationCommandCanExecute(ConnectableBase item)
         {
             return EditorMode == EditorMode.ShowInformation;
         }
@@ -264,9 +262,8 @@ namespace Petri.Editor.UI.ViewModel
                 }
 
                 ArrowManagement.Remove(conn.Source, conn.Destination);
-                var otherConnectionsBetweenRemoved = PnmlNet.PetriNet.Objects.GetConnections().Where(c => 
-                    (c.Source == conn.Destination || c.Source == conn.Source) &&
-                    (c.Destination == conn.Destination || c.Destination == conn.Source));
+                var otherConnectionsBetweenRemoved =
+                    PnmlNet.PetriNet.Objects.GetAllConnectionsBetween2Connectables(conn.Source, conn.Destination);
                 foreach (var c in otherConnectionsBetweenRemoved)
                 {
                     c.UpdateArrows();
@@ -285,16 +282,27 @@ namespace Petri.Editor.UI.ViewModel
             }
         }
 
-        public void AddConnection(IConnectable source, IConnectable destination, int value, string description)
+        public void AddConnection(ConnectableBase source, ConnectableBase destination, int value, string description)
         {
+            Connection updateOldConnection = null;
+            if (ArrowManagement.CountConnections(source, destination) == 1)
+            {
+                updateOldConnection = PnmlNet.PetriNet.Objects
+                    .GetAllConnectionsBetween2Connectables(source, destination).First();
+                ArrowManagement.Remove(source, destination);
+            }
+
             Connection newConnection = new Connection(PnmlNet.PetriNet.CreateId(), source.Id, destination.Id, value, description);
             PnmlNet.PetriNet.InitDependency(newConnection);
             PnmlNet.PetriNet.Objects.Add(newConnection);
-            PnmlNet.PetriNet.InitDependency(source as ConnectableBase);
-            PnmlNet.PetriNet.InitDependency(destination as ConnectableBase);
+            PnmlNet.PetriNet.InitDependency(source);
+            PnmlNet.PetriNet.InitDependency(destination);
             if(source is Transition trans) trans.CalcIsExecutable();
             if(destination is Transition transd) transd.CalcIsExecutable();
             newConnection.CalcIsExecutable();
+
+            if(updateOldConnection != null) updateOldConnection.UpdateArrows();
+
             newConnection.UpdateArrows();
         }
 

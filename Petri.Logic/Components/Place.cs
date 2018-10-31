@@ -5,20 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Petri.Logic.PNML;
+using Petri.Logic.Pnml;
 
 namespace Petri.Logic.Components
 {
     [XmlType("place")]
     public class Place : ConnectableBase, IConnectable
     {
-        private PNML_InitialMarking _value;
+        private PlaceInitialMarking _value;
 
         [XmlIgnore()]
         public ObservableCollection<PlacePoint> Points { get; set; }
 
+
+        /// <summary>
+        /// Only for binding
+        /// </summary>
+        [XmlIgnore()]
+        public int ValueBind
+        {
+            get { return GetProperty(() => ValueBind); }
+            set
+            {
+                SetProperty(() => ValueBind, value);
+                Value = new PlaceInitialMarking(value);
+            }
+        }
+
         [XmlElement("initialMarking")]
-        public PNML_InitialMarking Value
+        public PlaceInitialMarking Value
         {
             get
             {
@@ -26,7 +41,7 @@ namespace Petri.Logic.Components
             }
             set
             {
-                if (value.Text < 0) _value = new PNML_InitialMarking(0);
+                if (value.Text < 0) _value = new PlaceInitialMarking(0);
                 this._value = value;
                
                 foreach (var outputConnection in Output)
@@ -45,6 +60,8 @@ namespace Petri.Logic.Components
                 RaisePropertyChanged("Points");
                 RaisePropertyChanged("IsExecutable");
                 RaisePropertyChanged("Value");
+                SetProperty(() => ValueBind, value.Text);
+                RaisePropertiesChanged("ValueBind");
 
             }
         }
@@ -59,7 +76,7 @@ namespace Petri.Logic.Components
 
         public Place(string id, double x, double y, string name, string description, int value) : base(id, x, y, description, name)
         {
-            Value = new PNML_InitialMarking(value);
+            Value = new PlaceInitialMarking(value);
         }
 
         

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Petri.Logic.Components;
-using Petri.Logic.PNML;
+using Petri.Logic.Pnml;
 
 namespace Petri.Editor.Controls
 {
@@ -55,7 +55,7 @@ namespace Petri.Editor.Controls
                 MainButton.Visibility = Visibility.Collapsed;
                 try
                 {
-                    ((Connection) DataContext).Value = new PNML_Inscription(int.Parse(MainTextBox.Text));
+                    ((Connection) DataContext).Value = new ConnectionInscription(int.Parse(MainTextBox.Text));
                 }
                 catch
                 {

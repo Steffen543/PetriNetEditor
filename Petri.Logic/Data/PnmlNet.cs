@@ -23,7 +23,7 @@ namespace Petri.Logic.Data
 
         public PnmlNet()
         {
-            PetriNet = new Net();
+            
         }
 
 

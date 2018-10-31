@@ -107,6 +107,12 @@
     <Compile Include="UI\View\EmptyPetriNetView.xaml.cs">
       <DependentUpon>EmptyPetriNetView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\View\Information\PlaceInformationView.xaml.cs">
+      <DependentUpon>PlaceInformationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\View\Information\TransitionInformationView.xaml.cs">
+      <DependentUpon>TransitionInformationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\View\Manager\ScrollZoomManager.cs" />
     <Compile Include="UI\View\PetriNetEditorView.xaml.cs">
       <DependentUpon>PetriNetEditorView.xaml</DependentUpon>
@@ -146,6 +152,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\View\EmptyPetriNetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\View\Information\PlaceInformationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\View\Information\TransitionInformationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

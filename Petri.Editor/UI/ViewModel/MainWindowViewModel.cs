@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DevExpress.Mvvm;
 using Microsoft.Win32;
+using Petri.Editor.Properties;
 using Petri.Logic.Data;
 using Petri.Logic.Xml;
 
@@ -13,6 +17,12 @@ namespace Petri.Editor.UI.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
+        public ObservableCollection<LastOpenedFile> LastOpenedFiles
+        {
+            get { return GetProperty(() => LastOpenedFiles); }
+            set { SetProperty(() => LastOpenedFiles, value); }
+        }
+
         public PnmlNet CurrentPnmlNet
         {
             get { return GetProperty(() => CurrentPnmlNet); }
@@ -45,6 +55,7 @@ namespace Petri.Editor.UI.ViewModel
         public DelegateCommand OpenPetriNetFileCommand { get; private set; }
         public DelegateCommand SavePetriNetCommand { get; private set; }
         public DelegateCommand SavePetriNetUnderNewNameCommand { get; private set; }
+        public DelegateCommand<LastOpenedFile> OpenLastPetriNetFileCommand { get; private set; }
 
         public MainWindowViewModel()
         {
@@ -52,11 +63,19 @@ namespace Petri.Editor.UI.ViewModel
             OpenPetriNetFileCommand = new DelegateCommand(OpenPetriNetFileCommandExecute, OpenPetriNetFileCommandCanExecute);
             SavePetriNetCommand = new DelegateCommand(SavePetriNetCommandExecute, SavePetriNetCommandCanExecute);
             SavePetriNetUnderNewNameCommand = new DelegateCommand(SavePetriNetUnderNewNameCommandExecute, SavePetriNetUnderNewNameCommandCanExecute);
+            OpenLastPetriNetFileCommand = new DelegateCommand<LastOpenedFile>(OpenLastPetriNetFileCommandExecute, OpenLastPetriNetFileCommandCanExecute);
             EditorViewModel = new EditorViewModel();
             //CurrentPnmlNet = new PnmlNet();
+            LastOpenedFiles = GetLastOpenedFilesList();
+
         }
 
         #region Commands
+
+        void OpenLastPetriNetFileCommandExecute(LastOpenedFile file)
+        {
+           OpenPetriNet(file.FileName);
+        }
 
         void CreateNewPetriNetCommandExecute()
         {
@@ -72,15 +91,10 @@ namespace Petri.Editor.UI.ViewModel
             if(openFileDialog.ShowDialog() == true)
             {
                 var file = openFileDialog.FileName;
-
-                CurrentFileName = openFileDialog.FileName;
-                CurrentFilePath = file;
-
-                PetriNetXMLReader reader = new PetriNetXMLReader();
-                CurrentPnmlNet = reader.ReadFromXML(file);
-                CurrentPnmlNet.PetriNet.InitDependencies();
+                OpenPetriNet(file);
             }
         }
+
 
         void SavePetriNetCommandExecute()
         {
@@ -89,6 +103,7 @@ namespace Petri.Editor.UI.ViewModel
             if (CurrentFileName != null)
             {
                 reader.SaveToXML(CurrentPnmlNet, CurrentFilePath);
+
             }
             else
             {
@@ -110,6 +125,8 @@ namespace Petri.Editor.UI.ViewModel
             if (saveFileDialog.ShowDialog() == true)
             {
                 reader.SaveToXML(CurrentPnmlNet, saveFileDialog.FileName);
+                CurrentFileName = saveFileDialog.FileName;
+                CurrentFilePath = CurrentFileName;
             }
         }
 
@@ -117,6 +134,11 @@ namespace Petri.Editor.UI.ViewModel
 
         #region CanExecute
 
+
+        bool OpenLastPetriNetFileCommandCanExecute(LastOpenedFile file)
+        {
+            return true;
+        }
         bool CreateNewPetriNetCommandCanExecute()
         {
             return true;
@@ -136,6 +158,81 @@ namespace Petri.Editor.UI.ViewModel
 
 
         #endregion
+
+        private void OpenPetriNet(string filename)
+        {
+            try
+            {
+               
+
+                PetriNetXMLReader reader = new PetriNetXMLReader();
+                CurrentPnmlNet = reader.ReadFromXML(filename);
+                CurrentPnmlNet.PetriNet.InitDependencies();
+
+                if (Settings.Default.LastOpenedFiles.Count > 0 && Settings.Default.LastOpenedFiles[0] == filename)
+                {
+
+                }
+                else
+                {
+                    Settings.Default.LastOpenedFiles.Insert(0, filename);
+                }
+
+
+               
+
+                Settings.Default.Save();
+                LastOpenedFiles = GetLastOpenedFilesList();
+
+                CurrentFileName = filename;
+                CurrentFilePath = filename;
+            }
+            catch
+            {
+                CurrentPnmlNet = null;
+                MessageBox.Show("Petri Netz konnte nicht geöffnet werden", "Öffnen fehlgeschlagen", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        private ObservableCollection<LastOpenedFile> GetLastOpenedFilesList()
+        {
+            var returnList = new ObservableCollection<LastOpenedFile>();
+            var lastOpenedFiles = Settings.Default.LastOpenedFiles;
+            if (lastOpenedFiles == null)
+            {
+                lastOpenedFiles = new StringCollection();
+                Settings.Default.LastOpenedFiles = lastOpenedFiles;
+                Settings.Default.Save();
+            }
+            foreach (var lastOpenedFile in lastOpenedFiles)
+            {
+                bool isAvailable = true;
+                string isAvailableInfo = String.Empty;
+                if (!File.Exists(lastOpenedFile))
+                {
+                    isAvailable = false;
+                    isAvailableInfo = "Nicht gefunden";
+                }
+                returnList.Add(new LastOpenedFile(lastOpenedFile, isAvailableInfo, isAvailable));
+            }
+
+            return returnList;
+        }
+    }
+
+    public class LastOpenedFile
+    {
+        public string FileName { get; set; }
+        public string IsAvailableInfo { get; set; }
+        public bool IsAvailable { get; set; }
+
+        public LastOpenedFile(string filename, string availableInfo, bool isAvailable)
+        {
+            FileName = filename;
+            IsAvailableInfo = availableInfo;
+            IsAvailable = isAvailable;
+        }
 
     }
 }

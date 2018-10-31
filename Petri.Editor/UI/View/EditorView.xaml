@@ -80,8 +80,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding X, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Setter Property="Canvas.Left" Value="{Binding Position.X, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Position.Y, UpdateSourceTrigger=PropertyChanged}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.Resources>
@@ -94,10 +94,10 @@
                             <Canvas Background="Red">
                                 <media2d:ArrowLine x:Name="Arrow" IsArrowClosed="True"  
                                     StrokeThickness="2" ArrowLength="17" 
-                                    X1="{Binding ArrowSourceX, UpdateSourceTrigger=PropertyChanged}"
-                                    Y1="{Binding ArrowSourceY, UpdateSourceTrigger=PropertyChanged}"
-                                    X2="{Binding ArrowDestinationX, UpdateSourceTrigger=PropertyChanged}"
-                                    Y2="{Binding ArrowDestinationY, UpdateSourceTrigger=PropertyChanged}">
+                                    X1="{Binding SourcePosition.X, UpdateSourceTrigger=PropertyChanged}"
+                                    Y1="{Binding SourcePosition.Y, UpdateSourceTrigger=PropertyChanged}"
+                                    X2="{Binding DestinationPosition.X, UpdateSourceTrigger=PropertyChanged}"
+                                    Y2="{Binding DestinationPosition.Y, UpdateSourceTrigger=PropertyChanged}">
       
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">

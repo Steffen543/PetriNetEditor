@@ -27,7 +27,7 @@
                 </Style>
             </view:EditorView.Style>
         </view:EditorView>
-        <view:EmptyPetriNetView Grid.Column="0" >
+        <view:EmptyPetriNetView Grid.Column="0" DataContext="{Binding .}">
             <view:EmptyPetriNetView.Style>
                 <Style TargetType="view:EmptyPetriNetView">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
