@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Petri.Editor"
         xmlns:view="clr-namespace:Petri.Editor.UI.View" d:DataContext="{d:DesignInstance viewModel:MainWindowViewModel}"
         xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowState="Maximized"
         Title="{Binding CurrentFileName}" Height="750" Width="1200">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SavePetriNetCommand}"/>
