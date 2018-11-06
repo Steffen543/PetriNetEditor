@@ -156,12 +156,15 @@ namespace Petri.Editor.UI.ViewModel
             else if (AddConnectionHelper.Destination == null && item != AddConnectionHelper.Source)
             {
                 AddConnectionHelper.Destination = item;
-                AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, 1, AddConnectionHelper.Description);
-             
+                AddConnection(AddConnectionHelper.Source, AddConnectionHelper.Destination, 1,
+                    AddConnectionHelper.Description);
+
                 AddConnectionHelper.Source.SelectedAsSource = false;
                 item.SelectedAsSource = false;
                 AddConnectionHelper.Destination = null;
                 AddConnectionHelper.Source = null;
+                
+               
             }
         }
 

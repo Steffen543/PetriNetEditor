@@ -31,7 +31,7 @@ namespace Petri.Logic.Xml
 
             var net =  (PnmlNet)deserializer.Deserialize(fileStream);
 
-            ArrowManagement.ObjectList = net.PetriNet.Objects;
+           
 
             fileStream.Close();
             return net;

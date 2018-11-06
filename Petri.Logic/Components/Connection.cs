@@ -84,6 +84,8 @@ namespace Petri.Logic.Components
             Value = new ConnectionInscription(value);
             SourceId = sourceId;
             DestinationId = destinationId;
+            SourcePosition = new Position();
+            DestinationPosition = new Position();
         }
 
         public override string ToString()

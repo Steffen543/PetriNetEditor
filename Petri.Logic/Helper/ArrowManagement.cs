@@ -45,6 +45,7 @@ namespace Petri.Logic.Helper
 
         public static int CountConnections(ConnectableBase component1, ConnectableBase component2)
         {
+
             int counter = 0;
             foreach (var conn in ObjectList.GetConnections())
             {
@@ -53,6 +54,8 @@ namespace Petri.Logic.Helper
                 if (comp1Found && comp2Found) counter++;
             }
             return counter;
+           
+          
         }
     }
 

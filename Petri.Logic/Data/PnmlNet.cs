@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using DevExpress.Mvvm;
+using Petri.Logic.Helper;
 
 namespace Petri.Logic.Data
 {
@@ -23,7 +24,8 @@ namespace Petri.Logic.Data
 
         public PnmlNet()
         {
-            
+            PetriNet = new Net();
+            ArrowManagement.ObjectList = PetriNet.Objects;
         }
 
 
