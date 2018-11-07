@@ -7,7 +7,7 @@ using Petri.Logic.Pnml;
 
 namespace Petri.Logic.Components
 {
-    public interface IConnectable
+    public interface IConnectablef
     {
         string Id { get; set; }
         Position Position { get; set; }

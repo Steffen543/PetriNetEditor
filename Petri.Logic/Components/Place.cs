@@ -10,7 +10,7 @@ using Petri.Logic.Pnml;
 namespace Petri.Logic.Components
 {
     [XmlType("place")]
-    public class Place : ConnectableBase, IConnectable
+    public class Place : ConnectableBase
     {
         private PlaceInitialMarking _value;
 
@@ -55,7 +55,7 @@ namespace Petri.Logic.Components
                 Points = new ObservableCollection<PlacePoint>();
                 for (int i = 0; i < value.Text; i++)
                 {
-                    Points.Add(new PlaceFullPoint());
+                    Points.Add(new PlacePoint());
                 }
                 RaisePropertyChanged("Points");
                 RaisePropertyChanged("IsExecutable");
@@ -74,7 +74,7 @@ namespace Petri.Logic.Components
         }
 
 
-        public Place(string id, double x, double y, string name, string description, int value) : base(id, x, y, description, name)
+        public Place(string id, double x, double y, string name, string description, int value) : base(id, x, y, name, description)
         {
             Value = new PlaceInitialMarking(value);
         }
@@ -92,13 +92,4 @@ namespace Petri.Logic.Components
 
     }
 
-    public class PlaceFullPoint : PlacePoint
-    {
-
-    }
-
-    public class PlaceEmptyPoint : PlacePoint
-    {
-
-    }
 }

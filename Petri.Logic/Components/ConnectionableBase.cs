@@ -11,7 +11,7 @@ using Petri.Logic.Xml;
 
 namespace Petri.Logic.Components
 {
-    public class ConnectableBase : UIPlaceable, IConnectable
+    public class ConnectableBase : UIPlaceable
     {
         public static double SIZE;
 

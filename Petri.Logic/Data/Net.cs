@@ -93,6 +93,7 @@ namespace Petri.Logic.Data
 
             connectable.Input = new ObservableCollection<Connection>(sources);
             connectable.Output = new ObservableCollection<Connection>(destinations);
+            connectable.Position.PropertyChanged += connectable.PositionChanged;
         }
 
         /// <summary>

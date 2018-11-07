@@ -183,10 +183,10 @@ namespace Petri.Editor.UI.ViewModel
             switch (EditorMode)
             {
                 case EditorMode.AddPlace:
-                    AddPlace(x, y, "neu");
+                    AddPlace(x, y);
                     break;
                 case EditorMode.AddTransition:
-                    AddTransition(x, y, "neu");
+                    AddTransition(x, y);
                     break;
             }
         }
@@ -238,16 +238,16 @@ namespace Petri.Editor.UI.ViewModel
 
         #region Logic
 
-        public void AddPlace(double x, double y, string description)
+        public void AddPlace(double x, double y)
         {
-            Place place = new Place(PnmlNet.PetriNet.CreateId(), x, y, "Name", "Description",  0);
+            Place place = new Place(PnmlNet.PetriNet.CreateId(), x, y, "Stelle", String.Empty,  0);
             PnmlNet.PetriNet.Objects.Add(place);
             PnmlNet.PetriNet.InitDependency(place);
         }
 
-        public void AddTransition(double x, double y, string description)
+        public void AddTransition(double x, double y)
         {
-            Transition trans = new Transition(PnmlNet.PetriNet.CreateId(), x, y, "Name", "Description");
+            Transition trans = new Transition(PnmlNet.PetriNet.CreateId(), x, y, "Transition", String.Empty);
             PnmlNet.PetriNet.Objects.Add(trans);
             PnmlNet.PetriNet.InitDependency(trans);
             trans.CalcIsExecutable();

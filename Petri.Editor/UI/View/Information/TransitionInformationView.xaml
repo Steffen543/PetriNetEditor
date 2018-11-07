@@ -10,16 +10,16 @@
     <StackPanel HorizontalAlignment="Left">
         <Label Content="Name" HorizontalAlignment="Left"/>
         <TextBox MaxLength="40" Padding="3" Width="250" HorizontalAlignment="Left" 
-                 Text="{Binding Name.Text,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                 Text="{Binding NameBind,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="X:" HorizontalAlignment="Left"/>
-                <controls:NumericTextBox MaxLength="18" Padding="3" Width="50" HorizontalAlignment="Left" 
+                <controls:NumericTextBox MaxValue="8000" MaxLength="18" Padding="3" Width="50" HorizontalAlignment="Left" 
                                          Text="{Binding Position.X,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Y:" HorizontalAlignment="Left"/>
-                <controls:NumericTextBox MaxLength="8" Padding="3" Width="50" HorizontalAlignment="Left" 
+                <controls:NumericTextBox MaxValue="8000" MaxLength="8" Padding="3" Width="50" HorizontalAlignment="Left" 
                                          Text="{Binding Position.Y,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>

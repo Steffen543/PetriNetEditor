@@ -13,9 +13,18 @@ namespace Petri.Editor.Controls
     {
         private static readonly Regex allowedRegex = new Regex("[^0-9.-]+");
 
+        public int MaxValue { get; set; }
+
         public NumericTextBox()
         {
             PreviewTextInput += NumericTextBox_PreviewTextInput;
+            TextChanged += NumericTextBox_TextChanged;
+        }
+
+        private void NumericTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (int.Parse(Text) > MaxValue)
+                Text = MaxValue.ToString();
         }
 
         private void NumericTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -23,7 +32,7 @@ namespace Petri.Editor.Controls
             int result;
             bool isNumeric = int.TryParse(e.Text, out result);
             e.Handled = allowedRegex.IsMatch(e.Text);
-           
+            if (e.Text == "-") e.Handled = true;
         }
 
         private static bool IsTextAllowed(string text)

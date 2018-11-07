@@ -10,7 +10,7 @@ using Petri.Logic.Pnml;
 namespace Petri.Logic.Components
 {
     [XmlType("transition")]
-    public class Transition : ConnectableBase, IConnectable
+    public class Transition : ConnectableBase
     {
         [XmlAttribute("IsExecutable")]
         public bool IsExecutable
@@ -41,7 +41,7 @@ namespace Petri.Logic.Components
             
         }
 
-        public Transition(string id, double x, double y, string name, string description) : base(id, x, y, description, name)
+        public Transition(string id, double x, double y, string name, string description) : base(id, x, y, name, description)
         {
             
         }

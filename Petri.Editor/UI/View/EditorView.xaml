@@ -64,7 +64,7 @@
                     </Style.Triggers>
                 </Style>
             </ScrollViewer.Style>
-            <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8000" Height="8000" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PnmlNet.PetriNet.Objects}">
+            <ItemsControl dd:DragDrop.DropHandler="{Binding}" dd:DragDrop.IsDropTarget="True" Width="8100" Height="8100" Grid.Row="1" x:Name="MainItemsControl"  Background="#A0A0A0" ItemsSource="{Binding Path=PnmlNet.PetriNet.Objects}">
                 <ItemsControl.LayoutTransform>
                     <ScaleTransform x:Name="ScaleTransform" />
                 </ItemsControl.LayoutTransform>
@@ -164,7 +164,7 @@
                                 <controls:ConnectableButton x:Name="MainButton"  EditorMode="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}">
                                     <controls:ConnectableButton.Resources>
                                         <Style TargetType="controls:ConnectableButton" BasedOn="{StaticResource ConnectableButtonStyle}">
-                                            <Setter Property="Content" Value="{Binding Name}" />
+                                            <Setter Property="Content" Value="{Binding NameBind, UpdateSourceTrigger=PropertyChanged}" />
                                             <Style.Triggers>
                                                 <!-- is marked as source -->
                                                 <MultiDataTrigger>
@@ -288,7 +288,7 @@
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.Resources>
-                                                            <DataTemplate DataType="{x:Type components:PlaceFullPoint}">
+                                                            <DataTemplate DataType="{x:Type components:PlacePoint}">
                                                                 <Grid Margin="1">
                                                                     <Ellipse  Fill="{Binding ElementName=MainButton, Path=Foreground}" Stroke="{Binding ElementName=MainButton, Path=Foreground}" StrokeThickness="1" />
                                                                 </Grid>
@@ -298,6 +298,13 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
                                                 <DataTrigger Binding="{Binding Points.Count, Converter={StaticResource IsBiggerConverter}, ConverterParameter=9}" Value="True">
                                                     <Setter Property="Content">
                                                         <Setter.Value>
