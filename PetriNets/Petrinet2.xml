@@ -1,70 +1,269 @@
 <?xml version="1.0"?>
-<PetriNetXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.cpandl.com">
-  <Objects>
-    <Connection Id="41" Name="NAME" X="580.46629213483152" Y="990.405168539326" Value="3" IsExecutable="true" SourceId="19" DestinationId="17" />
-    <Connection Id="40" Name="NAME" X="1310.5" Y="1262.82" Value="3" IsExecutable="true" SourceId="37" DestinationId="39" />
-    <Connection Id="13" Name="Conn8" Description="Connbeschreibung" X="100" Y="600" Value="2" IsExecutable="true" SourceId="2" DestinationId="4" />
-    <Connection Id="12" Name="Conn7" Description="Connbeschreibung" X="100" Y="100" Value="2" IsExecutable="true" SourceId="0" DestinationId="5" />
-    <Connection Id="11" Name="Conn6" Description="Connbeschreibung" X="600" Y="600" Value="4" IsExecutable="false" SourceId="5" DestinationId="1" />
-    <Connection Id="10" Name="Conn5" Description="Connbeschreibung" X="600" Y="100" Value="1" IsExecutable="false" SourceId="1" DestinationId="5" />
-    <Connection Id="9" Name="Conn4" Description="Connbeschreibung" X="100" Y="300" Value="4" IsExecutable="true" SourceId="4" DestinationId="0" />
-    <Connection Id="8" Name="Conn3" Description="Connbeschreibung" X="100" Y="100" Value="1" IsExecutable="true" SourceId="0" DestinationId="4" />
-    <Connection Id="7" Name="Conn2" Description="Connbeschreibung" X="300" Y="100" Value="6" IsExecutable="false" SourceId="3" DestinationId="1" />
-    <Connection Id="6" Name="Conn1" Description="Connbeschreibung" X="100" Y="100" Value="3" IsExecutable="true" SourceId="0" DestinationId="3" />
-    <Connection Id="27" Name="NAME" X="1726.1363636363637" Y="915.37272727272727" Value="3" IsExecutable="true" SourceId="20" DestinationId="24" />
-    <Connection Id="28" Name="NAME" X="1691.5909090909092" Y="751.73636363636365" Value="2" IsExecutable="true" SourceId="24" DestinationId="21" />
-    <Connection Id="29" Name="NAME" X="1731.5909090909092" Y="529.91818181818178" Value="5" IsExecutable="true" SourceId="21" DestinationId="23" />
-    <Connection Id="30" Name="NAME" X="2100.6818181818185" Y="509.91818181818172" Value="2" IsExecutable="false" SourceId="23" DestinationId="22" />
-    <Connection Id="31" Name="NAME" X="2306.136363636364" Y="639.0090909090909" Value="1" IsExecutable="false" SourceId="22" DestinationId="25" />
-    <Connection Id="32" Name="NAME" X="2367.954545454546" Y="1288.1000000000001" Value="1" IsExecutable="true" SourceId="26" DestinationId="25" />
-    <Connection Id="33" Name="NAME" X="2171.5909090909095" Y="1122.6454545454546" Value="1" IsExecutable="true" SourceId="25" DestinationId="20" />
-    <Transition Id="0" Name="Beschreibung" Description="Main" X="100" Y="100" IsExecutable="true" />
-    <Transition Id="1" Name="Beschreibung" Description="Test" X="600" Y="100" IsExecutable="false" />
-    <Transition Id="2" Name="Beschreibung" Description="Hallo" X="100" Y="600" IsExecutable="true" />
-    <Stelle Id="3" Name="Stelllenbeschreibung" Description="Stelle 1" X="300" Y="100" Value="0" />
-    <Stelle Id="4" Name="Stelllenbeschreibung" Description="Stelle 2" X="100" Y="300" Value="6" />
-    <Stelle Id="5" Name="Stelllenbeschreibung" Description="Stelle 3" X="600" Y="600" Value="0" />
-    <Transition Id="15" Name="Description" Description="Name" X="281.5" Y="439.5" IsExecutable="true" />
-    <Stelle Id="16" Name="Description" Description="Name" X="418.5" Y="214.54" Value="0" />
-    <Stelle Id="17" Name="Description" Description="Name" X="1073.1404494382025" Y="518.966966292135" Value="0" />
-    <Stelle Id="18" Name="Description" Description="Name" X="858.65730337078662" Y="94.247865168539334" Value="0" />
-    <Transition Id="19" Name="Description" Description="Name" X="580.46629213483152" Y="990.405168539326" IsExecutable="true" />
-    <Transition Id="20" Name="Description" Description="Name" X="1726.1363636363637" Y="915.37272727272727" IsExecutable="true" />
-    <Transition Id="21" Name="Description" Description="Name" X="1731.5909090909092" Y="529.91818181818178" IsExecutable="true" />
-    <Transition Id="22" Name="Description" Description="Name" X="2306.136363636364" Y="639.0090909090909" IsExecutable="false" />
-    <Stelle Id="23" Name="Description" Description="Name" X="2100.6818181818185" Y="509.91818181818172" Value="1" />
-    <Stelle Id="24" Name="Description" Description="Name" X="1691.5909090909092" Y="751.73636363636365" Value="5" />
-    <Stelle Id="25" Name="Description" Description="Name" X="2171.5909090909095" Y="1122.6454545454546" Value="2" />
-    <Transition Id="26" Name="Description" Description="Name" X="2367.954545454546" Y="1288.1000000000001" IsExecutable="true" />
-    <Transition Id="34" Name="Description" Description="Name" X="685.5" Y="227.57999999999998" IsExecutable="true" />
-    <Transition Id="35" Name="Description" Description="Name" X="827.49999999999989" Y="695.96666666666658" IsExecutable="true" />
-    <Transition Id="36" Name="Description" Description="Name" X="2018.5" Y="2010.8200000000002" IsExecutable="true" />
-    <Transition Id="37" Name="Description" Description="Name" X="1310.5" Y="1262.82" IsExecutable="true" />
-    <Stelle Id="38" Name="Description" Description="Name" X="2934.5" Y="362.82" Value="0" />
-    <Stelle Id="39" Name="Description" Description="Name" X="1674.5" Y="1674.82" Value="0" />
-    <Stelle Id="42" Name="Description" Description="Name" X="949.642857142857" Y="272.6142857142857" Value="0" />
-    <Stelle Id="43" Name="Description" Description="Name" X="945.35714285714278" Y="274.04285714285709" Value="0" />
-    <Stelle Id="44" Name="Description" Description="Name" X="908.21428571428555" Y="302.61428571428564" Value="0" />
-    <Stelle Id="45" Name="Description" Description="Name" X="888.21428571428555" Y="326.9" Value="0" />
-    <Stelle Id="46" Name="Description" Description="Name" X="888.21428571428555" Y="326.9" Value="0" />
-    <Stelle Id="47" Name="Description" Description="Name" X="888.21428571428555" Y="328.32857142857137" Value="0" />
-    <Stelle Id="48" Name="Description" Description="Name" X="872.49999999999989" Y="365.47142857142853" Value="0" />
-    <Stelle Id="49" Name="Description" Description="Name" X="855.35714285714278" Y="388.32857142857137" Value="0" />
-    <Stelle Id="50" Name="Description" Description="Name" X="845.35714285714278" Y="398.32857142857137" Value="0" />
-    <Stelle Id="51" Name="Description" Description="Name" X="821.07142857142844" Y="434.04285714285709" Value="0" />
-    <Stelle Id="52" Name="Description" Description="Name" X="781.07142857142844" Y="482.61428571428564" Value="0" />
-    <Stelle Id="53" Name="Description" Description="Name" X="768.21428571428555" Y="489.75714285714275" Value="0" />
-    <Stelle Id="54" Name="Description" Description="Name" X="732.49999999999989" Y="529.75714285714275" Value="0" />
-    <Stelle Id="55" Name="Description" Description="Name" X="708.21428571428567" Y="586.89999999999986" Value="0" />
-    <Stelle Id="56" Name="Description" Description="Name" X="412.49999999999994" Y="734.04285714285709" Value="0" />
-    <Stelle Id="57" Name="Description" Description="Name" X="422.49999999999994" Y="691.1857142857142" Value="0" />
-    <Stelle Id="58" Name="Description" Description="Name" X="549.64285714285711" Y="674.04285714285709" Value="0" />
-    <Stelle Id="59" Name="Description" Description="Name" X="655.35714285714278" Y="659.75714285714275" Value="0" />
-    <Stelle Id="60" Name="Description" Description="Name" X="741.07142857142844" Y="571.1857142857142" Value="0" />
-    <Stelle Id="61" Name="Description" Description="Name" X="811.07142857142844" Y="385.47142857142853" Value="0" />
-    <Stelle Id="62" Name="Description" Description="Name" X="883.92857142857133" Y="289.75714285714281" Value="0" />
-    <Stelle Id="63" Name="Description" Description="Name" X="968.21428571428555" Y="264.04285714285709" Value="0" />
-    <Stelle Id="64" Name="Description" Description="Name" X="872.49999999999989" Y="509.75714285714275" Value="0" />
-    <Stelle Id="65" Name="Description" Description="Name" X="689.642857142857" Y="538.32857142857131" Value="0" />
-  </Objects>
-</PetriNetXML>
+<pnml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net>
+    <name>
+      <text>processes_0_1_min_lang.dot</text>
+    </name>
+    <page>
+      <arc id="in_p111_t_3_a_1" source="p111" target="t_3_a_1">
+        <position X="419.64285714285711" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_2_b_1_p122" source="t_2_b_1" target="p122">
+        <position X="60" Y="850" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p121_t_2_b_1" source="p121" target="t_2_b_1">
+        <position X="287.1153846153847" Y="250" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_2_b_1_p113" source="t_2_b_1" target="p113">
+        <position X="60" Y="850" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p112_t_2_b_1" source="p112" target="t_2_b_1">
+        <position X="60" Y="1040" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_1_b_1_p113" source="t_1_b_1" target="p113">
+        <position X="940" Y="1040" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p112_t_1_b_1" source="p112" target="t_1_b_1">
+        <position X="60" Y="1040" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_1_b_1_p122" source="t_1_b_1" target="p122">
+        <position X="940" Y="1040" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p122_t_1_b_1" source="p122" target="t_1_b_1">
+        <position X="940" Y="425.4142857142856" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_0__p111" source="t_0_" target="p111">
+        <position X="60" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p110_t_0_" source="p110" target="t_0_">
+        <position X="150" Y="180" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_0__p121" source="t_0_" target="p121">
+        <position X="60" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p120_t_0_" source="p120" target="t_0_">
+        <position X="60" Y="200" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_6_d_1_p111" source="t_6_d_1" target="p111">
+        <position X="940" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p111_t_6_d_1" source="p111" target="t_6_d_1">
+        <position X="419.64285714285711" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_6_d_1_p121" source="t_6_d_1" target="p121">
+        <position X="940" Y="60" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p122_t_6_d_1" source="p122" target="t_6_d_1">
+        <position X="940" Y="425.4142857142856" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_5_d_1_p121" source="t_5_d_1" target="p121">
+        <position X="745.83333333333326" Y="350" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p122_t_5_d_1" source="p122" target="t_5_d_1">
+        <position X="940" Y="425.4142857142856" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_5_d_1_p111" source="t_5_d_1" target="p111">
+        <position X="745.83333333333326" Y="350" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p114_t_5_d_1" source="p114" target="t_5_d_1">
+        <position X="60" Y="350" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_4_c_1_p114" source="t_4_c_1" target="p114">
+        <position X="60" Y="540.75454545454556" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="in_p113_t_4_c_1" source="p113" target="t_4_c_1">
+        <position X="60" Y="669.84545454545469" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="out_t_3_a_1_p112" source="t_3_a_1" target="p112">
+        <position X="413.40909090909088" Y="850" />
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <place id="p121">
+        <position X="287.1153846153847" Y="250" />
+        <name>
+          <text>121</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p110">
+        <position X="150" Y="180" />
+        <name>
+          <text>110</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <place id="p114">
+        <position X="60" Y="350" />
+        <name>
+          <text>114</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <place id="p120">
+        <position X="60" Y="200" />
+        <name>
+          <text>120</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <place id="p111">
+        <position X="419.64285714285711" Y="60" />
+        <name>
+          <text>111</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p113">
+        <position X="60" Y="669.84545454545469" />
+        <name>
+          <text>113</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <place id="p122">
+        <position X="940" Y="425.4142857142856" />
+        <name>
+          <text>122</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <place id="p112">
+        <position X="60" Y="1040" />
+        <name>
+          <text>112</text>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+      </place>
+      <transition id="t_6_d_1" IsExecutable="false">
+        <Description>fafafafafaf</Description>
+        <position X="940" Y="60" />
+        <name>
+          <text>d_1</text>
+        </name>
+      </transition>
+      <transition id="t_0_" IsExecutable="false">
+        <position X="60" Y="60" />
+        <name>
+          <text />
+        </name>
+      </transition>
+      <transition id="t_1_b_1" IsExecutable="false">
+        <position X="940" Y="1040" />
+        <name>
+          <text>b_1</text>
+        </name>
+      </transition>
+      <transition id="t_2_b_1" IsExecutable="false">
+        <position X="60" Y="850" />
+        <name>
+          <text>b_1</text>
+        </name>
+      </transition>
+      <transition id="t_3_a_1" IsExecutable="true">
+        <position X="413.40909090909088" Y="850" />
+        <name>
+          <text>a_1</text>
+        </name>
+      </transition>
+      <transition id="t_4_c_1" IsExecutable="false">
+        <position X="60" Y="540.75454545454556" />
+        <name>
+          <text>c_111333331313131313</text>
+        </name>
+      </transition>
+      <transition id="t_5_d_1" IsExecutable="false">
+        <position X="745.83333333333326" Y="350" />
+        <name>
+          <text>d_177</text>
+        </name>
+      </transition>
+    </page>
+  </net>
+</pnml>

@@ -111,7 +111,7 @@ namespace Petri.Logic.Components
             Position.Y = Source.Position.Y;
             double size = ConnectableBase.SIZE;
            
-            if (ArrowManagement.CountConnections(Source, Destination) == 1)
+            if (ArrowManagement.CountAllConnections(Source, Destination) == 1)
             {
                 var _x = 0 + size * 0.5;
                 var _y = 0 + size * 0.5;

@@ -12,10 +12,12 @@ using Petri.Logic.Helper;
 
 namespace Petri.Logic.Data
 {
-    [XmlRoot("pnml", Namespace = "http://www.cpandl.com", IsNullable = false)]
+    [XmlRoot("pnml", Namespace = "http://www.pnml.org/version-2009/grammar/pnml", IsNullable = false)]
     public class PnmlNet : BindableBase
     {
-        [XmlElement("net")]
+
+
+    [XmlElement("net")]
         public Net PetriNet
         {
             get { return GetProperty(() => PetriNet); }
@@ -25,6 +27,12 @@ namespace Petri.Logic.Data
         public PnmlNet()
         {
             PetriNet = new Net();
+           
+        }
+
+        public void InitArrowManagement()
+        {
+            ArrowManagement.Clear();
             ArrowManagement.ObjectList = PetriNet.Objects;
         }
 

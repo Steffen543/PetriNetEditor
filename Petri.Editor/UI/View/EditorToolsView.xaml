@@ -73,7 +73,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding CurrentInformationEntry, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IsNullConverter}}" Value="False" />
-                                <Condition Binding="{Binding  EditorMode, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation" />
+                                <Condition Binding="{Binding  EditorMode, UpdateSourceTrigger=PropertyChanged}" Value="Edit" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="Visibility" Value="Visible" />

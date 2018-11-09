@@ -29,7 +29,8 @@ namespace Petri.Editor.UI.ViewModel
             set
             {
                 EditorViewModel.PnmlNet = value;
-                SetProperty(() => CurrentPnmlNet, value); 
+                SetProperty(() => CurrentPnmlNet, value);
+                CurrentPnmlNet.InitArrowManagement();
             }
         }
 
@@ -44,11 +45,16 @@ namespace Petri.Editor.UI.ViewModel
             get { return GetProperty(() => CurrentFileName); }
             set { SetProperty(() => CurrentFileName, value); }
         }
-
         public string CurrentFilePath
         {
             get { return GetProperty(() => CurrentFilePath); }
             set { SetProperty(() => CurrentFilePath, value); }
+        }
+
+        public bool IsSaved
+        {
+            get { return GetProperty(() => IsSaved); }
+            set { SetProperty(() => IsSaved, value); }
         }
 
         public DelegateCommand CreateNewPetriNetCommand { get; private set; }
@@ -80,12 +86,13 @@ namespace Petri.Editor.UI.ViewModel
         void CreateNewPetriNetCommandExecute()
         {
             CurrentPnmlNet = new PnmlNet();
+            IsSaved = false;
         }
 
         void OpenPetriNetFileCommandExecute()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            openFileDialog.Filter = "XML Files (*.xml)|*.xml|PNML (*.pnml)|*.pnml";
             openFileDialog.FilterIndex = 0;
             openFileDialog.DefaultExt = "xml";
             if(openFileDialog.ShowDialog() == true)
@@ -163,11 +170,10 @@ namespace Petri.Editor.UI.ViewModel
         {
             try
             {
-               
-
                 PetriNetXMLReader reader = new PetriNetXMLReader();
                 CurrentPnmlNet = reader.ReadFromXML(filename);
                 CurrentPnmlNet.PetriNet.InitDependencies();
+                
 
                 if (Settings.Default.LastOpenedFiles.Count > 0 && Settings.Default.LastOpenedFiles[0] == filename)
                 {
@@ -178,16 +184,14 @@ namespace Petri.Editor.UI.ViewModel
                     Settings.Default.LastOpenedFiles.Insert(0, filename);
                 }
 
-
-               
-
                 Settings.Default.Save();
                 LastOpenedFiles = GetLastOpenedFilesList();
 
                 CurrentFileName = filename;
                 CurrentFilePath = filename;
+                IsSaved = true;
             }
-            catch
+            catch(Exception ex)
             {
                 CurrentPnmlNet = null;
                 MessageBox.Show("Petri Netz konnte nicht geöffnet werden", "Öffnen fehlgeschlagen", MessageBoxButton.OK,

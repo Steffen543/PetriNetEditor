@@ -60,7 +60,7 @@ namespace Petri.Editor.UI.ViewModel
         }
 
         public DelegateCommand<PetriNetCoordinates> AddCommand { get; private set; }
-        public DelegateCommand<ConnectableBase> ShowInformationCommand { get; private set; }
+        public DelegateCommand<ConnectableBase> EditCommand { get; private set; }
         public DelegateCommand<UIPlaceable> DeleteCommand { get; private set; }
         public DelegateCommand<Transition> ExecuteCommand { get; private set; }
         public DelegateCommand<ConnectableBase> AddConnectionCommand { get; private set; }
@@ -73,7 +73,7 @@ namespace Petri.Editor.UI.ViewModel
             DeleteCommand = new DelegateCommand<UIPlaceable>(DeleteCommandExecute, DeleteCommandCanExecute);
             ExecuteCommand = new DelegateCommand<Transition>(ExecuteCommandExecute, ExecuteCommandCanExecute);
             AddConnectionCommand = new DelegateCommand<ConnectableBase>(AddConnectionCommandExecute, AddConnectionCommandCanExecute);
-            ShowInformationCommand = new DelegateCommand<ConnectableBase>(ShowInformationCommandExecute, ShowInformationCommandCanExecute);
+            EditCommand = new DelegateCommand<ConnectableBase>(EditCommandExecute, EditCommandCanExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute, CancelCommandCanExecute);
         }
 
@@ -141,7 +141,7 @@ namespace Petri.Editor.UI.ViewModel
             item.Execute();
         }
 
-        void ShowInformationCommandExecute(ConnectableBase item)
+        void EditCommandExecute(ConnectableBase item)
         {
             CurrentInformationEntry = item;
         }
@@ -163,8 +163,6 @@ namespace Petri.Editor.UI.ViewModel
                 item.SelectedAsSource = false;
                 AddConnectionHelper.Destination = null;
                 AddConnectionHelper.Source = null;
-                
-               
             }
         }
 
@@ -205,9 +203,9 @@ namespace Petri.Editor.UI.ViewModel
             return EditorMode == EditorMode.Execute && item != null && item.IsExecutable;
         }
 
-        bool ShowInformationCommandCanExecute(ConnectableBase item)
+        bool EditCommandCanExecute(ConnectableBase item)
         {
-            return EditorMode == EditorMode.ShowInformation;
+            return EditorMode == EditorMode.Edit;
         }
 
         bool AddConnectionCommandCanExecute(ConnectableBase item)
@@ -271,6 +269,13 @@ namespace Petri.Editor.UI.ViewModel
                 {
                     c.UpdateArrows();
                 }
+
+                conn.Source.Output.Remove(conn);
+                conn.Destination.Input.Remove(conn);
+                if(conn.Destination is Transition trans)
+                    trans.CalcIsExecutable();
+
+              
             }
             if (component is ConnectableBase connectable)
             {
@@ -288,7 +293,7 @@ namespace Petri.Editor.UI.ViewModel
         public void AddConnection(ConnectableBase source, ConnectableBase destination, int value, string description)
         {
             Connection updateOldConnection = null;
-            if (ArrowManagement.CountConnections(source, destination) == 1)
+            if (ArrowManagement.CountConnectionsInArrowManagement(source, destination) == 1)
             {
                 updateOldConnection = PnmlNet.PetriNet.Objects
                     .GetAllConnectionsBetween2Connectables(source, destination).First();

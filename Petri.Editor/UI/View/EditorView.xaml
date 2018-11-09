@@ -19,6 +19,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converter:IsNullConverter x:Key="IsNullConverter"/>
+        <converter:IsEditorModeConverter x:Key="IsEditorModeConverter"/>
         <converter:PercentageConverter x:Key="PercentageConverter"/>
         <converter:IsBiggerConverter x:Key="IsBiggerConverter"/>
         <converter:PetriNetCoordinatesConverter x:Key="PetriNetCoordinatesConverter"/>
@@ -86,10 +87,6 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type components:Connection}">
-                        <DataTemplate.Resources>
-                            <system:Int32 x:Key="StartPosition">0</system:Int32>
-                            <Point x:Key="StartPoint" X="0" Y="0" />
-                        </DataTemplate.Resources>
                         <Border  >
                             <Canvas Background="Red">
                                 <media2d:ArrowLine x:Name="Arrow" IsArrowClosed="True"  
@@ -150,7 +147,7 @@
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Edit">
                                             <Setter Property="dd:DragDrop.IsDragSource" Value="True" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -212,8 +209,8 @@
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 </DataTrigger>
                                                 <!-- edit -->
-                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Edit">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.EditCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
                                                     <Setter Property="IsShowInformation" Value="True" />
                                                 </DataTrigger>
@@ -255,7 +252,6 @@
                                             </Style.Triggers>
                                         </Style>
                                     </controls:ConnectableButton.Resources>
-                                   
                                 </controls:ConnectableButton>
                             </Grid>
                         </Border>
@@ -265,7 +261,7 @@
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
+                                        <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Edit">
                                             <Setter Property="dd:DragDrop.IsDragSource" Value="True" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -298,13 +294,21 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Content">
-                                                        <Setter.Value>
-                                                            <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, Converter={StaticResource IsEditorModeConverter}, ConverterParameter=Delete}" Value="False" />
+                                                        <Condition Binding="{Binding Path=DataContext.EditorMode, ElementName=self, Converter={StaticResource IsEditorModeConverter}, ConverterParameter=AddConnection}" Value="False" />
+                                                        <Condition Binding="{Binding Path=IsMouseOver, ElementName=MainButton}" Value="True"></Condition>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property="Content">
+                                                            <Setter.Value>
+                                                                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </MultiDataTrigger.Setters>
+                                                  
+                                                </MultiDataTrigger>
                                                 <DataTrigger Binding="{Binding Points.Count, Converter={StaticResource IsBiggerConverter}, ConverterParameter=9}" Value="True">
                                                     <Setter Property="Content">
                                                         <Setter.Value>
@@ -320,6 +324,7 @@
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="IsMarkedAsSource" Value="True"></Setter>
+                                                        
                                                     </MultiDataTrigger.Setters>
                                                 </MultiDataTrigger>
                                                 <!-- execute mode -->
@@ -337,11 +342,11 @@
                                                 <!-- add connection -->
                                                 <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="AddConnection">
                                                     <Setter Property="Command" Value="{Binding Path=DataContext.AddConnectionCommand, ElementName=self}" />
-                                                    <Setter Property="CommandParameter" Value="{Binding .}" />
+                                                   <Setter Property="CommandParameter" Value="{Binding .}" />
                                                 </DataTrigger>
                                                 <!-- edit -->
-                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="ShowInformation">
-                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ShowInformationCommand, ElementName=self}" />
+                                                <DataTrigger Binding="{Binding Path=DataContext.EditorMode, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Value="Edit">
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.EditCommand, ElementName=self}" />
                                                     <Setter Property="CommandParameter" Value="{Binding .}" />
                                                     <Setter Property="IsShowInformation" Value="True" />
                                                 </DataTrigger>
@@ -355,7 +360,6 @@
                                                         <Setter Property="Command" Value="{Binding Path=DataContext.DeleteCommand, ElementName=self}" />
                                                         <Setter Property="CommandParameter" Value="{Binding .}" />
                                                         <Setter Property="IsMarkedAsDelete" Value="True" />
-                           
                                                     </MultiDataTrigger.Setters>
                                                 </MultiDataTrigger>
                                                 <!-- mark as source mouseover -->
@@ -399,3 +403,10 @@
 
     </Grid>
 </UserControl>
+
+
+
+
+
+    
+    

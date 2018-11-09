@@ -14,17 +14,17 @@
         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="X:" HorizontalAlignment="Left"/>
-                <controls:NumericTextBox MaxValue="8000" MaxLength="18" Padding="3" Width="50" HorizontalAlignment="Left" 
+                <controls:NumericTextBox MaxValue="8000" MaxLength="5" Padding="3" Width="50" HorizontalAlignment="Left" 
                                          Text="{Binding Position.X,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Y:" HorizontalAlignment="Left"/>
-                <controls:NumericTextBox MaxValue="8000" MaxLength="8" Padding="3" Width="50" HorizontalAlignment="Left" 
+                <controls:NumericTextBox MaxValue="8000" MaxLength="5" Padding="3" Width="50" HorizontalAlignment="Left" 
                                          Text="{Binding Position.Y,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>
         <Label Content="Wert" HorizontalAlignment="Left"/>
-        <controls:NumericTextBox MaxLength="8" Padding="3" Width="139" HorizontalAlignment="Left" 
+        <controls:NumericTextBox MaxLength="8" Padding="3" Width="139" HorizontalAlignment="Left" MaxValue="500000"
                                  Text="{Binding ValueBind,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         <Label  HorizontalAlignment="Left" Content="Beschreibung" />
         <TextBox MaxLength="1500" Padding="3" 

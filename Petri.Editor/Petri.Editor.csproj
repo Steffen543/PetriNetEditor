@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\IsBiggerConverter.cs" />
+    <Compile Include="Converter\IsEditorModeConverter.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowEnds.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowLine.cs" />
     <Compile Include="UI\Controls\Arrows\ArrowLineBase.cs" />
@@ -190,6 +191,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Diagrams\Model.cd" />
+    <None Include="Diagrams\ViewModel.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -210,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="petri.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Diagrams\XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

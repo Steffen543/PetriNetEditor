@@ -6,8 +6,31 @@
         xmlns:local="clr-namespace:Petri.Editor"
         xmlns:view="clr-namespace:Petri.Editor.UI.View" d:DataContext="{d:DesignInstance viewModel:MainWindowViewModel}"
         xmlns:viewModel="clr-namespace:Petri.Editor.UI.ViewModel"
+        xmlns:converter="clr-namespace:Petri.Editor.Converter"
         mc:Ignorable="d" WindowState="Maximized"
-        Title="{Binding CurrentFileName}" Height="750" Width="1200">
+        Height="750" Width="1200">
+    <Window.Resources>
+        <converter:IsNullConverter x:Key="IsNullConverter" />
+    </Window.Resources>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Title" Value="Petri-Netz Editor" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSaved, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Title" Value="{Binding CurrentFileName}" />
+                </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsSaved, UpdateSourceTrigger=PropertyChanged}" Value="False" />
+                        <Condition Binding="{Binding CurrentPnmlNet, Converter={StaticResource IsNullConverter}}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Title" Value="Ungespeichertes Petri-Netz"></Setter>
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SavePetriNetCommand}"/>
         <KeyBinding Key="Escape" Command="{Binding EditorViewModel.CancelCommand}"/>

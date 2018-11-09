@@ -23,8 +23,16 @@ namespace Petri.Editor.Controls
 
         private void NumericTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.Parse(Text) > MaxValue)
-                Text = MaxValue.ToString();
+            try
+            {
+                if (Text != String.Empty && int.Parse(Text) > MaxValue)
+                    Text = MaxValue.ToString();
+            }
+            catch (Exception ex)
+            {
+                e.Handled = true;
+            }
+            
         }
 
         private void NumericTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

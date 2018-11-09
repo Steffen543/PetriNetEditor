@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="net" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <name><text>processes_0_1_min_lang.dot</text></name>
+    <page id="page-0">
+      <name><text>a page has no name</text></name>
+      <place id="p112">
+        <name><text>112</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_6_d_1">
+        <name><text>d_1</text></name></transition>
+      <transition id="t_0_">
+        <arc id="out_t_3_a_1_p112" source="t_3_a_1" target="p112">
+          <inscription><text>1</text></inscription>
+        </arc>
+    </page>
+  </net>
+</pnml>

@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("petri.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("diagrams/xmlfile1.xml")]
 
 

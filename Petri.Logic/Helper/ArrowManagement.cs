@@ -12,6 +12,11 @@ namespace Petri.Logic.Helper
         private static List<ArrowItem> items = new List<ArrowItem>();
         public static ObjectList ObjectList;
 
+        public static void Clear()
+        {
+            items.Clear();
+        }
+
         public static void Add(ConnectableBase item1, ConnectableBase item2, double position)
         {
             items.Add(new ArrowItem(item1, item2) {Position =  position});
@@ -43,19 +48,38 @@ namespace Petri.Logic.Helper
             items.Remove(arrowitem);
         }
 
-        public static int CountConnections(ConnectableBase component1, ConnectableBase component2)
+        public static int CountConnectionsInArrowManagement(ConnectableBase component1, ConnectableBase component2)
         {
 
             int counter = 0;
-            foreach (var conn in ObjectList.GetConnections())
+            //foreach (var conn in ObjectList.GetConnections())
+            foreach (var conn in items)
             {
-                var comp1Found = conn.Source == component1 || conn.Destination == component1;
-                var comp2Found = conn.Source == component2 || conn.Destination == component2;
+                //var comp1Found = conn.Source == component1 || conn.Destination == component1;
+                //var comp2Found = conn.Source == component2 || conn.Destination == component2;
+                //if (comp1Found && comp2Found) counter++;
+                var comp1Found = component1 == conn.Component1 || component1 == conn.Component2;
+                var comp2Found = component2 == conn.Component1 || component2 == conn.Component2;
                 if (comp1Found && comp2Found) counter++;
             }
             return counter;
            
           
+        }
+
+        public static int CountAllConnections(ConnectableBase component1, ConnectableBase component2)
+        {
+
+            int counter = 0;
+            foreach (var conn in ObjectList.GetConnections())
+            {
+                var comp1Found = component1 == conn.Source || component1 == conn.Destination;
+                var comp2Found = component2 == conn.Source || component2 == conn.Destination;
+                if (comp1Found && comp2Found) counter++;
+            }
+            return counter;
+
+
         }
     }
 

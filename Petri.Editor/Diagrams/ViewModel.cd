@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Petri.Editor.UI.ViewModel.EditorViewModel">
+    <Position X="5.75" Y="3.75" Width="4.25" />
+    <Members>
+      <Property Name="AddConnectionHelper" Hidden="true" />
+      <Property Name="CurrentInformationEntry" Hidden="true" />
+      <Property Name="PnmlNet" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>wIAAIIIAAAACQREKAAAABAAAEgBQAAIUQoAICBAAAAA=</HashCode>
+      <FileName>UI\ViewModel\EditorViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

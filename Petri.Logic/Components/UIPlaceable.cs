@@ -11,7 +11,7 @@ using Petri.Logic.Pnml;
 
 namespace Petri.Logic.Components
 {
-    [XmlType("UIPlaceable")] // define Type
+    [XmlType("UIPlaceable")]
     [XmlInclude(typeof(Transition)), XmlInclude(typeof(Place)), XmlInclude(typeof(Connection)), XmlInclude(typeof(ConnectableBase))]
     public class UIPlaceable : BindableBase
     {
@@ -28,8 +28,9 @@ namespace Petri.Logic.Components
             get { return GetProperty(() => Description); }
             set { SetProperty(() => Description, value); }
         }
+    
 
-        [XmlElement("position")]
+    [XmlElement("position")]
         public Position Position
         {
             get { return GetProperty(() => Position); }
