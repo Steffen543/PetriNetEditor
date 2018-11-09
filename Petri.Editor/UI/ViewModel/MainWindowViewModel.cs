@@ -110,7 +110,7 @@ namespace Petri.Editor.UI.ViewModel
             if (CurrentFileName != null)
             {
                 reader.SaveToXML(CurrentPnmlNet, CurrentFilePath);
-
+                IsSaved = true;
             }
             else
             {
@@ -134,6 +134,7 @@ namespace Petri.Editor.UI.ViewModel
                 reader.SaveToXML(CurrentPnmlNet, saveFileDialog.FileName);
                 CurrentFileName = saveFileDialog.FileName;
                 CurrentFilePath = CurrentFileName;
+                IsSaved = true;
             }
         }
 
