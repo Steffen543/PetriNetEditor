@@ -279,13 +279,15 @@ namespace Petri.Editor.UI.ViewModel
             }
             if (component is ConnectableBase connectable)
             {
-                foreach(var outputConn in connectable.Output)
+                 //foreach(var outputConn in connectable.Output)
+                while (connectable.Output.Count > 0)
                 {
-                    DeleteComponent(outputConn);
+                    DeleteComponent(connectable.Output[0]);
                 }
-                foreach (var inputConn in connectable.Input)
+                //foreach (var inputConn in connectable.Input)
+                while (connectable.Input.Count > 0)
                 {
-                    DeleteComponent(inputConn);
+                    DeleteComponent(connectable.Input[0]);
                 }
             }
         }
